@@ -1,0 +1,33 @@
+:root{
+    --theme-black-color: #1f1f1f;
+    --theme-black-bg-color: #1f1f1f;
+
+    --theme-green-color: #27c94e;
+    --theme-green-bg-color: #27c94e;
+    
+    --theme-hight-light-text-color: #27c94e;
+
+    --theme-text-light-color: #e9e9eb;
+    --theme-text-dart-color: #1f1f1f;
+
+    /* Button Variable */
+    --theme-button-ligh-bg: #e9e9eb;
+    --theme-button-light-hover-bg: #1f1f1f;
+
+    --theme-button-light-text: #1f1f1f;
+    --theme-button-light-hover-text: #e9e9eb;
+}
+
+.theme-hight-light{
+    color: var(--theme-green-color);
+}
+
+.theme-primary-btn{
+    padding: 10px 40px;
+    background: var(--theme-green-bg-color);
+    border: none;
+    border-radius: 30px;
+    color: var(--theme-button-ligh-bg);
+    letter-spacing: 2px;
+    font-size: 25px;
+}
