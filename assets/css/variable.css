@@ -16,6 +16,12 @@
 
     --theme-button-light-text: #1f1f1f;
     --theme-button-light-hover-text: #e9e9eb;
+     --au-bg: #060706;
+    --au-bg-alt: #0c0e0d;
+    --au-accent: #2de6a8;
+    --au-accent-2: #6ee7ff;
+    --au-text-dim: #9aa39e;
+    --au-line: rgba(255,255,255,0.08);
 }
 
 .theme-hight-light{
@@ -31,3 +37,10 @@
     letter-spacing: 2px;
     font-size: 25px;
 }
+
+.theme-title{
+    font-size: 50px;
+    font-weight: 500
+    ;
+}
+
