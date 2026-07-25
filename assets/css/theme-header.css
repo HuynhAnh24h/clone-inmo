@@ -10,19 +10,30 @@
     text-transform: uppercase;
     color: var(--theme-hight-light-text-color);
 }
-.theme-navbar-list-item{
+.theme-navbar-list-item,
+.theme-navbar-list .menu-item {
     font-size: 16px;
     text-transform: uppercase;
-    cursor: pointer;
-    padding: 10px 20px;
     font-weight: 600;
+    list-style: none;
 }
 
-.theme-navbar-list-item:hover{
+.theme-navbar-list-item a,
+.theme-navbar-list .menu-item a {
+    color: var(--theme-text-color, #111);
+    text-decoration: none;
+    padding: 10px 20px;
+    display: inline-block;
+}
+
+.theme-navbar-list-item:hover a,
+.theme-navbar-list .menu-item:hover a,
+.theme-navbar-list-item a:hover,
+.theme-navbar-list .menu-item a:hover {
     background: var(--theme-black-color);
     color: var(--theme-text-light-color);
     border-radius: 20px;
-    transition: 0.5s all;
+    transition: 0.3s all;
 }
 .header-icon{
     font-size: 25px;
