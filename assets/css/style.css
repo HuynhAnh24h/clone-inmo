@@ -1,16 +1,2 @@
-@import url('./main.css');
 @import url('./bootstrap.min.css');
-@import url('./variable.css');
-
-
-/* Theme Css Component */
-@import url('./theme-header.css');
-@import url('./theme-footer.css');
-
-
-@import url('./theme-home-page.css');
-@import url('./theme-product-archive.css');
-@import url('./theme-product-single.css');
-@import url('./theme-contact.css');
-@import url('./theme-about.css');
-/* Theme Css Component */
+@import url('./theme-core.css');

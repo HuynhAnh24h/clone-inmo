@@ -50,8 +50,8 @@ get_header( 'shop' );
 				</div>
 				
 				<?php 
-				$note1 = get_post_meta( get_the_ID(), 'custom_note_1', true );
-				$note2 = get_post_meta( get_the_ID(), 'custom_note_2', true );
+				$note1 = function_exists('get_field') ? get_field('custom_note_1') : '';
+				$note2 = function_exists('get_field') ? get_field('custom_note_2') : '';
 				if ( $note1 ) echo '<p class="pg-info__note">' . esc_html( $note1 ) . '</p>';
 				if ( $note2 ) echo '<p class="pg-info__note">' . esc_html( $note2 ) . '</p>';
 				?>
@@ -63,14 +63,13 @@ get_header( 'shop' );
 						<button type="button" class="plus">+</button>
 					</div>
 
-					<button type="submit" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>" class="btn-pg-primary single_add_to_cart_button button alt">Add to cart</button>
+					<button type="submit" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>" class="btn-pg-primary single_add_to_cart_button button alt">Thêm vào giỏ hàng</button>
 				</form>
 
 				<div id="accordionWrap">
 					<?php
-					// Fetch custom fields for accordion
-					$features = get_post_meta( get_the_ID(), 'product_features', true );
-					if ( is_array( $features ) ) {
+					$features = function_exists('get_field') ? get_field('product_features') : false;
+					if ( is_array( $features ) && !empty($features) ) {
 						foreach ( $features as $feature ) {
 							?>
 							<div class="pg-accordion-item"><span><?php echo esc_html( $feature['title'] ); ?></span><i class="bi bi-plus-lg"></i></div>
@@ -78,17 +77,16 @@ get_header( 'shop' );
 							<?php
 						}
 					} else {
-						// Fallback hardcoded if no meta
 					?>
-						<div class="pg-accordion-item"><span>Real-Time AI Translation</span><i class="bi bi-plus-lg"></i></div>
-						<div class="pg-accordion-body">Speak naturally and see instant translated subtitles.</div>
+						<div class="pg-accordion-item"><span>Dịch Thuật AI Theo Thời Gian Thực</span><i class="bi bi-plus-lg"></i></div>
+						<div class="pg-accordion-body">Nói chuyện tự nhiên và xem phụ đề dịch ngay lập tức.</div>
 					<?php
 					}
 					?>
 				</div>
 
 				<div class="pg-share">
-					Share:
+					Chia sẻ:
 					<a href="#"><i class="bi bi-facebook"></i></a>
 					<a href="#"><i class="bi bi-twitter-x"></i></a>
 					<a href="#"><i class="bi bi-telegram"></i></a>
@@ -97,33 +95,37 @@ get_header( 'shop' );
 				</div>
 
 				<div class="pg-policy">
-					<?php echo get_post_meta( get_the_ID(), 'shipping_policy', true ) ?: 'Shipping policy details...'; ?>
+					<?php echo get_post_meta( get_the_ID(), 'shipping_policy', true ) ?: 'Chi tiết chính sách giao hàng...'; ?>
 				</div>
 			</div>
 		</div>
 	</section>
 
 	<!-- ================= FULL IMAGE BANNER ================= -->
+	<?php $banner = function_exists('get_field') ? get_field('product_banner_image') : ''; ?>
+	<?php if( $banner ): ?>
 	<div class="pg-banner">
-		<img
-			src="https://placehold.co/1920x760/0a0b0c/333333?text=INMO+GO3+Glasses"
-			alt="INMO GO3 close up"
-		/>
+		<img src="<?php echo esc_url($banner); ?>" alt="Banner" />
 	</div>
+	<?php endif; ?>
 
 	<!-- ================= HOW IT WORKS ================= -->
 	<div class="pg-howitworks">
 		<p class="pg-eyebrow">INMO GO3</p>
 		<button type="button" class="btn-pg-cta">
-			Check How It Works <i class="bi bi-arrow-right ms-1"></i>
+			Xem Cách Hoạt Động <i class="bi bi-arrow-right ms-1"></i>
 		</button>
 	</div>
 
 	<!-- ================= ERGONOMIC DESIGN (dark) ================= -->
+	<?php 
+		$erg_head = function_exists('get_field') && get_field('ergonomic_heading') ? get_field('ergonomic_heading') : 'Ergonomic Design for All-Day Comfort';
+		$erg_sub = function_exists('get_field') && get_field('ergonomic_subheading') ? get_field('ergonomic_subheading') : 'Precision crafted for lightweight performance';
+	?>
 	<section class="pg-dark-section">
-		<p class="pg-eyebrow">INMO GO3</p>
-		<h2 class="pg-dark-heading">Ergonomic Design for All-Day Comfort</h2>
-		<p class="pg-dark-sub">Precision crafted for lightweight performance</p>
+		<p class="pg-eyebrow"><?php echo esc_html($product->get_name()); ?></p>
+		<h2 class="pg-dark-heading"><?php echo esc_html($erg_head); ?></h2>
+		<p class="pg-dark-sub"><?php echo esc_html($erg_sub); ?></p>
 
 		<div class="row g-3 mb-3" id="featureSmWrap"></div>
 		<div class="row g-3 mb-3" id="featureLgWrap1"></div>
@@ -132,26 +134,35 @@ get_header( 'shop' );
 
 	<!-- ================= READY CTA ================= -->
 	<div class="pg-dark-section pg-ready" style="padding-top: 0">
-		<h2>Are You Ready For INMO GO3?</h2>
+		<h2>Bạn Đã Sẵn Sàng Trải Nghiệm INMO GO3?</h2>
 		<button type="button" class="btn-pg-cta">
-			Buy Now <i class="bi bi-arrow-right ms-1"></i>
+			Mua Ngay <i class="bi bi-arrow-right ms-1"></i>
 		</button>
 	</div>
 
 	<!-- ================= APP SECTION ================= -->
 	<section class="pg-app">
 		<div class="pg-app__text">
-			<h3>INMO GO3 APP</h3>
-			<p class="pg-app__models">Compatible models:</p>
+			<h3><?php echo esc_html($product->get_name()); ?> APP</h3>
+			<p class="pg-app__models">Dòng máy tương thích:</p>
 			<ul class="pg-app__models" style="list-style: none; padding: 0">
-				<li><i class="bi bi-check2 me-1"></i>INMO GO3</li>
+				<?php 
+				$models = function_exists('get_field') ? get_field('compatible_models') : false;
+				if( $models ) {
+					foreach( $models as $m ) {
+						echo '<li><i class="bi bi-check2 me-1"></i>' . esc_html($m['model_name']) . '</li>';
+					}
+				} else {
+					echo '<li><i class="bi bi-check2 me-1"></i>' . esc_html($product->get_name()) . '</li>';
+				}
+				?>
 			</ul>
 			<div class="mt-3">
 				<a href="#" class="btn-pg-dl"
-					>Download for iOS <i class="bi bi-arrow-right"></i
+					>Tải về cho iOS <i class="bi bi-arrow-right"></i
 				></a>
 				<a href="#" class="btn-pg-dl"
-					>Download for Android <i class="bi bi-arrow-right"></i
+					>Tải về cho Android <i class="bi bi-arrow-right"></i
 				></a>
 			</div>
 		</div>
@@ -160,124 +171,22 @@ get_header( 'shop' );
 
 	<!-- ================= TESTIMONIALS ================= -->
 	<section class="pg-testimonials">
-		<h2 class="pg-dark-heading">What They Say</h2>
-		<p class="pg-dark-sub">Precision Crafted for Lightweight Performance</p>
+		<h2 class="pg-dark-heading">Đánh Giá Từ Chuyên Gia</h2>
+		<p class="pg-dark-sub">Thiết Kế Tinh Xảo - Hiệu Năng Vượt Trội</p>
 		<div class="row g-3" id="testiWrap"></div>
 	</section>
+
+	<script>
+		window.acfProductData = {
+			featureSm: <?php echo json_encode(function_exists('get_field') ? get_field('feature_sm_data') : null); ?>,
+			featureLg1: <?php echo json_encode(function_exists('get_field') ? get_field('feature_lg_data_1') : null); ?>,
+			featureLg2: <?php echo json_encode(function_exists('get_field') ? get_field('feature_lg_data_2') : null); ?>,
+			testimonials: <?php echo json_encode(function_exists('get_field') ? get_field('testimonials') : null); ?>
+		};
+	</script>
 <?php endwhile; // end of the loop. ?>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-	// Gallery logic
-	const thumbs = document.querySelectorAll('.pg-thumbs img');
-	const mainImage = document.getElementById('mainImage');
-	
-	if(thumbs.length > 0) {
-		thumbs.forEach(img => {
-			img.addEventListener('click', () => {
-				mainImage.src = img.getAttribute('data-full');
-				thumbs.forEach(t => t.classList.remove('is-active'));
-				img.classList.add('is-active');
-			});
-		});
-	}
 
-	// Accordion logic
-	const accordionItems = document.querySelectorAll('.pg-accordion-item');
-	accordionItems.forEach(head => {
-		head.addEventListener('click', () => head.classList.toggle('is-open'));
-	});
-
-	// Qty logic
-	const qtyInput = document.getElementById('qtyValue');
-	const btnMinus = document.querySelector('.pg-qty .minus');
-	const btnPlus = document.querySelector('.pg-qty .plus');
-	if (btnMinus && btnPlus && qtyInput) {
-		btnMinus.addEventListener('click', () => {
-			let val = parseInt(qtyInput.value) || 1;
-			if(val > 1) qtyInput.value = val - 1;
-		});
-		btnPlus.addEventListener('click', () => {
-			let val = parseInt(qtyInput.value) || 1;
-			qtyInput.value = val + 1;
-		});
-	}
-
-	// ---- ergonomic feature grids ----
-	const featureSmData = [
-		{ title: 'Air Cushion Nose Pads', img: 'https://placehold.co/260x210/1a1a1a/ffffff?text=Nose+Pads' },
-		{ title: '15° Adaptive Temples', img: 'https://placehold.co/260x210/1a1a1a/ffffff?text=15°' },
-		{ title: '8mm Powerful, Not Bulky', img: 'https://placehold.co/260x210/1a1a1a/ffffff?text=8mm' },
-		{ title: 'Premium Finish', img: 'https://placehold.co/260x210/1a1a1a/ffffff?text=Finish' },
-		{ title: 'Privacy First', img: 'https://placehold.co/260x210/1a1a1a/ffffff?text=Privacy' }
-	];
-	const featureSmWrap = document.getElementById('featureSmWrap');
-	if (featureSmWrap) {
-		featureSmData.forEach((f) => {
-			const col = document.createElement('div');
-			col.className = 'col-6 col-md';
-			col.innerHTML = `<div class="pg-feature-sm"><img src="${f.img}" alt="${f.title}"><span>${f.title}</span></div>`;
-			featureSmWrap.appendChild(col);
-		});
-	}
-
-	const featureLgData1 = [
-		{ title: 'Dual-Eye Monochrome Display', img: 'https://placehold.co/500x260/1a1a1a/ffffff?text=Display' },
-		{ title: 'All-day comfort, lightweight design', img: 'https://placehold.co/500x260/1a1a1a/ffffff?text=Comfort' },
-		{ title: 'Voice-activated AI assistant, evolves with use', img: 'https://placehold.co/500x260/1a1a1a/ffffff?text=AI' }
-	];
-	const featureLgWrap1 = document.getElementById('featureLgWrap1');
-	if (featureLgWrap1) {
-		featureLgData1.forEach((f) => {
-			const col = document.createElement('div');
-			col.className = 'col-md-4';
-			col.innerHTML = `<div class="pg-feature-lg"><img src="${f.img}" alt="${f.title}"><span>${f.title}</span></div>`;
-			featureLgWrap1.appendChild(col);
-		});
-	}
-
-	const featureLgData2 = [
-		{ title: 'AI translation, 98+ languages supported', img: 'https://placehold.co/380x260/1a1a1a/ffffff?text=Translate' },
-		{ title: '5-second swap, all-day battery life', img: 'https://placehold.co/380x260/1a1a1a/ffffff?text=Battery' },
-		{ title: 'Teleprompter + Meeting summary auto-gen', img: 'https://placehold.co/380x260/1a1a1a/ffffff?text=Teleprompter' },
-		{ title: 'AR navigation, hands-free, phone-free', img: 'https://placehold.co/380x260/1a1a1a/ffffff?text=Navigation' }
-	];
-	const featureLgWrap2 = document.getElementById('featureLgWrap2');
-	if (featureLgWrap2) {
-		featureLgData2.forEach((f) => {
-			const col = document.createElement('div');
-			col.className = 'col-6 col-md-3';
-			col.innerHTML = `<div class="pg-feature-lg"><img src="${f.img}" alt="${f.title}"><span>${f.title}</span></div>`;
-			featureLgWrap2.appendChild(col);
-		});
-	}
-
-	// ---- testimonials ----
-	const testiData = [
-		{ name: 'Tyriel Wood - VR Tech', quote: 'This idea should be copied. INMO Go3', img: 'https://placehold.co/300x400/1a1a1a/ffffff?text=Tyriel' },
-		{ name: 'CKid', quote: 'The Smart Glasses That Actually Make Sense | INMO GO3 (AR Display, 98 Languages, and more)', img: 'https://placehold.co/300x400/1a1a1a/ffffff?text=CKid' },
-		{ name: 'Unbox Therapy', quote: 'Understand almost any language...', img: 'https://placehold.co/300x400/1a1a1a/ffffff?text=Unbox' },
-		{ name: 'Steven Sullivan', quote: 'The Most Affordable Navigation Smart Glasses', img: 'https://placehold.co/300x400/1a1a1a/ffffff?text=Steven' },
-		{ name: 'Jose Tecnofanatico', quote: "Inmo Go 2 Smart Glasses with Interchangeable Battery / Amazing!", img: 'https://placehold.co/300x400/1a1a1a/ffffff?text=Jose' }
-	];
-	const testiWrap = document.getElementById('testiWrap');
-	if (testiWrap) {
-		testiData.forEach((t) => {
-			const col = document.createElement('div');
-			col.className = 'col-6 col-md';
-			col.innerHTML = `
-				<div class="pg-testi-card">
-					<img src="${t.img}" alt="${t.name}">
-					<div class="pg-testi-play"><i class="bi bi-play-fill"></i></div>
-				</div>
-				<div class="pg-testi-name">${t.name}</div>
-				<div class="pg-testi-quote">${t.quote}</div>
-			`;
-			testiWrap.appendChild(col);
-		});
-	}
-});
-</script>
 
 <?php
 get_footer( 'shop' );

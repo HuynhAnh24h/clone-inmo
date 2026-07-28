@@ -16,9 +16,11 @@ get_header( 'shop' );
   </nav>
  
   <!-- Title -->
-  <h1 class="pp-title"><?php woocommerce_page_title(); ?></h1>
+  <h1 class="theme-title"><?php woocommerce_page_title(); ?></h1>
  
-  <!-- Categories Navigation -->
+  <!-- Categories Navigation (Rendered via JS) -->
+  <div id="woo-category-wrap" class="d-flex flex-wrap gap-2 mb-4 mt-3"></div>
+
   <?php
   // Get product categories (child categories if on a category page, or top-level categories if on main shop)
   $term_id = is_product_category() ? get_queried_object_id() : 0;
@@ -27,19 +29,41 @@ get_header( 'shop' );
       'hide_empty' => false,
       'parent'     => $term_id,
   ) );
-  
+
+  $cats_array = array();
   if ( ! empty( $categories ) && ! is_wp_error( $categories ) ) {
-      echo '<div class="d-flex flex-wrap gap-2 mb-4 mt-3">';
       if ( is_product_category() ) {
-          // Link back to main shop
-          echo '<a href="' . esc_url( wc_get_page_permalink( 'shop' ) ) . '" class="btn btn-dark rounded-pill px-3 py-1 text-decoration-none" style="font-size: 0.9rem;">← Tất cả</a>';
+          $cats_array[] = array(
+              'name' => '← Tất cả',
+              'url'  => esc_url( wc_get_page_permalink( 'shop' ) ),
+              'is_back' => true
+          );
       }
       foreach ( $categories as $category ) {
-          echo '<a href="' . esc_url( get_term_link( $category ) ) . '" class="btn btn-outline-dark rounded-pill px-3 py-1 text-decoration-none" style="font-size: 0.9rem;">' . esc_html( $category->name ) . '</a>';
+          $cats_array[] = array(
+              'name' => esc_html( $category->name ),
+              'url'  => esc_url( get_term_link( $category ) ),
+              'is_back' => false
+          );
       }
-      echo '</div>';
   }
   ?>
+  <script>
+      const wooCategoriesData = <?php echo json_encode( $cats_array ); ?>;
+      document.addEventListener('DOMContentLoaded', function() {
+          const catWrap = document.getElementById('woo-category-wrap');
+          if (catWrap && wooCategoriesData && wooCategoriesData.length > 0) {
+              wooCategoriesData.forEach(cat => {
+                  const a = document.createElement('a');
+                  a.href = cat.url;
+                  a.className = cat.is_back ? 'btn btn-dark rounded-pill px-3 py-1 text-decoration-none' : 'btn btn-outline-dark rounded-pill px-3 py-1 text-decoration-none';
+                  a.style.fontSize = '0.9rem';
+                  a.textContent = cat.name;
+                  catWrap.appendChild(a);
+              });
+          }
+      });
+  </script>
 
   <!-- Product grid -->
   <div class="row" id="productGrid">

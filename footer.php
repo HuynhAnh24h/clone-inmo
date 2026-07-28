@@ -1,6 +1,7 @@
 <footer class="footer-wrapper">
 	<div class="footer py-5">
-	<div class="container mx-auto row py-5">
+	<div class="container mx-auto py-5">
+		<div class="row">
 		<div class="col-lg-6">
 		<div class="row">
 			<div class="col-md-3">
@@ -69,10 +70,11 @@
 			</div>
 		</div>
 		</div>
+		</div>
 	</div>
 	</div>
-	<div class="footer-bottom py-5 mx-5">
-	<div class="d-flex justify-content-between align-items-center">
+	<div class="footer-bottom py-5 px-3 px-md-5">
+	<div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-4">
 		<div class="theme-footer-box">
 		<p class="theme-footer-bottom-text">
 			FLAT/RM A 12/F, ZJ 300, 300 LOCKHART ROAD, WAN CHAI, HONG KONG
@@ -81,20 +83,20 @@
 			INMO INTERNATIONAL TECHNOLOGY LIMITED
 		</p>
 		<p class="theme-footer-bottom-text">© <?php echo date('Y'); ?> INMO.</p>
-		<ul class="d-flex justify-content-center align-items-center gap-2">
-			<li class="theme-footer-bottom-link">Refund Policy</li>
-			<li class="theme-footer-bottom-link">Privacy policy</li>
-			<li class="theme-footer-bottom-link">Terms of service</li>
-			<li class="theme-footer-bottom-link">Shipping policy</li>
-			<li class="theme-footer-bottom-link">Contact infomation</li>
-			<li class="theme-footer-bottom-link">Legal notice</li>
+		<ul class="d-flex flex-wrap justify-content-start align-items-center gap-2 mt-3">
+			<li class="theme-footer-bottom-link">Chính sách hoàn tiền</li>
+			<li class="theme-footer-bottom-link">Chính sách bảo mật</li>
+			<li class="theme-footer-bottom-link">Điều khoản dịch vụ</li>
+			<li class="theme-footer-bottom-link">Chính sách giao hàng</li>
+			<li class="theme-footer-bottom-link">Thông tin liên hệ</li>
+			<li class="theme-footer-bottom-link">Thông báo pháp lý</li>
 		</ul>
 		</div>
 		<div class="theme-footer-box">
 		<div class="footer-bottom-buton">Việt Nam</div>
 		</div>
 		<div class="theme-footer-box">
-		<ul class="theme-footer-payment-icon d-flex justify-content-between align-items-center gap-2">
+		<ul class="theme-footer-payment-icon d-flex flex-wrap justify-content-start justify-content-lg-end align-items-center gap-2">
 			<img src="<?php echo get_template_directory_uri(); ?>/assets/images/paypal.svg" height="25" width="auto" alt="paypal" loading="lazy" />
 			<img src="<?php echo get_template_directory_uri(); ?>/assets/images/master.svg" height="25" alt="master" loading="lazy" width="auto" />
 			<img src="<?php echo get_template_directory_uri(); ?>/assets/images/visa.svg" height="25" alt="visa" loading="lazy" width="auto" />
@@ -110,6 +112,29 @@
 		</div>
 	</div>
 	</div>
+
+	<!-- Promo Modal Overlay -->
+	<div class="theme-promo-modal-overlay" id="promoModalOverlay">
+		<div class="theme-promo-modal">
+			<button type="button" class="theme-promo-close" id="promoModalClose"><i class="bi bi-x-lg"></i></button>
+			<div class="theme-promo-content d-flex">
+				<div class="theme-promo-text">
+					<h3>Limited Time $100 Off<br>INMO GO3</h3>
+					<p>Save on your first order and get email only offers when you join</p>
+					<form class="theme-promo-form" onsubmit="return false;">
+						<input type="email" placeholder="Email" required>
+						<button type="submit">Continue</button>
+					</form>
+				</div>
+				<div class="theme-promo-logo d-none d-md-flex">
+					<h2>INMO</h2>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Sticky Claim Button -->
+	<button class="theme-sticky-claim-btn" id="promoStickyBtn">Claim $100 OFF</button>
 </footer>
 
 <?php wp_footer(); ?>
