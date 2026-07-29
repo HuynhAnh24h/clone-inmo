@@ -224,17 +224,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	if (promoModalOverlay && promoModalClose && promoStickyBtn) {
 		setTimeout(() => {
-			if (!sessionStorage.getItem('promoClosed')) {
-				promoModalOverlay.classList.add('is-open');
-			} else {
-				promoStickyBtn.classList.add('is-visible');
-			}
+			promoModalOverlay.classList.add('is-open');
+			promoStickyBtn.classList.remove('is-visible');
 		}, 1000);
 
 		const closeModal = () => {
 			promoModalOverlay.classList.remove('is-open');
 			promoStickyBtn.classList.add('is-visible');
-			sessionStorage.setItem('promoClosed', 'true');
 		};
 
 		promoModalClose.addEventListener('click', closeModal);
@@ -245,6 +241,49 @@ document.addEventListener('DOMContentLoaded', () => {
 		promoStickyBtn.addEventListener('click', () => {
 			promoModalOverlay.classList.add('is-open');
 			promoStickyBtn.classList.remove('is-visible');
+		});
+	}
+
+	// ---- AJAX SEARCH LOGIC ----
+	const searchInput = document.getElementById('offcanvasSearchInput');
+	const searchResults = document.getElementById('ajaxSearchResults');
+	let searchTimeout = null;
+
+	if (searchInput && searchResults && typeof inmo_ajax !== 'undefined') {
+		searchInput.addEventListener('input', function() {
+			const searchTerm = this.value.trim();
+			
+			if (searchTimeout) {
+				clearTimeout(searchTimeout);
+			}
+
+			if (searchTerm.length < 2) {
+				searchResults.innerHTML = '';
+				return;
+			}
+
+			searchResults.innerHTML = '<div class="text-center py-4"><div class="spinner-border spinner-border-sm text-secondary" role="status"></div><span class="ms-2 text-muted">Đang tìm kiếm...</span></div>';
+
+			searchTimeout = setTimeout(() => {
+				const formData = new FormData();
+				formData.append('action', 'inmo_ajax_search');
+				formData.append('s', searchTerm);
+
+				fetch(inmo_ajax.ajax_url, {
+					method: 'POST',
+					body: formData
+				})
+				.then(response => response.json())
+				.then(data => {
+					if (data.success) {
+						searchResults.innerHTML = data.data;
+					}
+				})
+				.catch(error => {
+					searchResults.innerHTML = '<div class="text-center py-3 text-danger">Có lỗi xảy ra, vui lòng thử lại.</div>';
+					console.error('Search error:', error);
+				});
+			}, 500); // 500ms debounce
 		});
 	}
 });

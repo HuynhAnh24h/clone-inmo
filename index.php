@@ -11,7 +11,9 @@ get_header();
 	if ( have_posts() ) :
 		while ( have_posts() ) :
 			the_post();
-			the_title( '<h1>', '</h1>' );
+			if ( ! ( function_exists('is_account_page') && is_account_page() && ! is_user_logged_in() ) ) {
+				the_title( '<h1 class="text-center mb-4">', '</h1>' );
+			}
 			the_content();
 		endwhile;
 	else :

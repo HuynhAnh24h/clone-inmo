@@ -7,10 +7,10 @@ get_header();
 ?>
 
 <div class="container py-5 animate-fade-in">
-  <h1 class="theme-ct-title">Contact us</h1>
+  <h1 class="theme-ct-title">Liên hệ với chúng tôi</h1>
   <p class="theme-ct-subtitle">
-    We'd love to hear from you. Our team is here to help.<br>
-    Let your customers get in touch with you by filling out the email form below.
+    Chúng tôi luôn mong muốn lắng nghe ý kiến từ bạn. Đội ngũ của chúng tôi luôn sẵn sàng hỗ trợ.<br>
+    Hãy để lại lời nhắn cho chúng tôi bằng cách điền vào biểu mẫu dưới đây.
   </p>
  
   <div class="row mt-5">
@@ -20,7 +20,7 @@ get_header();
       <form id="contactForm">
         <div class="row">
           <div class="col-md-6">
-            <input type="text" class="theme-ct-field" placeholder="Name" name="name">
+            <input type="text" class="theme-ct-field" placeholder="Họ và tên" name="name">
           </div>
           <div class="col-md-6">
             <input type="email" class="theme-ct-field" placeholder="Email" name="email">
@@ -28,25 +28,25 @@ get_header();
         </div>
         <div class="row">
           <div class="col-md-6">
-            <input type="tel" class="theme-ct-field" placeholder="Phone number" name="phone">
+            <input type="tel" class="theme-ct-field" placeholder="Số điện thoại" name="phone">
           </div>
           <div class="col-md-6">
             <select class="theme-ct-field" name="subject">
-              <option value="" disabled selected>Subject</option>
-              <option value="support">Customer Support</option>
-              <option value="press">KOL &amp; Press</option>
-              <option value="business">Business</option>
-              <option value="other">Other</option>
+              <option value="" disabled selected>Chủ đề</option>
+              <option value="support">Hỗ trợ khách hàng</option>
+              <option value="press">KOL & Báo chí</option>
+              <option value="business">Hợp tác kinh doanh</option>
+              <option value="other">Khác</option>
             </select>
           </div>
         </div>
-        <textarea class="theme-ct-field" placeholder="Message" name="message"></textarea>
+        <textarea class="theme-ct-field" placeholder="Nội dung tin nhắn" name="message"></textarea>
  
-        <button type="submit" class="theme-ct-submit">Send message</button>
+        <button type="submit" class="theme-ct-submit">Gửi tin nhắn</button>
  
         <p class="theme-ct-disclaimer">
-          This site is protected by hCaptcha and the hCaptcha
-          <a href="#">Privacy Policy</a> and <a href="#">Terms of Service</a> apply.
+          Trang web này được bảo vệ bởi hCaptcha và tuân theo
+          <a href="#">Chính sách bảo mật</a> cũng như <a href="#">Điều khoản dịch vụ</a> của hCaptcha.
         </p>
       </form>
     </div>
@@ -56,19 +56,19 @@ get_header();
  
       <div class="theme-ct-side-block">
         <p class="theme-ct-side-label">Email</p>
-        <p class="mb-1">Customer Service: <a href="mailto:support@inmoxr.com">support@inmoxr.com</a></p>
-        <p class="mb-1">KOL &amp; Press: <a href="mailto:marketing@inmoxr.com">marketing@inmoxr.com</a></p>
-        <p class="mb-0">Business: <a href="mailto:contact@inmoxr.com">contact@inmoxr.com</a></p>
+        <p class="mb-1">Chăm sóc khách hàng: <a href="mailto:support@inmoxr.com">support@inmoxr.com</a></p>
+        <p class="mb-1">KOL & Báo chí: <a href="mailto:marketing@inmoxr.com">marketing@inmoxr.com</a></p>
+        <p class="mb-0">Hợp tác kinh doanh: <a href="mailto:contact@inmoxr.com">contact@inmoxr.com</a></p>
       </div>
  
       <div class="theme-ct-side-block">
-        <p class="theme-ct-side-label">Phone</p>
+        <p class="theme-ct-side-label">Điện thoại</p>
         <p class="mb-1">+1 800-689-8547</p>
-        <p class="mb-0"><strong>EST</strong> Mon–Fri: 09:00 – 17:00</p>
+        <p class="mb-0"><strong>EST</strong> Thứ 2 – Thứ 6: 09:00 – 17:00</p>
       </div>
  
       <div class="theme-ct-side-block">
-        <p class="theme-ct-side-label">Follow us</p>
+        <p class="theme-ct-side-label">Theo dõi chúng tôi</p>
         <div class="theme-ct-social">
           <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
           <a href="#" aria-label="X"><i class="bi bi-twitter-x"></i></a>

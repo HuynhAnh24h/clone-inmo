@@ -144,3 +144,75 @@ if ( file_exists( get_template_directory() . '/inc/acf-fields-about.php' ) ) {
 if ( file_exists( get_template_directory() . '/inc/acf-products.php' ) ) {
     require_once get_template_directory() . '/inc/acf-products.php';
 }
+
+/**
+ * AJAX Search functionality
+ */
+function inmo_ajax_search_scripts() {
+    wp_localize_script( 'inmo-theme-main-js', 'inmo_ajax', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+}
+add_action( 'wp_enqueue_scripts', 'inmo_ajax_search_scripts', 99 );
+
+function inmo_ajax_search() {
+    $search_term = isset($_POST['s']) ? sanitize_text_field($_POST['s']) : '';
+    
+    if ( empty($search_term) ) {
+        wp_send_json_success('');
+    }
+    
+    $args = array(
+        'post_type'      => 'product',
+        'post_status'    => 'publish',
+        's'              => $search_term,
+        'posts_per_page' => 6,
+    );
+    
+    $query = new WP_Query($args);
+    $html = '';
+    
+    if ($query->have_posts()) {
+        $html .= '<div class="list-group list-group-flush border-0 mb-3">';
+        while ($query->have_posts()) {
+            $query->the_post();
+            global $product;
+            $html .= '<a href="' . get_permalink() . '" class="list-group-item list-group-item-action d-flex align-items-center border-0 p-2 mb-2" style="border-radius: 8px; background: #fff; transition: background 0.2s;">';
+            if ( has_post_thumbnail() ) {
+                $html .= '<div class="flex-shrink-0 me-3" style="width: 50px; height: 50px; background: #f9f9f9; border-radius: 8px; display: flex; align-items: center; justify-content: center; overflow: hidden;">';
+                $html .= get_the_post_thumbnail( get_the_ID(), 'thumbnail', array( 'style' => 'width: 100%; height: 100%; object-fit: contain;' ) );
+                $html .= '</div>';
+            }
+            $html .= '<div class="flex-grow-1">';
+            $html .= '<h6 class="mb-1 text-dark" style="font-size: 14px; font-weight: 600;">' . get_the_title() . '</h6>';
+            $html .= '<small class="text-muted d-block" style="font-size: 13px;">' . $product->get_price_html() . '</small>';
+            $html .= '</div>';
+            $html .= '</a>';
+        }
+        $html .= '</div>';
+        $html .= '<a href="' . esc_url( home_url( '/?s=' . urlencode($search_term) . '&post_type=product' ) ) . '" class="btn w-100" style="background-color: #f4f4f4; color: #111; font-weight: 500; border-radius: 10px; transition: background-color 0.2s;">Xem tất cả kết quả</a>';
+    } else {
+        $html .= '<div class="text-center py-5 text-muted">';
+        $html .= '<i class="bi bi-search fs-1 mb-3 d-block text-light"></i>';
+        $html .= '<p>Không tìm thấy sản phẩm nào phù hợp.</p>';
+        $html .= '</div>';
+    }
+    
+    wp_reset_postdata();
+    wp_send_json_success($html);
+}
+add_action('wp_ajax_inmo_ajax_search', 'inmo_ajax_search');
+add_action('wp_ajax_nopriv_inmo_ajax_search', 'inmo_ajax_search');
+
+/**
+ * Custom WooCommerce Breadcrumb Defaults
+ */
+add_filter( 'woocommerce_breadcrumb_defaults', 'inmo_custom_woocommerce_breadcrumbs' );
+function inmo_custom_woocommerce_breadcrumbs() {
+    return array(
+        'delimiter'   => ' &nbsp;&nbsp;/&nbsp;&nbsp; ',
+        'wrap_before' => '<nav class="woocommerce-breadcrumb">',
+        'wrap_after'  => '</nav>',
+        'before'      => '',
+        'after'       => '',
+        'home'        => '<i class="bi bi-house-door-fill icon-shake" style="font-size: 1.1rem; line-height: 1;"></i>',
+    );
+}

@@ -26,26 +26,24 @@ $kolData = [
     [ 'image' => "https://placehold.co/400x380/4a4a4a/ffffff?text=Smart+Glasses", 'caption' => "Đánh giá từ @TechDaily" ],
     [ 'image' => "https://placehold.co/400x380/2d5f5f/ffffff?text=AR+Unboxing", 'caption' => "Đánh giá từ @GadgetVN" ]
 ];
+echo '<script>
+    window.inmoFrontSlidesData = ' . json_encode($slidesData) . ';
+    window.inmoFrontKolData = ' . json_encode($kolData) . ';
+</script>';
 ?>
-<script>
-    window.inmoFrontSlidesData = <?php echo json_encode($slidesData); ?>;
-    window.inmoFrontKolData = <?php echo json_encode($kolData); ?>;
-</script>
 
 <!-- Hero Section -->
 <section class="theme-hero-wrapper animate-fade-in" style="background-image: url('<?php echo esc_url($hero_bg); ?>');">
 	<div class="container d-flex justify-content-start align-items-center">
 	<div class="theme-hero-content">
-		<h1 class="theme-hero-hight-light-text">
-		Kính AI <?php echo esc_html($hero_title); ?> – Dùng hàng ngày
-		</h1>
-		<p class="theme-hero-text">
-		Kính <span class="theme-hight-light">dịch thuật AI</span>
-		</p>
-		<p class="theme-hero-text">Dành cho</p>
-		<p class="theme-hero-text mb-5">
+		<h2 class="theme-hero-hight-light-text mb-3" style="letter-spacing: 1.5px;">
+		KÍNH AI <?php echo esc_html(mb_strtoupper($hero_title, 'UTF-8')); ?> – DÙNG HÀNG NGÀY
+		</h2>
+		<h1 class="theme-hero-main-title mb-5">
+		Kính <span class="theme-hight-light">dịch thuật AI</span><br>
+		Dành cho<br>
 		Nhu cầu sử dụng <span class="theme-hight-light">hàng ngày</span>
-		</p>
+		</h1>
 		<button class="theme-primary-btn">
 		Mua Ngay <i class="bi bi-chevron-right"></i>
 		</button>
@@ -127,34 +125,39 @@ $kolData = [
 		</div>
 	</div>
 </div>
-
-<div class="container py-5 animate-fade-in">
-	<h2 class="theme-title">KOL Reality Labs</h2>
 </div>
-<section class="theme-kol-slide container animate-slide-up">
-	<div class="splide" id="splide-kol">
-		<div class="splide__track">
-			<ul class="splide__list">
-				<?php foreach($kolData as $kol): ?>
-				<li class="splide__slide theme-kol-slide__item">
-					<div class="theme-kol-slide__media">
-						<img src="<?php echo esc_url($kol['image']); ?>" alt="<?php echo esc_attr($kol['caption']); ?>">
-					</div>
-					<div class="theme-kol-slide__caption"><?php echo esc_html($kol['caption']); ?></div>
-				</li>
-				<?php endforeach; ?>
-			</ul>
+
+	<!-- KOL Review Section -->
+	<section class="theme-kol-wrapper bg-light py-5 mb-5" style="padding-bottom: 80px !important;">
+		<div class="container py-5 text-center">
+			<h2 class="theme-kol-title mb-5">Họ nói gì về INMO</h2>
+			<div class="splide" id="splide-kol">
+				<div class="splide__track">
+					<ul class="splide__list">
+						<?php foreach($kolData as $kol): ?>
+						<li class="splide__slide theme-kol-slide px-3">
+							<div class="theme-kol-slide__inner position-relative rounded-4 overflow-hidden shadow-sm" style="height: 450px;">
+								<img src="<?php echo esc_url($kol['image']); ?>" alt="<?php echo esc_attr($kol['caption']); ?>" style="width: 100%; height: 100%; object-fit: cover;">
+								<div class="theme-kol-slide__overlay" style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); pointer-events: none;"></div>
+								<div class="theme-kol-slide__caption fs-5 px-3" style="position: absolute; bottom: 30px; left: 0; right: 0; color: white; z-index: 2; font-weight: 500;"><?php echo esc_html($kol['caption']); ?></div>
+							</div>
+						</li>
+						<?php endforeach; ?>
+					</ul>
+				</div>
+				<div class="splide__arrows theme-kol-slide__arrows">
+					<button class="splide__arrow splide__arrow--prev theme-kol-slide__nav-btn theme-kol-slide__nav-btn--prev">
+						<i class="bi bi-chevron-left"></i>
+					</button>
+					<button class="splide__arrow splide__arrow--next theme-kol-slide__nav-btn theme-kol-slide__nav-btn--next">
+						<i class="bi bi-chevron-right"></i>
+					</button>
+				</div>
+			</div>
 		</div>
-		<div class="splide__arrows theme-kol-slide__arrows">
-			<button class="splide__arrow splide__arrow--prev theme-kol-slide__nav-btn theme-kol-slide__nav-btn--prev">
-				<i class="bi bi-chevron-left"></i>
-			</button>
-			<button class="splide__arrow splide__arrow--next theme-kol-slide__nav-btn theme-kol-slide__nav-btn--next">
-				<i class="bi bi-chevron-right"></i>
-			</button>
-		</div>
-	</div>
-</section>
+	</section>
+</main>
 
 <?php
 get_footer();
+

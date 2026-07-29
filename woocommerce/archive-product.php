@@ -12,7 +12,10 @@ get_header( 'shop' );
  
   <!-- Breadcrumb -->
   <nav class="pp-breadcrumb mb-3" aria-label="breadcrumb">
-	<?php woocommerce_breadcrumb( array( 'delimiter' => ' <span class="sep">/</span> ' ) ); ?>
+	<?php woocommerce_breadcrumb( array( 
+        'delimiter' => ' <span class="sep">/</span> ',
+        'home'      => '<i class="bi bi-house-door-fill icon-shake" style="font-size: 1.1rem; line-height: 1;"></i>'
+    ) ); ?>
   </nav>
  
   <!-- Title -->
