@@ -1,13 +1,16 @@
 /*
-Theme Name: Clone INMO Huynh Anh
-Theme URI: 
-Author: Antigravity
-Author URI: 
-Description: Custom WordPress theme based on INMO static template. Includes WooCommerce support.
-Version: 1.0.1
+Theme Name: INMO Tech Store
+Theme URI: https://huynh-anh-portfolio.vercel.app/
+Author: Huỳnh Anh Developer
+Author URI: https://huynh-anh-portfolio.vercel.app/
+Description: Theme WordPress thương mại điện tử (WooCommerce) cao cấp được thiết kế độc quyền siêu mượt mà chuẩn phong cách Apple dành cho INMO XR. Tối ưu hóa điểm PageSpeed, tích hợp hệ thống Mini CRM và Email SMTP tự động. Code and Design by Huỳnh Anh Developer.
+Version: 1.0.0
+Tested up to: 6.5
+Requires PHP: 7.4
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: inmo-theme
+Tags: e-commerce, custom-colors, custom-menu, featured-images, woocommerce
 */
 
 /* Core CSS will be enqueued separately or imported here if needed. */
