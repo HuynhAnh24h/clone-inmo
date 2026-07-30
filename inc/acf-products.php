@@ -1,79 +1,279 @@
 <?php
 if( function_exists('acf_add_local_field_group') ):
 
-$fields = array(
-    array(
-        'key' => 'field_custom_note_1',
-        'label' => 'Ghi chú tùy chỉnh 1',
-        'name' => 'custom_note_1',
-        'type' => 'text',
-    ),
-    array(
-        'key' => 'field_custom_note_2',
-        'label' => 'Ghi chú tùy chỉnh 2',
-        'name' => 'custom_note_2',
-        'type' => 'text',
-    ),
+$fields = array();
+
+// ==========================
+// TAB 1: Nội dung chung
+// ==========================
+$fields[] = array(
+    'key' => 'field_tab_general',
+    'label' => 'Nội dung chung',
+    'name' => '',
+    'type' => 'tab',
+    'placement' => 'top',
+    'endpoint' => 0,
 );
-
-// Thêm 5 tính năng (Accordion)
-for ($i = 1; $i <= 5; $i++) {
-    $fields[] = array(
-        'key' => 'field_feature_' . $i . '_title',
-        'label' => 'Tính năng ' . $i . ' (Tiêu đề)',
-        'name' => 'feature_' . $i . '_title',
-        'type' => 'text',
-    );
-    $fields[] = array(
-        'key' => 'field_feature_' . $i . '_body',
-        'label' => 'Tính năng ' . $i . ' (Nội dung)',
-        'name' => 'feature_' . $i . '_body',
-        'type' => 'textarea',
-    );
-}
-
-// Thêm 3 Tabs
-for ($j = 1; $j <= 3; $j++) {
-    $fields[] = array(
-        'key' => 'field_tab_' . $j . '_title',
-        'label' => 'Tab ' . $j . ' (Tiêu đề)',
-        'name' => 'tab_' . $j . '_title',
-        'type' => 'text',
-    );
-    $fields[] = array(
-        'key' => 'field_tab_' . $j . '_content',
-        'label' => 'Tab ' . $j . ' (Nội dung - Hình/Video)',
-        'name' => 'tab_' . $j . '_content',
-        'type' => 'wysiwyg',
-    );
-}
-
-// Giữ lại các trường cũ
 $fields[] = array(
     'key' => 'field_product_banner_image',
-    'label' => 'Ảnh Banner Full Width',
+    'label' => 'Ảnh Banner Lớn (Full Width)',
     'name' => 'product_banner_image',
     'type' => 'image',
     'return_format' => 'url',
+    'instructions' => 'Hình ảnh banner nằm giữa trang (All-Day Style, Non-Stop Power).',
 );
 $fields[] = array(
     'key' => 'field_ergonomic_heading',
-    'label' => 'Tiêu đề Phần Thiết Kế',
+    'label' => 'Tiêu đề phần Thiết kế',
     'name' => 'ergonomic_heading',
     'type' => 'text',
     'default_value' => 'Ergonomic Design for All-Day Comfort',
 );
 $fields[] = array(
     'key' => 'field_ergonomic_subheading',
-    'label' => 'Mô tả phụ Phần Thiết Kế',
+    'label' => 'Mô tả phụ phần Thiết kế',
     'name' => 'ergonomic_subheading',
     'type' => 'text',
     'default_value' => 'Precision crafted for lightweight performance',
 );
 
+// ==========================
+// TAB 2: Tính năng (Accordion)
+// ==========================
+$fields[] = array(
+    'key' => 'field_tab_accordion',
+    'label' => 'Tính năng (Accordion)',
+    'name' => '',
+    'type' => 'tab',
+    'placement' => 'top',
+    'endpoint' => 0,
+);
+for ($i = 1; $i <= 5; $i++) {
+    $fields[] = array(
+        'key' => 'field_feature_' . $i . '_title',
+        'label' => 'Tiêu đề Tính năng ' . $i,
+        'name' => 'feature_' . $i . '_title',
+        'type' => 'text',
+    );
+    $fields[] = array(
+        'key' => 'field_feature_' . $i . '_body',
+        'label' => 'Nội dung Tính năng ' . $i,
+        'name' => 'feature_' . $i . '_body',
+        'type' => 'textarea',
+    );
+}
+
+// ==========================
+// TAB 3: Gallery Thiết kế
+// ==========================
+$fields[] = array(
+    'key' => 'field_tab_gallery',
+    'label' => 'Gallery Thiết kế',
+    'name' => '',
+    'type' => 'tab',
+    'placement' => 'top',
+    'endpoint' => 0,
+);
+
+// Lưới 1 (Nhỏ)
+$fields[] = array(
+    'key' => 'field_feature_sm_data',
+    'label' => 'Lưới ảnh nhỏ (Hàng trên cùng)',
+    'name' => 'feature_sm_data',
+    'type' => 'repeater',
+    'button_label' => 'Thêm ảnh',
+    'layout' => 'table',
+    'sub_fields' => array(
+        array(
+            'key' => 'field_f_sm_img',
+            'label' => 'Hình ảnh',
+            'name' => 'img',
+            'type' => 'image',
+            'return_format' => 'url',
+        ),
+        array(
+            'key' => 'field_f_sm_title',
+            'label' => 'Tiêu đề',
+            'name' => 'title',
+            'type' => 'text',
+        ),
+    ),
+);
+
+// Lưới 2 (Vừa)
+$fields[] = array(
+    'key' => 'field_feature_lg_data_1',
+    'label' => 'Lưới ảnh vừa (Hàng giữa)',
+    'name' => 'feature_lg_data_1',
+    'type' => 'repeater',
+    'button_label' => 'Thêm ảnh',
+    'layout' => 'table',
+    'sub_fields' => array(
+        array(
+            'key' => 'field_f_lg1_img',
+            'label' => 'Hình ảnh',
+            'name' => 'img',
+            'type' => 'image',
+            'return_format' => 'url',
+        ),
+        array(
+            'key' => 'field_f_lg1_title',
+            'label' => 'Tiêu đề',
+            'name' => 'title',
+            'type' => 'text',
+        ),
+    ),
+);
+
+// Lưới 3 (Ngang)
+$fields[] = array(
+    'key' => 'field_feature_lg_data_2',
+    'label' => 'Lưới ảnh ngang (Hàng dưới)',
+    'name' => 'feature_lg_data_2',
+    'type' => 'repeater',
+    'button_label' => 'Thêm ảnh',
+    'layout' => 'table',
+    'sub_fields' => array(
+        array(
+            'key' => 'field_f_lg2_img',
+            'label' => 'Hình ảnh',
+            'name' => 'img',
+            'type' => 'image',
+            'return_format' => 'url',
+        ),
+        array(
+            'key' => 'field_f_lg2_title',
+            'label' => 'Tiêu đề',
+            'name' => 'title',
+            'type' => 'text',
+        ),
+    ),
+);
+
+// ==========================
+// TAB 4: INMO App
+// ==========================
+$fields[] = array(
+    'key' => 'field_tab_app',
+    'label' => 'INMO App',
+    'name' => '',
+    'type' => 'tab',
+    'placement' => 'top',
+    'endpoint' => 0,
+);
+$fields[] = array(
+    'key' => 'field_compatible_models',
+    'label' => 'Dòng máy tương thích',
+    'name' => 'compatible_models',
+    'type' => 'repeater',
+    'button_label' => 'Thêm máy tương thích',
+    'layout' => 'table',
+    'sub_fields' => array(
+        array(
+            'key' => 'field_comp_model_name',
+            'label' => 'Tên máy',
+            'name' => 'model_name',
+            'type' => 'text',
+        ),
+    ),
+);
+
+// ==========================
+// TAB 5: Trải nghiệm (Testimonials)
+// ==========================
+$fields[] = array(
+    'key' => 'field_tab_testimonials',
+    'label' => 'Trải nghiệm (Testimonials)',
+    'name' => '',
+    'type' => 'tab',
+    'placement' => 'top',
+    'endpoint' => 0,
+);
+$fields[] = array(
+    'key' => 'field_testimonials',
+    'label' => 'Đánh giá chuyên gia / Video',
+    'name' => 'testimonials',
+    'type' => 'repeater',
+    'button_label' => 'Thêm đánh giá',
+    'layout' => 'block',
+    'sub_fields' => array(
+        array(
+            'key' => 'field_testi_img',
+            'label' => 'Hình ảnh (Thumbnail)',
+            'name' => 'img',
+            'type' => 'image',
+            'return_format' => 'url',
+            'wrapper' => array('width' => '30%'),
+        ),
+        array(
+            'key' => 'field_testi_name',
+            'label' => 'Tên tác giả',
+            'name' => 'name',
+            'type' => 'text',
+            'wrapper' => array('width' => '25%'),
+        ),
+        array(
+            'key' => 'field_testi_video',
+            'label' => 'Link Video (Youtube/Tiktok...)',
+            'name' => 'video_url',
+            'type' => 'url',
+            'wrapper' => array('width' => '25%'),
+        ),
+        array(
+            'key' => 'field_testi_quote',
+            'label' => 'Trích dẫn / Tiêu đề',
+            'name' => 'quote',
+            'type' => 'textarea',
+            'rows' => 3,
+            'wrapper' => array('width' => '30%'),
+        ),
+    ),
+);
+
+// ==========================
+// TAB 6: Các Tab Tùy chỉnh (Hiện có)
+// ==========================
+$fields[] = array(
+    'key' => 'field_tab_custom',
+    'label' => 'Tab & Ghi chú Tùy chỉnh',
+    'name' => '',
+    'type' => 'tab',
+    'placement' => 'top',
+    'endpoint' => 0,
+);
+$fields[] = array(
+    'key' => 'field_custom_note_1',
+    'label' => 'Ghi chú tùy chỉnh 1',
+    'name' => 'custom_note_1',
+    'type' => 'text',
+);
+$fields[] = array(
+    'key' => 'field_custom_note_2',
+    'label' => 'Ghi chú tùy chỉnh 2',
+    'name' => 'custom_note_2',
+    'type' => 'text',
+);
+
+// Thêm 3 Tabs
+for ($j = 1; $j <= 3; $j++) {
+    $fields[] = array(
+        'key' => 'field_tab_' . $j . '_title',
+        'label' => 'Tiêu đề Custom Tab ' . $j,
+        'name' => 'tab_' . $j . '_title',
+        'type' => 'text',
+    );
+    $fields[] = array(
+        'key' => 'field_tab_' . $j . '_content',
+        'label' => 'Nội dung Custom Tab ' . $j,
+        'name' => 'tab_' . $j . '_content',
+        'type' => 'wysiwyg',
+    );
+}
+
+// Đăng ký Field Group
 acf_add_local_field_group(array(
     'key' => 'group_product_additional_data',
-    'title' => 'Dữ liệu Bổ sung Sản phẩm',
+    'title' => 'Dữ liệu Giao diện Chi tiết Sản phẩm',
     'fields' => $fields,
     'location' => array(
         array(
@@ -91,7 +291,7 @@ acf_add_local_field_group(array(
     'instruction_placement' => 'label',
     'hide_on_screen' => '',
     'active' => true,
-    'description' => '',
+    'description' => 'Quản lý toàn bộ dữ liệu động (Banner, Gallery, Testimonials) trên trang chi tiết sản phẩm.',
 ));
 
 endif;

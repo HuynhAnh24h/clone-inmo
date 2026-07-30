@@ -44,9 +44,62 @@ get_header( 'shop' );
 		.pg-app-downloads { background: #fafafa; padding: 20px; border-radius: 8px; margin-top: 20px; display: flex; justify-content: space-between; align-items: flex-start; }
 		.pg-app-downloads h4 { font-size: 0.95rem; margin-bottom: 10px; font-weight: 600; }
 		.pg-app-downloads ul { margin: 0; padding-left: 20px; font-size: 0.9rem; color: #666; }
+		#testiWrap::-webkit-scrollbar { display: none; }
+		#testiWrap { -ms-overflow-style: none; scrollbar-width: none; cursor: grab; }
+		#testiWrap:active { cursor: grabbing; }
+
+		/* Parallax Banner CSS */
+		.pg-parallax-banner {
+			position: relative;
+			min-height: 100vh;
+			background-size: cover;
+			background-position: center;
+			background-attachment: fixed;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin: 0;
+		}
+		@media (max-width: 768px) {
+			.pg-parallax-banner {
+				/* Tối ưu Mobile: tắt cố định nền để mượt hơn, hoặc vẫn để nếu trình duyệt hỗ trợ tốt */
+				background-attachment: scroll;
+				min-height: 70vh;
+			}
+		}
+		.pg-parallax-content {
+			text-align: center;
+			color: #fff;
+			background: rgba(0, 0, 0, 0.3);
+			padding: 40px 60px;
+			border-radius: 20px;
+			backdrop-filter: blur(8px);
+			-webkit-backdrop-filter: blur(8px);
+		}
+		.pg-parallax-content .pg-eyebrow {
+			color: #fff;
+			font-size: 1.5rem;
+			letter-spacing: 2px;
+			margin-bottom: 20px;
+		}
+		.pg-parallax-content .btn-pg-cta {
+			background: #fff;
+			color: #000;
+			border: none;
+			padding: 15px 40px;
+			border-radius: 40px;
+			font-weight: 600;
+			font-size: 1.2rem;
+			cursor: pointer;
+			transition: transform 0.3s;
+		}
+		.pg-parallax-content .btn-pg-cta:hover {
+			transform: scale(1.05);
+		}
 	</style>
 	<section class="pg-product animate-fade-in">
-		<div class="row g-5">
+		<div class="container-fluid px-3 px-md-5">
+			<div class="row g-5">
 			<div class="col-lg-7">
 				<div class="pg-gallery">
 					<div class="pg-thumbs" id="thumbsWrap">
@@ -133,21 +186,18 @@ get_header( 'shop' );
 		</div>
 	</section>
 
-	<!-- ================= FULL IMAGE BANNER ================= -->
+	<!-- ================= PARALLAX BANNER ================= -->
 	<?php $banner = function_exists('get_field') ? get_field('product_banner_image') : ''; ?>
 	<?php if( $banner ): ?>
-	<div class="pg-banner">
-		<img src="<?php echo esc_url($banner); ?>" alt="Banner" />
+	<div class="pg-parallax-banner" style="background-image: url('<?php echo esc_url($banner); ?>');">
+		<div class="pg-parallax-content">
+			<p class="pg-eyebrow"><?php echo esc_html($product->get_name()); ?></p>
+			<button type="button" class="btn-pg-cta">
+				Xem Cách Hoạt Động <i class="bi bi-arrow-right ms-1"></i>
+			</button>
+		</div>
 	</div>
 	<?php endif; ?>
-
-	<!-- ================= HOW IT WORKS ================= -->
-	<div class="pg-howitworks">
-		<p class="pg-eyebrow">INMO GO3</p>
-		<button type="button" class="btn-pg-cta">
-			Xem Cách Hoạt Động <i class="bi bi-arrow-right ms-1"></i>
-		</button>
-	</div>
 
 	<!-- ================= ERGONOMIC DESIGN (dark) ================= -->
 	<?php 
@@ -155,13 +205,15 @@ get_header( 'shop' );
 		$erg_sub = function_exists('get_field') && get_field('ergonomic_subheading') ? get_field('ergonomic_subheading') : 'Precision crafted for lightweight performance';
 	?>
 	<section class="pg-dark-section">
-		<p class="pg-eyebrow"><?php echo esc_html($product->get_name()); ?></p>
-		<h2 class="pg-dark-heading"><?php echo esc_html($erg_head); ?></h2>
-		<p class="pg-dark-sub"><?php echo esc_html($erg_sub); ?></p>
+		<div class="container">
+			<p class="pg-eyebrow"><?php echo esc_html($product->get_name()); ?></p>
+			<h2 class="pg-dark-heading"><?php echo esc_html($erg_head); ?></h2>
+			<p class="pg-dark-sub"><?php echo esc_html($erg_sub); ?></p>
 
-		<div class="row g-3 mb-3" id="featureSmWrap"></div>
-		<div class="row g-3 mb-3" id="featureLgWrap1"></div>
-		<div class="row g-3" id="featureLgWrap2"></div>
+			<div class="row g-3 mb-3" id="featureSmWrap"></div>
+			<div class="row g-3 mb-3" id="featureLgWrap1"></div>
+			<div class="row g-3" id="featureLgWrap2"></div>
+		</div>
 	</section>
 
 	<!-- ================= READY CTA ================= -->
@@ -198,14 +250,18 @@ get_header( 'shop' );
 				></a>
 			</div>
 		</div>
-		<div class="pg-app__logo"><span>INMO</span></div>
+		<div class="pg-app__logo"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/INMO_LOGO-Black.webp" alt="INMO Logo" style="max-width: 250px; opacity: 0.15;" /></div>
 	</section>
 
 	<!-- ================= TESTIMONIALS ================= -->
 	<section class="pg-testimonials">
-		<h2 class="pg-dark-heading">Đánh Giá Từ Chuyên Gia</h2>
-		<p class="pg-dark-sub">Thiết Kế Tinh Xảo - Hiệu Năng Vượt Trội</p>
-		<div class="row g-3" id="testiWrap"></div>
+		<div class="container">
+			<h2 class="pg-dark-heading">Đánh Giá Từ Chuyên Gia</h2>
+			<p class="pg-dark-sub">Thiết Kế Tinh Xảo - Hiệu Năng Vượt Trội</p>
+		</div>
+		<div class="container-fluid px-0">
+			<div class="row g-3 mx-0 flex-nowrap" id="testiWrap" style="overflow-x: auto; padding-bottom: 20px;"></div>
+		</div>
 	</section>
 
 	<script>

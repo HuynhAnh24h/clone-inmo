@@ -195,25 +195,67 @@ document.addEventListener('DOMContentLoaded', () => {
 	const testiWrap = document.getElementById('testiWrap');
 	if (testiWrap) {
 		let testiData = window.acfProductData && window.acfProductData.testimonials ? window.acfProductData.testimonials : [
-			{ author: 'Tyriel Wood - VR Tech', quote: 'Ý tưởng này nên được sao chép. INMO Go3', image: 'https://placehold.co/300x400/1a1a1a/ffffff?text=Tyriel' },
-			{ author: 'CKid', quote: 'Chiếc kính thông minh thực sự mang lại ý nghĩa | INMO GO3', image: 'https://placehold.co/300x400/1a1a1a/ffffff?text=CKid' },
-			{ author: 'Unbox Therapy', quote: 'Hiểu hầu hết mọi loại ngôn ngữ...', image: 'https://placehold.co/300x400/1a1a1a/ffffff?text=Unbox' },
-			{ author: 'Steven Sullivan', quote: 'Kính thông minh điều hướng giá cả phải chăng nhất', image: 'https://placehold.co/300x400/1a1a1a/ffffff?text=Steven' },
-			{ author: 'Jose Tecnofanatico', quote: "Kính thông minh Inmo Go 2 với Pin tháo rời / Tuyệt vời!", image: 'https://placehold.co/300x400/1a1a1a/ffffff?text=Jose' }
+			{ author: 'Tyriel Wood - VR Tech', quote: 'Ý tưởng này nên được sao chép. INMO Go3', image: 'https://placehold.co/300x400/1a1a1a/ffffff?text=Tyriel', video_url: 'https://youtube.com' },
+			{ author: 'CKid', quote: 'Chiếc kính thông minh thực sự mang lại ý nghĩa | INMO GO3', image: 'https://placehold.co/300x400/1a1a1a/ffffff?text=CKid', video_url: 'https://youtube.com' },
+			{ author: 'Unbox Therapy', quote: 'Hiểu hầu hết mọi loại ngôn ngữ...', image: 'https://placehold.co/300x400/1a1a1a/ffffff?text=Unbox', video_url: 'https://youtube.com' },
+			{ author: 'Steven Sullivan', quote: 'Kính thông minh điều hướng giá cả phải chăng nhất', image: 'https://placehold.co/300x400/1a1a1a/ffffff?text=Steven', video_url: 'https://youtube.com' },
+			{ author: 'Jose Tecnofanatico', quote: "Kính thông minh Inmo Go 2 với Pin tháo rời / Tuyệt vời!", image: 'https://placehold.co/300x400/1a1a1a/ffffff?text=Jose', video_url: 'https://youtube.com' }
 		];
 		if (!Array.isArray(testiData) || testiData.length === 0) testiData = [];
 		testiData.forEach((t) => {
 			const col = document.createElement('div');
-			col.className = 'col-6 col-md';
+			col.className = 'col-10 col-sm-6 col-md-4 col-lg-3 flex-shrink-0';
 			col.innerHTML = `
-				<div class="pg-testi-card">
+				<a href="${t.video_url || '#'}" target="_blank" class="pg-testi-card" style="display: block; text-decoration: none;">
 					<img src="${t.image || t.img}" alt="${t.author || t.name}">
 					<div class="pg-testi-play"><i class="bi bi-play-fill"></i></div>
-				</div>
+				</a>
 				<div class="pg-testi-name">${t.author || t.name}</div>
 				<div class="pg-testi-quote">${t.quote}</div>
 			`;
 			testiWrap.appendChild(col);
+		});
+
+		// Auto scroll logic (Ticker)
+		let isHovering = false;
+		let isDragging = false;
+		let startX, scrollLeft;
+		let animationFrameId;
+
+		const smoothScroll = () => {
+			if (!isHovering && !isDragging) {
+				testiWrap.scrollLeft += 1;
+				if (testiWrap.scrollLeft >= testiWrap.scrollWidth - testiWrap.clientWidth) {
+					// Duplicate content or reset
+					// For simple ticker, just reset to 0
+					testiWrap.scrollLeft = 0;
+				}
+			}
+			animationFrameId = requestAnimationFrame(smoothScroll);
+		};
+
+		// Start ticker
+		animationFrameId = requestAnimationFrame(smoothScroll);
+		
+		testiWrap.addEventListener('mouseenter', () => isHovering = true);
+		testiWrap.addEventListener('mouseleave', () => {
+			isHovering = false;
+			isDragging = false;
+		});
+
+		// Mouse drag to scroll
+		testiWrap.addEventListener('mousedown', (e) => {
+			isDragging = true;
+			startX = e.pageX - testiWrap.offsetLeft;
+			scrollLeft = testiWrap.scrollLeft;
+		});
+		testiWrap.addEventListener('mouseup', () => isDragging = false);
+		testiWrap.addEventListener('mousemove', (e) => {
+			if (!isDragging) return;
+			e.preventDefault();
+			const x = e.pageX - testiWrap.offsetLeft;
+			const walk = (x - startX) * 2; // Scroll speed multiplier
+			testiWrap.scrollLeft = scrollLeft - walk;
 		});
 	}
 

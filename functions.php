@@ -57,7 +57,9 @@ function inmo_theme_scripts() {
 
 	// Main theme styles
 	wp_enqueue_style( 'inmo-theme-style', get_stylesheet_uri(), array(), wp_get_theme()->get( 'Version' ) );
-	wp_enqueue_style( 'inmo-theme-main-style', get_template_directory_uri() . '/assets/css/style.css', array(), wp_get_theme()->get( 'Version' ) );
+	wp_enqueue_style( 'inmo-bootstrap-style', get_template_directory_uri() . '/assets/css/bootstrap.min.css', array(), '5.3' );
+	wp_enqueue_style( 'inmo-theme-core-style', get_template_directory_uri() . '/assets/css/theme-core.css', array('inmo-bootstrap-style'), wp_get_theme()->get( 'Version' ) );
+	wp_enqueue_style( 'inmo-theme-main-style', get_template_directory_uri() . '/assets/css/style.css', array('inmo-theme-core-style'), wp_get_theme()->get( 'Version' ) );
 
 	// Scripts
 	wp_enqueue_script( 'bootstrap-js', get_template_directory_uri() . '/assets/js/bootstrap.min.js', array(), '5.3', true );
@@ -65,6 +67,49 @@ function inmo_theme_scripts() {
 	wp_enqueue_script( 'inmo-theme-main-js', get_template_directory_uri() . '/assets/js/theme.js', array('splide-js'), wp_get_theme()->get( 'Version' ), true );
 }
 add_action( 'wp_enqueue_scripts', 'inmo_theme_scripts' );
+
+/**
+ * Add defer to JS scripts for performance
+ */
+function inmo_defer_scripts( $tag, $handle, $src ) {
+    $defer_scripts = array( 'bootstrap-js', 'splide-js', 'inmo-theme-main-js' );
+    if ( in_array( $handle, $defer_scripts ) ) {
+        return '<script src="' . esc_url($src) . '" defer="defer" type="text/javascript"></script>' . "\n";
+    }
+    return $tag;
+}
+add_filter( 'script_loader_tag', 'inmo_defer_scripts', 10, 3 );
+
+/**
+ * Remove WP Bloat for Performance
+ */
+function inmo_disable_wp_bloat() {
+    // Remove Emoji
+    remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+    remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
+    remove_action( 'wp_print_styles', 'print_emoji_styles' );
+    remove_action( 'admin_print_styles', 'print_emoji_styles' );
+    remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
+    remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
+    remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
+    
+    // Remove oEmbed
+    wp_deregister_script('wp-embed');
+    
+    // Remove classic theme styles
+    wp_dequeue_style( 'classic-theme-styles' );
+}
+add_action( 'init', 'inmo_disable_wp_bloat' );
+add_action( 'wp_enqueue_scripts', 'inmo_disable_wp_bloat', 100 );
+
+/**
+ * Add Preconnect to CDN
+ */
+function inmo_preconnect_cdn() {
+    echo '<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>' . "\n";
+    echo '<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">' . "\n";
+}
+add_action('wp_head', 'inmo_preconnect_cdn', 1);
 
 /**
  * Add WooCommerce Cart fragments for AJAX cart update
