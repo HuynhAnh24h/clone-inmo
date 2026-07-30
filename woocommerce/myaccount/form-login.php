@@ -108,11 +108,11 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
     </div>
     
     <div class="theme-shopify-login-footer-text mt-5">
-        Bằng cách tiếp tục, bạn đồng ý với <a href="#">Điều khoản dịch vụ</a> của chúng tôi
+        Bằng cách tiếp tục, bạn đồng ý với <a href="<?php echo esc_url( home_url( '/dieu-khoan-dich-vu/' ) ); ?>">Điều khoản dịch vụ</a> của chúng tôi
     </div>
 
     <div class="theme-shopify-login-bottom-links mt-2">
-        <a href="#">Chính sách bảo mật</a>
+        <a href="<?php echo esc_url( home_url( '/chinh-sach-bao-mat/' ) ); ?>">Chính sách bảo mật</a>
     </div>
 </div>
 

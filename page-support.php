@@ -216,13 +216,13 @@ $supportProductsData = [
             
             <div class="theme-sp-topbar-right">
                 <div class="theme-sp-socials">
-                    <a href="#" aria-label="Email"><i class="bi bi-envelope"></i></a>
-                    <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-                    <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-                    <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
-                    <a href="#" aria-label="Discord"><i class="bi bi-discord"></i></a>
-                    <a href="#" aria-label="Reddit"><i class="bi bi-reddit"></i></a>
-                    <a href="#" aria-label="X"><i class="bi bi-twitter-x"></i></a>
+                    <a href="mailto:support@inmoxr.com" aria-label="Email"><i class="bi bi-envelope"></i></a>
+                    <a href="https://facebook.com/inmo" target="_blank" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="https://instagram.com/inmo" target="_blank" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                    <a href="https://youtube.com/inmo" target="_blank" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+                    <a href="https://discord.com" target="_blank" aria-label="Discord"><i class="bi bi-discord"></i></a>
+                    <a href="https://reddit.com" target="_blank" aria-label="Reddit"><i class="bi bi-reddit"></i></a>
+                    <a href="https://x.com/inmo" target="_blank" aria-label="X"><i class="bi bi-twitter-x"></i></a>
                 </div>
 
                 <div class="theme-sp-topbar-divider"></div>
@@ -276,13 +276,13 @@ $supportProductsData = [
             <h2>Bạn Cần Hỗ trợ Thêm?</h2>
             <p>Chúng tôi luôn sẵn sàng hỗ trợ bạn bất cứ lúc nào.</p>
             <div class="theme-sp-contact-options">
-                <a href="#" class="theme-sp-contact-item">
+                <a href="mailto:support@inmoxr.com" class="theme-sp-contact-item">
                     <div class="theme-sp-contact-icon">
                         <i class="bi bi-headset"></i>
                     </div>
                     <span>Gửi Email</span>
                 </a>
-                <a href="#" class="theme-sp-contact-item">
+                <a href="<?php echo esc_url( home_url( '/lien-he/' ) ); ?>" class="theme-sp-contact-item">
                     <div class="theme-sp-contact-icon">
                         <i class="bi bi-chat-dots"></i>
                     </div>

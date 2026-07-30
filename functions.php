@@ -216,3 +216,243 @@ function inmo_custom_woocommerce_breadcrumbs() {
         'home'        => '<i class="bi bi-house-door-fill icon-shake" style="font-size: 1.1rem; line-height: 1;"></i>',
     );
 }
+
+/**
+ * Thêm Custom Tabs cho WooCommerce từ ACF
+ */
+add_filter( 'woocommerce_product_tabs', 'inmo_custom_product_tabs' );
+function inmo_custom_product_tabs( $tabs ) {
+    if ( ! function_exists('get_field') ) return $tabs;
+
+    for ( $i = 1; $i <= 3; $i++ ) {
+        $tab_title = get_field( 'tab_' . $i . '_title' );
+        $tab_content = get_field( 'tab_' . $i . '_content' );
+
+        if ( $tab_title && $tab_content ) {
+            $tabs['custom_tab_' . $i] = array(
+                'title'    => esc_html( $tab_title ),
+                'priority' => 50 + $i,
+                'callback' => 'inmo_custom_tab_content_callback',
+                'tab_index' => $i
+            );
+        }
+    }
+    return $tabs;
+}
+
+function inmo_custom_tab_content_callback( $key, $tab ) {
+    if ( ! function_exists('get_field') ) return;
+    $index = isset($tab['tab_index']) ? $tab['tab_index'] : 1;
+    $content = get_field( 'tab_' . $index . '_content' );
+    echo '<div class="custom-tab-content">';
+    echo wp_kses_post( $content );
+    echo '</div>';
+}
+
+if ( file_exists( get_template_directory() . '/inc/crm-mini.php' ) ) {
+    require_once get_template_directory() . '/inc/crm-mini.php';
+}
+
+/**
+ * Hàm tạo Email Template Đen/Trắng
+ */
+function inmo_get_email_template($content) {
+    $logo_id = get_theme_mod( 'custom_logo' );
+    $logo_url = $logo_id ? wp_get_attachment_image_url( $logo_id, 'full' ) : '';
+    $logo_html = $logo_url ? '<img src="'.esc_url($logo_url).'" alt="INMO Logo" style="max-height: 40px;">' : '<h2 style="color:#000;">INMO</h2>';
+    $content_html = nl2br(esc_html($content));
+    
+    return '
+    <div style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 40px 0;">
+        <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 40px; border: 1px solid #e0e0e0; border-radius: 4px;">
+            <div style="margin-bottom: 30px; text-align: center; border-bottom: 2px solid #000000; padding-bottom: 20px;">
+                ' . $logo_html . '
+            </div>
+            <div style="font-size: 16px; line-height: 1.6; color: #000000; text-align: left;">
+                ' . $content_html . '
+            </div>
+            <div style="margin-top: 40px; text-align: center;">
+                <a href="' . home_url() . '" style="display: inline-block; background-color: #000000; color: #ffffff; text-decoration: none; padding: 14px 32px; border-radius: 50px; font-weight: bold; font-size: 15px;">Ghé thăm Website</a>
+            </div>
+            <div style="margin-top: 40px; font-size: 12px; color: #666666; border-top: 1px solid #eeeeee; padding-top: 20px; text-align: center;">
+                Bạn nhận được email này từ hệ thống của ' . get_bloginfo('name') . '.<br>Bản quyền &copy; ' . date('Y') . ' INMO.
+            </div>
+        </div>
+    </div>';
+}
+
+/**
+ * Xử lý AJAX Form Liên hệ
+ */
+add_action('wp_ajax_inmo_submit_contact_form', 'inmo_handle_contact_form');
+add_action('wp_ajax_nopriv_inmo_submit_contact_form', 'inmo_handle_contact_form');
+function inmo_handle_contact_form() {
+    $name = isset($_POST['name']) ? sanitize_text_field($_POST['name']) : '';
+    $email = isset($_POST['email']) ? sanitize_email($_POST['email']) : '';
+    $phone = isset($_POST['phone']) ? sanitize_text_field($_POST['phone']) : '';
+    $subject = isset($_POST['subject']) ? sanitize_text_field($_POST['subject']) : 'Không có chủ đề';
+    $message = isset($_POST['message']) ? sanitize_textarea_field($_POST['message']) : '';
+
+    if (empty($name) || empty($email) || empty($message)) {
+        wp_send_json_error('Vui lòng điền đầy đủ các trường bắt buộc.');
+    }
+
+    // 0. Lưu vào CRM Mini Database
+    $post_id = wp_insert_post(array(
+        'post_title'   => $name,
+        'post_type'    => 'inmo_contact',
+        'post_status'  => 'publish'
+    ));
+
+    if ( $post_id && ! is_wp_error( $post_id ) ) {
+        update_post_meta( $post_id, 'email', $email );
+        update_post_meta( $post_id, 'phone', $phone );
+        update_post_meta( $post_id, 'subject', $subject );
+        update_post_meta( $post_id, 'message', $message );
+    }
+
+    $admin_email = get_option('admin_email');
+    $mail_subject = "Liên hệ mới từ website: " . $subject;
+    
+    $mail_body = "Bạn vừa nhận được một liên hệ mới từ website.\n\n";
+    $mail_body .= "Họ và tên: $name\n";
+    $mail_body .= "Email: $email\n";
+    $mail_body .= "Số điện thoại: $phone\n";
+    $mail_body .= "Chủ đề: $subject\n";
+    $mail_body .= "Nội dung:\n$message\n";
+
+    $headers = array('Content-Type: text/html; charset=UTF-8');
+    $headers[] = 'Reply-To: ' . $name . ' <' . $email . '>';
+
+    $admin_html = inmo_get_email_template($mail_body);
+    $sent = wp_mail($admin_email, $mail_subject, $admin_html, $headers);
+
+    // Gửi Auto-reply cho Khách hàng
+    $customer_subject = "Đã nhận thông tin liên hệ - " . get_bloginfo('name');
+    $customer_body = "Xin chào $name,\n\n";
+    $customer_body .= "Cảm ơn bạn đã liên hệ với chúng tôi. Hệ thống đã ghi nhận thông tin của bạn với nội dung:\n\n";
+    $customer_body .= "Chủ đề: $subject\n";
+    $customer_body .= "Nội dung: $message\n\n";
+    $customer_body .= "Đội ngũ chăm sóc khách hàng của chúng tôi sẽ xem xét và phản hồi lại cho bạn trong thời gian sớm nhất.\n\n";
+    $customer_body .= "Trân trọng,\nĐội ngũ " . get_bloginfo('name') . ".";
+    
+    $customer_html = inmo_get_email_template($customer_body);
+    wp_mail($email, $customer_subject, $customer_html, array('Content-Type: text/html; charset=UTF-8'));
+
+    if ($sent) {
+        wp_send_json_success('Gửi tin nhắn thành công, chúng tôi sẽ liên hệ lại sớm nhất.');
+    } else {
+        wp_send_json_error('Có lỗi xảy ra khi gửi email. Vui lòng thử lại sau.');
+    }
+}
+
+/**
+ * Xử lý AJAX Form Đăng ký nhận mã ưu đãi
+ */
+add_action('wp_ajax_inmo_submit_discount_form', 'inmo_handle_discount_form');
+add_action('wp_ajax_nopriv_inmo_submit_discount_form', 'inmo_handle_discount_form');
+function inmo_handle_discount_form() {
+    $email = isset($_POST['email']) ? sanitize_email($_POST['email']) : '';
+
+    if (empty($email) || !is_email($email)) {
+        wp_send_json_error('Vui lòng nhập một địa chỉ email hợp lệ.');
+    }
+
+    // 0. Lưu vào CRM Mini Database
+    wp_insert_post(array(
+        'post_title'   => $email,
+        'post_type'    => 'inmo_discount',
+        'post_status'  => 'publish'
+    ));
+
+    $admin_email = get_option('admin_email');
+    
+    // 1. Gửi thông báo cho Admin
+    $admin_subject = "Đăng ký nhận mã ưu đãi mới";
+    $admin_body = "Có một khách hàng vừa đăng ký nhận mã ưu đãi.\nEmail: $email\n";
+    wp_mail($admin_email, $admin_subject, inmo_get_email_template($admin_body), array('Content-Type: text/html; charset=UTF-8'));
+
+    // Lấy mã ưu đãi từ cấu hình ACF (trang chủ)
+    $front_page_id = get_option('page_on_front');
+    $discount_code = function_exists('get_field') ? get_field('discount_code_send', $front_page_id) : 'WELCOME10';
+    if (!$discount_code) $discount_code = 'WELCOME10';
+
+    // 2. Gửi Auto-reply cho Khách hàng
+    $customer_subject = "Mã ưu đãi đặc biệt từ INMO";
+    $customer_body = "Cảm ơn bạn đã đăng ký nhận thông tin từ INMO.\n\n";
+    $customer_body .= "Đây là mã ưu đãi của bạn để sử dụng khi mua hàng:\n";
+    $customer_body .= "MÃ ƯU ĐÃI: " . $discount_code . "\n\n";
+    $customer_body .= "Trân trọng,\nĐội ngũ INMO.";
+
+    $headers = array('Content-Type: text/html; charset=UTF-8');
+    $customer_html = inmo_get_email_template($customer_body);
+    
+    $sent = wp_mail($email, $customer_subject, $customer_html, $headers);
+
+    if ($sent) {
+        wp_send_json_success('Đăng ký thành công! Vui lòng kiểm tra email (kể cả hộp thư rác) để nhận mã ưu đãi.');
+    } else {
+        // Fallback in case mail fails to send, still show success so they aren't stuck, or show error
+        wp_send_json_error('Có lỗi xảy ra. Hãy chắc chắn cấu hình SMTP của website đang hoạt động.');
+    }
+}
+
+/**
+ * Xử lý AJAX Gửi Email Hàng Loạt (Bulk Email)
+ */
+add_action('wp_ajax_inmo_send_bulk_email_batch', 'inmo_handle_bulk_email_batch');
+function inmo_handle_bulk_email_batch() {
+    if ( ! current_user_can( 'manage_options' ) ) {
+        wp_send_json_error( 'Bạn không có quyền thực hiện thao tác này.' );
+    }
+
+    $offset = isset($_POST['offset']) ? intval($_POST['offset']) : 0;
+    $subject = isset($_POST['subject']) ? sanitize_text_field($_POST['subject']) : 'Ưu đãi từ INMO';
+    $content = isset($_POST['content']) ? sanitize_textarea_field($_POST['content']) : '';
+    
+    $batch_size = 50;
+
+    // Lấy tổng số người đăng ký
+    $total_query = new WP_Query(array(
+        'post_type' => 'inmo_discount',
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'fields' => 'ids'
+    ));
+    $total_emails = $total_query->found_posts;
+
+    // Lấy 50 người của đợt này
+    $batch_query = new WP_Query(array(
+        'post_type' => 'inmo_discount',
+        'post_status' => 'publish',
+        'posts_per_page' => $batch_size,
+        'offset' => $offset,
+    ));
+
+    if ( ! $batch_query->have_posts() ) {
+        wp_send_json_success(array('done' => true, 'total' => $total_emails, 'sent' => $total_emails));
+    }
+
+    // Build HTML Template
+    $html_body = inmo_get_email_template($content);
+
+    $headers = array('Content-Type: text/html; charset=UTF-8');
+    
+    // Gửi mail cho từng người trong đợt này
+    foreach ( $batch_query->posts as $post ) {
+        $to_email = $post->post_title;
+        if ( is_email( $to_email ) ) {
+            wp_mail( $to_email, $subject, $html_body, $headers );
+        }
+    }
+
+    $new_offset = $offset + $batch_size;
+    $done = ($new_offset >= $total_emails);
+
+    wp_send_json_success(array(
+        'done' => $done,
+        'total' => $total_emails,
+        'sent' => min($new_offset, $total_emails),
+        'next_offset' => $new_offset
+    ));
+}

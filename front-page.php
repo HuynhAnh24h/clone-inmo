@@ -61,13 +61,14 @@ echo '<script>
 	<p class="theme-discount-subtext">
 		Nhận thông tin mới nhất từ ​​INMO.
 	</p>
-	<form class="theme-discount-form" onsubmit="return false;">
+	<form id="discountFormHome" class="theme-discount-form">
 		<div class="theme-discount-email-pill d-flex align-items-center">
-		<input type="email" class="theme-email-input" placeholder="Nhập email của bạn" required autocomplete="email" />
+		<input type="email" class="theme-email-input" name="email" placeholder="Nhập email của bạn" required autocomplete="email" />
 		<button type="submit" class="theme-discount-email-submit" aria-label="Gửi email">
 			<i class="bi bi-arrow-right"></i>
 		</button>
 		</div>
+		<div class="discountResponse" style="display:none; margin-top: 15px; font-size: 0.95rem;"></div>
 	</form>
 	</div>
 </section>

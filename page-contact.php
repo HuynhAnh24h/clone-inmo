@@ -44,9 +44,11 @@ get_header();
  
         <button type="submit" class="theme-ct-submit">Gửi tin nhắn</button>
  
+        <div id="contactResponse" style="display:none; margin-top: 15px; padding: 10px; border-radius: 8px; font-weight: 500;"></div>
+
         <p class="theme-ct-disclaimer">
           Trang web này được bảo vệ bởi hCaptcha và tuân theo
-          <a href="#">Chính sách bảo mật</a> cũng như <a href="#">Điều khoản dịch vụ</a> của hCaptcha.
+          <a href="<?php echo esc_url( home_url( '/chinh-sach-bao-mat/' ) ); ?>">Chính sách bảo mật</a> cũng như <a href="<?php echo esc_url( home_url( '/dieu-khoan-dich-vu/' ) ); ?>">Điều khoản dịch vụ</a> của hCaptcha.
         </p>
       </form>
     </div>
@@ -70,11 +72,11 @@ get_header();
       <div class="theme-ct-side-block">
         <p class="theme-ct-side-label">Theo dõi chúng tôi</p>
         <div class="theme-ct-social">
-          <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-          <a href="#" aria-label="X"><i class="bi bi-twitter-x"></i></a>
-          <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-          <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
-          <a href="#" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+          <a href="https://facebook.com/inmo" target="_blank" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          <a href="https://x.com/inmo" target="_blank" aria-label="X"><i class="bi bi-twitter-x"></i></a>
+          <a href="https://instagram.com/inmo" target="_blank" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          <a href="https://youtube.com/inmo" target="_blank" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+          <a href="https://tiktok.com/@inmo" target="_blank" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
         </div>
       </div>
  

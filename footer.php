@@ -8,28 +8,28 @@
 			<div class="col-md-4">
 			<p class="theme-footer-text-heading">Sản phẩm</p>
 			<ul>
-				<li class="theme-footer-link"><a href="#">INMO GO3</a></li>
-				<li class="theme-footer-link"><a href="#">INMO Air3</a></li>
+				<li class="theme-footer-link"><a href="<?php echo esc_url( home_url( '/inmo-go3/' ) ); ?>">INMO GO3</a></li>
+				<li class="theme-footer-link"><a href="<?php echo esc_url( home_url( '/inmo-air3/' ) ); ?>">INMO Air3</a></li>
 			</ul>
 			</div>
 			<div class="col-md-4">
 			<p class="theme-footer-text-heading">Thương hiệu</p>
 			<ul>
-				<li class="theme-footer-link"><a href="#">Về chúng tôi</a></li>
-				<li class="theme-footer-link"><a href="#">Liên hệ</a></li>
-				<li class="theme-footer-link"><a href="#">Đại lý phân phối</a></li>
-				<li class="theme-footer-link"><a href="#">Tin tức</a></li>
-				<li class="theme-footer-link"><a href="#">Bộ phương tiện</a></li>
+				<li class="theme-footer-link"><a href="<?php echo esc_url( home_url( '/ve-chung-toi/' ) ); ?>">Về chúng tôi</a></li>
+				<li class="theme-footer-link"><a href="<?php echo esc_url( home_url( '/lien-he/' ) ); ?>">Liên hệ</a></li>
+				<li class="theme-footer-link"><a href="<?php echo esc_url( home_url( '/dai-ly-phan-phoi/' ) ); ?>">Đại lý phân phối</a></li>
+				<li class="theme-footer-link"><a href="<?php echo esc_url( home_url( '/tin-tuc/' ) ); ?>">Tin tức</a></li>
+				<li class="theme-footer-link"><a href="<?php echo esc_url( home_url( '/bo-phuong-tien/' ) ); ?>">Bộ phương tiện</a></li>
 			</ul>
 			</div>
 			<div class="col-md-4">
 			<p class="theme-footer-text-heading">Hỗ trợ</p>
 			<ul>
-				<li class="theme-footer-link"><a href="#">Trung tâm trợ giúp thông minh</a></li>
-				<li class="theme-footer-link"><a href="#">Tải ứng dụng & Hướng dẫn</a></li>
-				<li class="theme-footer-link"><a href="#">Cảnh báo an toàn sức khỏe INMO Air3</a></li>
-				<li class="theme-footer-link"><a href="#">Bảo hành</a></li>
-				<li class="theme-footer-link"><a href="#">Phương thức thanh toán</a></li>
+				<li class="theme-footer-link"><a href="<?php echo esc_url( home_url( '/trung-tam-tro-giup-thong-minh/' ) ); ?>">Trung tâm trợ giúp thông minh</a></li>
+				<li class="theme-footer-link"><a href="<?php echo esc_url( home_url( '/tai-ung-dung-va-huong-dan/' ) ); ?>">Tải ứng dụng & Hướng dẫn</a></li>
+				<li class="theme-footer-link"><a href="<?php echo esc_url( home_url( '/canh-bao-an-toan-suc-khoe/' ) ); ?>">Cảnh báo an toàn sức khỏe INMO Air3</a></li>
+				<li class="theme-footer-link"><a href="<?php echo esc_url( home_url( '/bao-hanh/' ) ); ?>">Bảo hành</a></li>
+				<li class="theme-footer-link"><a href="<?php echo esc_url( home_url( '/phuong-thuc-thanh-toan/' ) ); ?>">Phương thức thanh toán</a></li>
 			</ul>
 			</div>
 		</div>
@@ -59,11 +59,11 @@
 			</li>
 		</ul>
 		<div class="d-flex justify-content-start align-items-center mt-4 gap-3">
-			<a href="#" class="theme-footer-social-icon"><i class="bi bi-facebook"></i></a>
-			<a href="#" class="theme-footer-social-icon"><i class="bi bi-twitter-x"></i></a>
-			<a href="#" class="theme-footer-social-icon"><i class="bi bi-instagram"></i></a>
-			<a href="#" class="theme-footer-social-icon"><i class="bi bi-youtube"></i></a>
-			<a href="#" class="theme-footer-social-icon"><i class="bi bi-tiktok"></i></a>
+			<a href="https://facebook.com/inmo" target="_blank" class="theme-footer-social-icon"><i class="bi bi-facebook"></i></a>
+			<a href="https://x.com/inmo" target="_blank" class="theme-footer-social-icon"><i class="bi bi-twitter-x"></i></a>
+			<a href="https://instagram.com/inmo" target="_blank" class="theme-footer-social-icon"><i class="bi bi-instagram"></i></a>
+			<a href="https://youtube.com/inmo" target="_blank" class="theme-footer-social-icon"><i class="bi bi-youtube"></i></a>
+			<a href="https://tiktok.com/@inmo" target="_blank" class="theme-footer-social-icon"><i class="bi bi-tiktok"></i></a>
 		</div>
 		</div>
 		</div>
@@ -80,12 +80,12 @@
 		</p>
 		<p class="theme-footer-bottom-text mb-2">© <?php echo date('Y'); ?> INMO.</p>
 		<ul class="d-flex flex-wrap justify-content-start align-items-center gap-3 mt-3" style="list-style: none; padding: 0;">
-			<li><a href="#" class="theme-footer-bottom-link">Chính sách hoàn tiền</a></li>
-			<li><a href="#" class="theme-footer-bottom-link">Chính sách bảo mật</a></li>
-			<li><a href="#" class="theme-footer-bottom-link">Điều khoản dịch vụ</a></li>
-			<li><a href="#" class="theme-footer-bottom-link">Chính sách vận chuyển</a></li>
-			<li><a href="#" class="theme-footer-bottom-link">Thông tin liên hệ</a></li>
-			<li><a href="#" class="theme-footer-bottom-link">Thông báo pháp lý</a></li>
+			<li><a href="<?php echo esc_url( home_url( '/chinh-sach-hoan-tien/' ) ); ?>" class="theme-footer-bottom-link">Chính sách hoàn tiền</a></li>
+			<li><a href="<?php echo esc_url( home_url( '/chinh-sach-bao-mat/' ) ); ?>" class="theme-footer-bottom-link">Chính sách bảo mật</a></li>
+			<li><a href="<?php echo esc_url( home_url( '/dieu-khoan-dich-vu/' ) ); ?>" class="theme-footer-bottom-link">Điều khoản dịch vụ</a></li>
+			<li><a href="<?php echo esc_url( home_url( '/chinh-sach-van-chuyen/' ) ); ?>" class="theme-footer-bottom-link">Chính sách vận chuyển</a></li>
+			<li><a href="<?php echo esc_url( home_url( '/thong-tin-lien-he/' ) ); ?>" class="theme-footer-bottom-link">Thông tin liên hệ</a></li>
+			<li><a href="<?php echo esc_url( home_url( '/thong-bao-phap-ly/' ) ); ?>" class="theme-footer-bottom-link">Thông báo pháp lý</a></li>
 		</ul>
 		</div>
 		<div class="theme-footer-box d-flex justify-content-center">
@@ -119,9 +119,10 @@
 				<div class="theme-promo-text">
 					<h3>Ưu đãi giới hạn giảm 100 USD<br>Kính INMO GO3</h3>
 					<p>Tiết kiệm cho đơn hàng đầu tiên và nhận các ưu đãi độc quyền qua email</p>
-					<form class="theme-promo-form" onsubmit="return false;">
-						<input type="email" placeholder="Nhập email của bạn" required>
-						<button type="submit">Tiếp tục</button>
+					<form id="discountFormFooter" class="theme-promo-form">
+						<input type="email" name="email" class="theme-promo-input" placeholder="Nhập email của bạn" required />
+						<button type="submit" class="theme-promo-btn"><i class="bi bi-arrow-right"></i></button>
+						<div class="discountResponse" style="display:none; width:100%; margin-top: 10px; font-size: 0.85rem; color: #fff;"></div>
 					</form>
 				</div>
 				<div class="theme-promo-logo d-none d-md-flex">

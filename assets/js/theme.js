@@ -287,3 +287,87 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	}
 });
+// ================= AJAX FORMS =================
+document.addEventListener('DOMContentLoaded', function() {
+    var ajaxurl = (typeof inmo_ajax !== 'undefined') ? inmo_ajax.ajax_url : '/wp-admin/admin-ajax.php';
+
+    // 1. Contact Form
+    var contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            var btn = contactForm.querySelector('button[type="submit"]');
+            var res = document.getElementById('contactResponse');
+            btn.innerHTML = 'Đang gửi...';
+            btn.disabled = true;
+
+            var formData = new FormData(contactForm);
+            formData.append('action', 'inmo_submit_contact_form');
+
+            fetch(ajaxurl, {
+                method: 'POST',
+                body: formData
+            }).then(response => response.json()).then(data => {
+                res.style.display = 'block';
+                if (data.success) {
+                    res.style.backgroundColor = '#e6f4ea';
+                    res.style.color = '#137333';
+                    res.innerHTML = data.data;
+                    contactForm.reset();
+                } else {
+                    res.style.backgroundColor = '#fce8e6';
+                    res.style.color = '#c5221f';
+                    res.innerHTML = data.data;
+                }
+            }).catch(error => {
+                res.style.display = 'block';
+                res.style.backgroundColor = '#fce8e6';
+                res.style.color = '#c5221f';
+                res.innerHTML = 'Lỗi kết nối. Vui lòng thử lại sau.';
+            }).finally(() => {
+                btn.innerHTML = 'Gửi tin nhắn';
+                btn.disabled = false;
+            });
+        });
+    }
+
+    // 2. Discount Forms
+    var discountForms = [document.getElementById('discountFormHome'), document.getElementById('discountFormFooter')];
+    discountForms.forEach(function(form) {
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                var btn = form.querySelector('button[type="submit"]');
+                var res = form.querySelector('.discountResponse');
+                var originalBtnHtml = btn.innerHTML;
+                btn.innerHTML = '<i class="bi bi-hourglass-split"></i>';
+                btn.disabled = true;
+
+                var formData = new FormData(form);
+                formData.append('action', 'inmo_submit_discount_form');
+
+                fetch(ajaxurl, {
+                    method: 'POST',
+                    body: formData
+                }).then(response => response.json()).then(data => {
+                    res.style.display = 'block';
+                    if (data.success) {
+                        res.style.color = '#28a745'; // Green for success
+                        res.innerHTML = data.data;
+                        form.reset();
+                    } else {
+                        res.style.color = '#dc3545'; // Red for error
+                        res.innerHTML = data.data;
+                    }
+                }).catch(error => {
+                    res.style.display = 'block';
+                    res.style.color = '#dc3545';
+                    res.innerHTML = 'Lỗi kết nối. Vui lòng thử lại sau.';
+                }).finally(() => {
+                    btn.innerHTML = originalBtnHtml;
+                    btn.disabled = false;
+                });
+            });
+        }
+    });
+});
