@@ -94,6 +94,100 @@ function inmo_contact_details_callback( $post ) {
     <?php
 }
 
+// Xử lý Form Liên Hệ qua AJAX
+add_action('wp_ajax_inmo_submit_contact_form', 'inmo_handle_contact_form_submission');
+add_action('wp_ajax_nopriv_inmo_submit_contact_form', 'inmo_handle_contact_form_submission');
+function inmo_handle_contact_form_submission() {
+    $name    = isset($_POST['name']) ? sanitize_text_field($_POST['name']) : '';
+    $email   = isset($_POST['email']) ? sanitize_email($_POST['email']) : '';
+    $phone   = isset($_POST['phone']) ? sanitize_text_field($_POST['phone']) : '';
+    $subject = isset($_POST['subject']) ? sanitize_text_field($_POST['subject']) : 'Không xác định';
+    $message = isset($_POST['message']) ? sanitize_textarea_field($_POST['message']) : '';
+
+    if ( empty($name) || empty($email) || empty($message) ) {
+        wp_send_json_error('Vui lòng điền đầy đủ Họ Tên, Email và Nội dung.');
+    }
+
+    if ( !is_email($email) ) {
+        wp_send_json_error('Địa chỉ email không hợp lệ.');
+    }
+
+    // Lưu vào CPT 'inmo_contact'
+    $post_data = array(
+        'post_title'   => $name,
+        'post_type'    => 'inmo_contact',
+        'post_status'  => 'publish',
+    );
+    $post_id = wp_insert_post($post_data);
+
+    if ( is_wp_error($post_id) ) {
+        wp_send_json_error('Lỗi hệ thống. Không thể lưu tin nhắn.');
+    }
+
+    update_post_meta($post_id, 'email', $email);
+    update_post_meta($post_id, 'phone', $phone);
+    update_post_meta($post_id, 'subject', $subject);
+    update_post_meta($post_id, 'message', $message);
+
+    // Gửi Email tự động xác nhận cho khách (Auto-reply)
+    $to = $email;
+    $mail_subject = 'Xác nhận: Chúng tôi đã nhận được liên hệ của bạn';
+    
+    // Giao diện Email thông báo (Apple-style)
+    ob_start();
+    ?>
+    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f5f5f7; padding: 40px 20px; text-align: center;">
+        <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 18px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.06); text-align: left;">
+            
+            <!-- Header -->
+            <div style="background-color: #ffffff; padding: 30px; text-align: center; border-bottom: 1px solid #e5e5ea;">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/INMO_LOGO-Black.webp" alt="INMO" style="height: 30px; margin-bottom: 0;">
+            </div>
+
+            <!-- Body -->
+            <div style="padding: 40px;">
+                <h2 style="margin-top: 0; font-size: 24px; font-weight: 600; color: #1d1d1f; text-align: center;">Đã tiếp nhận yêu cầu</h2>
+                
+                <p style="font-size: 16px; color: #515154; line-height: 1.5; margin-bottom: 20px;">
+                    Xin chào <strong><?php echo esc_html($name); ?></strong>,<br><br>
+                    Cảm ơn bạn đã liên hệ với INMO. Chúng tôi đã nhận được thông tin của bạn với chủ đề: <strong><?php echo esc_html($subject); ?></strong>. Đội ngũ chuyên viên của chúng tôi đang xem xét và sẽ phản hồi cho bạn trong thời gian sớm nhất.
+                </p>
+
+                <div style="background-color: #f5f5f7; border-radius: 12px; padding: 20px; margin: 30px 0;">
+                    <p style="margin: 0 0 10px 0; font-size: 14px; color: #86868b; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Nội dung tin nhắn:</p>
+                    <p style="margin: 0; font-size: 15px; color: #1d1d1f; line-height: 1.5; font-style: italic;">
+                        "<?php echo nl2br(esc_html($message)); ?>"
+                    </p>
+                </div>
+
+                <!-- CTA Button -->
+                <div style="text-align: center; margin-top: 40px;">
+                    <a href="<?php echo esc_url( wc_get_page_permalink( 'shop' ) ); ?>" style="display: inline-block; background-color: #000000; color: #ffffff; text-decoration: none; font-size: 16px; font-weight: 600; padding: 15px 30px; border-radius: 30px;">
+                        Mua sắm ngay
+                    </a>
+                    <p style="font-size: 13px; color: #86868b; margin-top: 15px;">Khám phá bộ sưu tập INMO mới nhất.</p>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div style="background-color: #f5f5f7; padding: 20px; text-align: center; border-top: 1px solid #e5e5ea;">
+                <p style="margin: 0; font-size: 12px; color: #86868b;">
+                    © <?php echo date('Y'); ?> INMO. All rights reserved.<br>
+                    Bạn nhận được email này vì đã liên hệ qua website của chúng tôi.
+                </p>
+            </div>
+        </div>
+    </div>
+    <?php
+    $mail_body = ob_get_clean();
+    $headers = array('Content-Type: text/html; charset=UTF-8');
+
+    // Gửi qua hàm wp_mail() (đã được cấu hình SMTP từ trước)
+    wp_mail($to, $mail_subject, $mail_body, $headers);
+
+    wp_send_json_success('Cảm ơn bạn! Tin nhắn đã được gửi và email xác nhận đã được chuyển đến hộp thư của bạn.');
+}
+
 // Thêm Submenu Gửi Email Hàng Loạt
 add_action('admin_menu', 'inmo_add_bulk_email_submenu');
 function inmo_add_bulk_email_submenu() {
@@ -254,6 +348,17 @@ function inmo_smtp_settings_page() {
     </div>
     <?php
 }
+// Ghi đè địa chỉ người gửi (From Email)
+add_filter( 'wp_mail_from', function( $original_email_address ) {
+    $email = get_option( 'inmo_smtp_email' );
+    return !empty($email) ? $email : $original_email_address;
+} );
+
+// Ghi đè tên người gửi (From Name)
+add_filter( 'wp_mail_from_name', function( $original_email_from ) {
+    $from_name = get_option( 'inmo_smtp_from_name', get_bloginfo('name') );
+    return !empty($from_name) ? $from_name : $original_email_from;
+} );
 
 // Hook vào phpmailer_init để ghi đè cấu hình SMTP
 add_action( 'phpmailer_init', 'inmo_configure_smtp' );
@@ -271,7 +376,7 @@ function inmo_configure_smtp( $phpmailer ) {
         $phpmailer->Password   = $password;
         $phpmailer->SMTPSecure = 'ssl'; // SSL for port 465
         
-        $phpmailer->From       = $email;
-        $phpmailer->FromName   = $from_name;
+        // Đặt người gửi chính thức
+        $phpmailer->setFrom($email, $from_name);
     }
 }

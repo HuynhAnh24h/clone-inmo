@@ -65,6 +65,9 @@ function inmo_theme_scripts() {
 	wp_enqueue_script( 'bootstrap-js', get_template_directory_uri() . '/assets/js/bootstrap.min.js', array(), '5.3', true );
     wp_enqueue_script( 'splide-js', 'https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js', array(), '4.1.4', true );
 	wp_enqueue_script( 'inmo-theme-main-js', get_template_directory_uri() . '/assets/js/theme.js', array('splide-js'), wp_get_theme()->get( 'Version' ), true );
+	
+	// Localize AJAX URL for frontend JS
+	wp_localize_script( 'inmo-theme-main-js', 'ajaxurl', admin_url( 'admin-ajax.php' ) );
 }
 add_action( 'wp_enqueue_scripts', 'inmo_theme_scripts' );
 
