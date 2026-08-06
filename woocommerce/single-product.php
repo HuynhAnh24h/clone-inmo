@@ -96,6 +96,114 @@ get_header( 'shop' );
 		.pg-parallax-content .btn-pg-cta:hover {
 			transform: scale(1.05);
 		}
+
+		/* ================= FIXED SCROLL VIDEOS STYLE ================= */
+		.pg-scroll-video-section {
+			position: relative;
+			min-height: 200vh; /* 100vh for video + 100vh for text content overlay */
+			overflow: visible;
+		}
+		.pg-scroll-video-container {
+			position: -webkit-sticky;
+			position: sticky;
+			top: 0;
+			width: 100%;
+			height: 100vh;
+			overflow: hidden;
+			z-index: 1;
+		}
+		.pg-scroll-video-bg {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+		.pg-scroll-video-spacer {
+			height: 100vh;
+			pointer-events: none;
+		}
+		.pg-scroll-video-info-overlay {
+			position: relative;
+			z-index: 2; /* Stands above the sticky video container */
+			min-height: 100vh;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background: rgba(0, 0, 0, 0.45); /* Semi-transparent dark background */
+			backdrop-filter: blur(6px); /* Modern frosted glass effect */
+			-webkit-backdrop-filter: blur(6px);
+			text-align: center;
+			color: #fff;
+			padding: 80px 20px;
+		}
+		.pg-scroll-video-info-overlay .pg-eyebrow {
+			color: #fff;
+			font-size: 1.1rem;
+			letter-spacing: 2px;
+			margin-bottom: 20px;
+			opacity: 0.7;
+		}
+		.pg-scroll-video-info-title {
+			font-size: 3.5rem;
+			font-weight: 700;
+			margin-bottom: 20px;
+			color: #fff;
+			letter-spacing: -0.5px;
+			line-height: 1.2;
+		}
+		.pg-scroll-video-info-desc {
+			font-size: 1.3rem;
+			color: #eee;
+			max-width: 850px;
+			margin: 0 auto;
+			line-height: 1.6;
+		}
+		.pg-scroll-video-info-overlay .btn-pg-cta {
+			background: #2de6a8; /* Vibrant theme green */
+			color: #000;
+			border: none;
+			padding: 15px 40px;
+			border-radius: 40px;
+			font-weight: 600;
+			font-size: 1.1rem;
+			cursor: pointer;
+			transition: all 0.3s;
+			text-decoration: none;
+			display: inline-block;
+		}
+		.pg-scroll-video-info-overlay .btn-pg-cta:hover {
+			transform: scale(1.05);
+			background: #25cc94;
+			color: #000;
+			box-shadow: 0 0 15px rgba(45, 230, 168, 0.4);
+		}
+		@media (max-width: 768px) {
+			.pg-scroll-video-section {
+				min-height: auto;
+			}
+			.pg-scroll-video-container {
+				position: relative;
+				height: 50vh;
+			}
+			.pg-scroll-video-spacer {
+				display: none;
+			}
+			.pg-scroll-video-info-overlay {
+				min-height: auto;
+				padding: 60px 20px;
+				background: #000; /* Solid background fallback on mobile */
+				backdrop-filter: none;
+				-webkit-backdrop-filter: none;
+			}
+			.pg-scroll-video-info-title {
+				font-size: 2.2rem;
+			}
+			.pg-scroll-video-info-desc {
+				font-size: 1.05rem;
+			}
+		}
 	</style>
 	<section class="pg-product animate-fade-in">
 		<div class="container-fluid px-3 px-md-5">
@@ -186,17 +294,65 @@ get_header( 'shop' );
 		</div>
 	</section>
 
-	<!-- ================= PARALLAX BANNER ================= -->
-	<?php $banner = function_exists('get_field') ? get_field('product_banner_image') : ''; ?>
-	<?php if( $banner ): ?>
-	<div class="pg-parallax-banner" style="background-image: url('<?php echo esc_url($banner); ?>');">
-		<div class="pg-parallax-content">
-			<p class="pg-eyebrow"><?php echo esc_html($product->get_name()); ?></p>
-			<button type="button" class="btn-pg-cta">
-				Xem Cách Hoạt Động <i class="bi bi-arrow-right ms-1"></i>
-			</button>
+	<!-- ================= FIXED SCROLL VIDEO / PARALLAX BANNER ================= -->
+	<?php 
+		// Lấy dữ liệu video scroll cố định và nội dung từ ACF
+		$scroll_video = function_exists('get_field') ? get_field('scroll_video') : '';
+		
+		if ( $scroll_video ) : 
+			$video_title    = get_field('scroll_video_title');
+			$video_desc     = get_field('scroll_video_desc');
+			$video_btn_text = get_field('scroll_video_btn_text');
+			$video_btn_link = get_field('scroll_video_btn_link');
+	?>
+		<!-- Section Video Scroll Cố định (Video làm nền, chữ trượt đè lên khi scroll) -->
+		<section class="pg-scroll-video-section">
+			<!-- Video nền cố định (sticky) -->
+			<div class="pg-scroll-video-container">
+				<video class="pg-scroll-video-bg" autoplay loop muted playsinline>
+					<source src="<?php echo esc_url($scroll_video); ?>" type="video/mp4">
+				</video>
+			</div>
+			
+			<!-- Khoảng trống (100vh đầu tiên) để hiển thị video sạch không có chữ -->
+			<div class="pg-scroll-video-spacer"></div>
+
+			<!-- Section Thông tin hiển thị trượt đè lên video khi cuộn xuống (100vh tiếp theo) -->
+			<?php if ( $video_title || $video_desc || ($video_btn_text && $video_btn_link) ) : ?>
+				<div class="pg-scroll-video-info-overlay">
+					<div class="container">
+						<p class="pg-eyebrow"><?php echo esc_html($product->get_name()); ?></p>
+						<?php if ( $video_title ) : ?>
+							<h2 class="pg-scroll-video-info-title"><?php echo esc_html($video_title); ?></h2>
+						<?php endif; ?>
+						<?php if ( $video_desc ) : ?>
+							<p class="pg-scroll-video-info-desc"><?php echo esc_html($video_desc); ?></p>
+						<?php endif; ?>
+						<?php if ( $video_btn_text && $video_btn_link ) : ?>
+							<div class="mt-4">
+								<a href="<?php echo esc_url($video_btn_link); ?>" class="btn-pg-cta">
+									<?php echo esc_html($video_btn_text); ?> <i class="bi bi-arrow-right ms-1"></i>
+								</a>
+							</div>
+						<?php endif; ?>
+					</div>
+				</div>
+			<?php endif; ?>
+		</section>
+
+	<?php else: ?>
+		<!-- Fallback về Banner ảnh tĩnh ban đầu nếu chưa thiết lập Video -->
+		<?php $banner = function_exists('get_field') ? get_field('product_banner_image') : ''; ?>
+		<?php if( $banner ): ?>
+		<div class="pg-parallax-banner" style="background-image: url('<?php echo esc_url($banner); ?>');">
+			<div class="pg-parallax-content">
+				<p class="pg-eyebrow"><?php echo esc_html($product->get_name()); ?></p>
+				<button type="button" class="btn-pg-cta">
+					Xem Cách Hoạt Động <i class="bi bi-arrow-right ms-1"></i>
+				</button>
+			</div>
 		</div>
-	</div>
+		<?php endif; ?>
 	<?php endif; ?>
 
 	<!-- ================= ERGONOMIC DESIGN (dark) ================= -->

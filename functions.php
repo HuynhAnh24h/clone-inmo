@@ -504,3 +504,10 @@ function inmo_handle_bulk_email_batch() {
         'next_offset' => $new_offset
     ));
 }
+
+// Add Image Webp
+function allow_webp_upload($mimes) {
+    $mimes['webp'] = 'image/webp';
+    return $mimes;
+}
+add_filter('mime_types', 'allow_webp_upload');

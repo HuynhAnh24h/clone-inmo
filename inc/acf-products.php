@@ -22,6 +22,46 @@ $fields[] = array(
     'return_format' => 'url',
     'instructions' => 'Hình ảnh banner nằm giữa trang (All-Day Style, Non-Stop Power).',
 );
+// --- Bắt đầu thêm video scroll cố định và nội dung trượt đè ---
+$fields[] = array(
+    'key' => 'field_scroll_video',
+    'label' => 'Video Scroll Cố định',
+    'name' => 'scroll_video',
+    'type' => 'file',
+    'return_format' => 'url',
+    'mime_types' => 'mp4,webm,ogg',
+    'instructions' => 'Chọn hoặc tải lên video MP4 làm nền cho section scroll cố định.',
+);
+$fields[] = array(
+    'key' => 'field_scroll_video_title',
+    'label' => 'Tiêu đề Section Video',
+    'name' => 'scroll_video_title',
+    'type' => 'text',
+    'default_value' => 'All-Day Style, Non-Stop Power',
+    'instructions' => 'Tiêu đề hiển thị trượt đè lên video nền khi cuộn xuống.',
+);
+$fields[] = array(
+    'key' => 'field_scroll_video_desc',
+    'label' => 'Mô tả Section Video',
+    'name' => 'scroll_video_desc',
+    'type' => 'textarea',
+    'rows' => 2,
+    'default_value' => 'Fashion-forward smart glasses designed for daily wear with long-lasting battery life.',
+);
+$fields[] = array(
+    'key' => 'field_scroll_video_btn_text',
+    'label' => 'Chữ nút bấm Section Video',
+    'name' => 'scroll_video_btn_text',
+    'type' => 'text',
+    'default_value' => 'Check How It Works',
+);
+$fields[] = array(
+    'key' => 'field_scroll_video_btn_link',
+    'label' => 'Link nút bấm Section Video',
+    'name' => 'scroll_video_btn_link',
+    'type' => 'url',
+);
+// --- Kết thúc thêm video scroll ---
 $fields[] = array(
     'key' => 'field_ergonomic_heading',
     'label' => 'Tiêu đề phần Thiết kế',
