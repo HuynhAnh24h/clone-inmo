@@ -14,14 +14,6 @@ $fields[] = array(
     'placement' => 'top',
     'endpoint' => 0,
 );
-$fields[] = array(
-    'key' => 'field_product_banner_image',
-    'label' => 'Ảnh Banner Lớn (Full Width)',
-    'name' => 'product_banner_image',
-    'type' => 'image',
-    'return_format' => 'url',
-    'instructions' => 'Hình ảnh banner nằm giữa trang (All-Day Style, Non-Stop Power).',
-);
 // --- Bắt đầu thêm video scroll cố định và nội dung trượt đè ---
 $fields[] = array(
     'key' => 'field_scroll_video',
@@ -77,6 +69,154 @@ $fields[] = array(
     'default_value' => 'Precision crafted for lightweight performance',
 );
 
+// --- Bắt đầu thêm Khối Layout Đặc biệt (Custom Showcase Block) ---
+$fields[] = array(
+    'key' => 'field_custom_layout_type',
+    'label' => 'Bố cục hiển thị Đặc biệt',
+    'name' => 'custom_layout_type',
+    'type' => 'select',
+    'choices' => array(
+        'none'   => 'Không hiển thị',
+        'style1' => 'Kiểu 1: Bố cục Bundle (Gói sản phẩm)',
+        'style2' => 'Kiểu 2: Bố cục Đặc tính nổi bật (Showcase)',
+    ),
+    'default_value' => 'none',
+    'return_format' => 'value',
+    'instructions' => 'Chọn kiểu thiết kế cho khối giới thiệu đặc biệt dưới phần video scroll.',
+);
+$fields[] = array(
+    'key' => 'field_custom_layout_eyebrow',
+    'label' => 'Nhãn phụ (Eyebrow)',
+    'name' => 'custom_layout_eyebrow',
+    'type' => 'text',
+    'default_value' => 'What\'s in the bundle?',
+    'conditional_logic' => array(
+        array(
+            array(
+                'field' => 'field_custom_layout_type',
+                'operator' => '!=',
+                'value' => 'none',
+            ),
+        ),
+    ),
+);
+$fields[] = array(
+    'key' => 'field_custom_layout_title',
+    'label' => 'Tiêu đề chính',
+    'name' => 'custom_layout_title',
+    'type' => 'text',
+    'default_value' => 'Everything You Need to See and Hear.',
+    'conditional_logic' => array(
+        array(
+            array(
+                'field' => 'field_custom_layout_type',
+                'operator' => '!=',
+                'value' => 'none',
+            ),
+        ),
+    ),
+);
+$fields[] = array(
+    'key' => 'field_custom_layout_desc',
+    'label' => 'Mô tả chi tiết',
+    'name' => 'custom_layout_desc',
+    'type' => 'textarea',
+    'rows' => 3,
+    'default_value' => 'This bundle pairs your Go3 glasses with the GO3 Speaker, giving you immersive audio to match your AI powered view. Two devices, one seamless experience.',
+    'conditional_logic' => array(
+        array(
+            array(
+                'field' => 'field_custom_layout_type',
+                'operator' => '!=',
+                'value' => 'none',
+            ),
+        ),
+    ),
+);
+$fields[] = array(
+    'key' => 'field_custom_layout_btn_text',
+    'label' => 'Chữ trên nút bấm',
+    'name' => 'custom_layout_btn_text',
+    'type' => 'text',
+    'default_value' => 'Claim $100 OFF',
+    'conditional_logic' => array(
+        array(
+            array(
+                'field' => 'field_custom_layout_type',
+                'operator' => '!=',
+                'value' => 'none',
+            ),
+        ),
+    ),
+);
+$fields[] = array(
+    'key' => 'field_custom_layout_btn_link',
+    'label' => 'Đường dẫn nút bấm',
+    'name' => 'custom_layout_btn_link',
+    'type' => 'url',
+    'conditional_logic' => array(
+        array(
+            array(
+                'field' => 'field_custom_layout_type',
+                'operator' => '!=',
+                'value' => 'none',
+            ),
+        ),
+    ),
+);
+$fields[] = array(
+    'key' => 'field_custom_layout_img_1',
+    'label' => 'Hình ảnh 1',
+    'name' => 'custom_layout_img_1',
+    'type' => 'image',
+    'return_format' => 'url',
+    'conditional_logic' => array(
+        array(
+            array(
+                'field' => 'field_custom_layout_type',
+                'operator' => '!=',
+                'value' => 'none',
+            ),
+        ),
+    ),
+);
+$fields[] = array(
+    'key' => 'field_custom_layout_img_2',
+    'label' => 'Hình ảnh 2',
+    'name' => 'custom_layout_img_2',
+    'type' => 'image',
+    'return_format' => 'url',
+    'conditional_logic' => array(
+        array(
+            array(
+                'field' => 'field_custom_layout_type',
+                'operator' => '!=',
+                'value' => 'none',
+            ),
+        ),
+    ),
+);
+$fields[] = array(
+    'key' => 'field_custom_layout_product',
+    'label' => 'Sản phẩm đi kèm (Thẻ mua nhanh)',
+    'name' => 'custom_layout_product',
+    'type' => 'post_object',
+    'post_type' => array('product'),
+    'return_format' => 'id',
+    'instructions' => 'Chọn một sản phẩm để hiển thị thẻ mua nhanh nổi (Add to Cart) ở góc dưới bên phải.',
+    'conditional_logic' => array(
+        array(
+            array(
+                'field' => 'field_custom_layout_type',
+                'operator' => '!=',
+                'value' => 'none',
+            ),
+        ),
+    ),
+);
+// --- Kết thúc Khối Layout Đặc biệt ---
+
+
 // ==========================
 // TAB 2: Tính năng (Accordion)
 // ==========================
@@ -115,80 +255,62 @@ $fields[] = array(
     'endpoint' => 0,
 );
 
-// Lưới 1 (Nhỏ)
-$fields[] = array(
-    'key' => 'field_feature_sm_data',
-    'label' => 'Lưới ảnh nhỏ (Hàng trên cùng)',
-    'name' => 'feature_sm_data',
-    'type' => 'repeater',
-    'button_label' => 'Thêm ảnh',
-    'layout' => 'table',
-    'sub_fields' => array(
-        array(
-            'key' => 'field_f_sm_img',
-            'label' => 'Hình ảnh',
-            'name' => 'img',
-            'type' => 'image',
-            'return_format' => 'url',
-        ),
-        array(
-            'key' => 'field_f_sm_title',
-            'label' => 'Tiêu đề',
-            'name' => 'title',
-            'type' => 'text',
-        ),
-    ),
-);
+// Lưới 1 (Nhỏ) - Tối đa 5 ảnh
+for ($k = 1; $k <= 5; $k++) {
+    $fields[] = array(
+        'key' => 'field_feature_sm_' . $k . '_img',
+        'label' => 'Lưới ảnh nhỏ (Hàng trên) ' . $k . ' - Hình ảnh',
+        'name' => 'feature_sm_' . $k . '_img',
+        'type' => 'image',
+        'return_format' => 'url',
+        'wrapper' => array('width' => '50%'),
+    );
+    $fields[] = array(
+        'key' => 'field_feature_sm_' . $k . '_title',
+        'label' => 'Lưới ảnh nhỏ (Hàng trên) ' . $k . ' - Tiêu đề',
+        'name' => 'feature_sm_' . $k . '_title',
+        'type' => 'text',
+        'wrapper' => array('width' => '50%'),
+    );
+}
 
-// Lưới 2 (Vừa)
-$fields[] = array(
-    'key' => 'field_feature_lg_data_1',
-    'label' => 'Lưới ảnh vừa (Hàng giữa)',
-    'name' => 'feature_lg_data_1',
-    'type' => 'repeater',
-    'button_label' => 'Thêm ảnh',
-    'layout' => 'table',
-    'sub_fields' => array(
-        array(
-            'key' => 'field_f_lg1_img',
-            'label' => 'Hình ảnh',
-            'name' => 'img',
-            'type' => 'image',
-            'return_format' => 'url',
-        ),
-        array(
-            'key' => 'field_f_lg1_title',
-            'label' => 'Tiêu đề',
-            'name' => 'title',
-            'type' => 'text',
-        ),
-    ),
-);
+// Lưới 2 (Vừa) - Tối đa 3 ảnh
+for ($k = 1; $k <= 3; $k++) {
+    $fields[] = array(
+        'key' => 'field_feature_lg1_' . $k . '_img',
+        'label' => 'Lưới ảnh vừa (Hàng giữa) ' . $k . ' - Hình ảnh',
+        'name' => 'feature_lg1_' . $k . '_img',
+        'type' => 'image',
+        'return_format' => 'url',
+        'wrapper' => array('width' => '50%'),
+    );
+    $fields[] = array(
+        'key' => 'field_feature_lg1_' . $k . '_title',
+        'label' => 'Lưới ảnh vừa (Hàng giữa) ' . $k . ' - Tiêu đề',
+        'name' => 'feature_lg1_' . $k . '_title',
+        'type' => 'text',
+        'wrapper' => array('width' => '50%'),
+    );
+}
 
-// Lưới 3 (Ngang)
-$fields[] = array(
-    'key' => 'field_feature_lg_data_2',
-    'label' => 'Lưới ảnh ngang (Hàng dưới)',
-    'name' => 'feature_lg_data_2',
-    'type' => 'repeater',
-    'button_label' => 'Thêm ảnh',
-    'layout' => 'table',
-    'sub_fields' => array(
-        array(
-            'key' => 'field_f_lg2_img',
-            'label' => 'Hình ảnh',
-            'name' => 'img',
-            'type' => 'image',
-            'return_format' => 'url',
-        ),
-        array(
-            'key' => 'field_f_lg2_title',
-            'label' => 'Tiêu đề',
-            'name' => 'title',
-            'type' => 'text',
-        ),
-    ),
-);
+// Lưới 3 (Ngang) - Tối đa 4 ảnh
+for ($k = 1; $k <= 4; $k++) {
+    $fields[] = array(
+        'key' => 'field_feature_lg2_' . $k . '_img',
+        'label' => 'Lưới ảnh ngang (Hàng dưới) ' . $k . ' - Hình ảnh',
+        'name' => 'feature_lg2_' . $k . '_img',
+        'type' => 'image',
+        'return_format' => 'url',
+        'wrapper' => array('width' => '50%'),
+    );
+    $fields[] = array(
+        'key' => 'field_feature_lg2_' . $k . '_title',
+        'label' => 'Lưới ảnh ngang (Hàng dưới) ' . $k . ' - Tiêu đề',
+        'name' => 'feature_lg2_' . $k . '_title',
+        'type' => 'text',
+        'wrapper' => array('width' => '50%'),
+    );
+}
 
 // ==========================
 // TAB 4: INMO App
@@ -201,21 +323,31 @@ $fields[] = array(
     'placement' => 'top',
     'endpoint' => 0,
 );
+
+// Dòng máy tương thích - Tối đa 5 máy
+for ($k = 1; $k <= 5; $k++) {
+    $fields[] = array(
+        'key' => 'field_compatible_model_' . $k,
+        'label' => 'Tên máy tương thích ' . $k,
+        'name' => 'compatible_model_' . $k,
+        'type' => 'text',
+    );
+}
+
+// Link ứng dụng trên Store
 $fields[] = array(
-    'key' => 'field_compatible_models',
-    'label' => 'Dòng máy tương thích',
-    'name' => 'compatible_models',
-    'type' => 'repeater',
-    'button_label' => 'Thêm máy tương thích',
-    'layout' => 'table',
-    'sub_fields' => array(
-        array(
-            'key' => 'field_comp_model_name',
-            'label' => 'Tên máy',
-            'name' => 'model_name',
-            'type' => 'text',
-        ),
-    ),
+    'key' => 'field_app_store_link',
+    'label' => 'Link App Store (iOS)',
+    'name' => 'app_store_link',
+    'type' => 'url',
+    'instructions' => 'Đường dẫn đến trang tải ứng dụng trên Apple App Store.',
+);
+$fields[] = array(
+    'key' => 'field_google_play_link',
+    'label' => 'Link Google Play / CH Play (Android)',
+    'name' => 'google_play_link',
+    'type' => 'url',
+    'instructions' => 'Đường dẫn đến trang tải ứng dụng trên Google Play Store.',
 );
 
 // ==========================
@@ -229,46 +361,40 @@ $fields[] = array(
     'placement' => 'top',
     'endpoint' => 0,
 );
-$fields[] = array(
-    'key' => 'field_testimonials',
-    'label' => 'Đánh giá chuyên gia / Video',
-    'name' => 'testimonials',
-    'type' => 'repeater',
-    'button_label' => 'Thêm đánh giá',
-    'layout' => 'block',
-    'sub_fields' => array(
-        array(
-            'key' => 'field_testi_img',
-            'label' => 'Hình ảnh (Thumbnail)',
-            'name' => 'img',
-            'type' => 'image',
-            'return_format' => 'url',
-            'wrapper' => array('width' => '30%'),
-        ),
-        array(
-            'key' => 'field_testi_name',
-            'label' => 'Tên tác giả',
-            'name' => 'name',
-            'type' => 'text',
-            'wrapper' => array('width' => '25%'),
-        ),
-        array(
-            'key' => 'field_testi_video',
-            'label' => 'Link Video (Youtube/Tiktok...)',
-            'name' => 'video_url',
-            'type' => 'url',
-            'wrapper' => array('width' => '25%'),
-        ),
-        array(
-            'key' => 'field_testi_quote',
-            'label' => 'Trích dẫn / Tiêu đề',
-            'name' => 'quote',
-            'type' => 'textarea',
-            'rows' => 3,
-            'wrapper' => array('width' => '30%'),
-        ),
-    ),
-);
+
+// Đánh giá chuyên gia / Video - Tối đa 5 đánh giá
+for ($k = 1; $k <= 5; $k++) {
+    $fields[] = array(
+        'key' => 'field_testi_' . $k . '_img',
+        'label' => 'Đánh giá ' . $k . ' - Hình ảnh (Thumbnail)',
+        'name' => 'testi_' . $k . '_img',
+        'type' => 'image',
+        'return_format' => 'url',
+        'wrapper' => array('width' => '25%'),
+    );
+    $fields[] = array(
+        'key' => 'field_testi_' . $k . '_name',
+        'label' => 'Đánh giá ' . $k . ' - Tên tác giả',
+        'name' => 'testi_' . $k . '_name',
+        'type' => 'text',
+        'wrapper' => array('width' => '25%'),
+    );
+    $fields[] = array(
+        'key' => 'field_testi_' . $k . '_video',
+        'label' => 'Đánh giá ' . $k . ' - Link Video (Youtube/Tiktok...)',
+        'name' => 'testi_' . $k . '_video',
+        'type' => 'url',
+        'wrapper' => array('width' => '25%'),
+    );
+    $fields[] = array(
+        'key' => 'field_testi_' . $k . '_quote',
+        'label' => 'Đánh giá ' . $k . ' - Trích dẫn / Tiêu đề',
+        'name' => 'testi_' . $k . '_quote',
+        'type' => 'textarea',
+        'rows' => 2,
+        'wrapper' => array('width' => '25%'),
+    );
+}
 
 // ==========================
 // TAB 6: Các Tab Tùy chỉnh (Hiện có)

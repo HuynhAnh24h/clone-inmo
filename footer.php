@@ -126,7 +126,7 @@
 					</form>
 				</div>
 				<div class="theme-promo-logo d-none d-md-flex">
-					<h2>INMO</h2>
+					<img src="<?php echo get_template_directory_uri(); ?>/assets/images/INMO_LOGO-Black.webp" alt="<?php bloginfo( 'name' ); ?>" style="max-height: 40px; max-width: 100%; object-fit: contain;">
 				</div>
 			</div>
 		</div>

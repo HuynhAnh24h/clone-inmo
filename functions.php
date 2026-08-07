@@ -61,6 +61,14 @@ function inmo_theme_scripts() {
 	wp_enqueue_style( 'inmo-theme-core-style', get_template_directory_uri() . '/assets/css/theme-core.css', array('inmo-bootstrap-style'), wp_get_theme()->get( 'Version' ) );
 	wp_enqueue_style( 'inmo-theme-main-style', get_template_directory_uri() . '/assets/css/style.css', array('inmo-theme-core-style'), wp_get_theme()->get( 'Version' ) );
 
+	// Page-specific styles
+	if ( function_exists('is_product') && is_product() ) {
+		wp_enqueue_style( 'inmo-single-product-style', get_template_directory_uri() . '/assets/css/single-product.css', array('inmo-theme-core-style'), wp_get_theme()->get( 'Version' ) );
+	}
+	if ( is_page_template( 'page-support.php' ) ) {
+		wp_enqueue_style( 'inmo-page-support-style', get_template_directory_uri() . '/assets/css/page-support.css', array('inmo-theme-core-style'), wp_get_theme()->get( 'Version' ) );
+	}
+
 	// Scripts
 	wp_enqueue_script( 'bootstrap-js', get_template_directory_uri() . '/assets/js/bootstrap.min.js', array(), '5.3', true );
     wp_enqueue_script( 'splide-js', 'https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js', array(), '4.1.4', true );
@@ -511,3 +519,11 @@ function allow_webp_upload($mimes) {
     return $mimes;
 }
 add_filter('mime_types', 'allow_webp_upload');
+
+// Customize WooCommerce Add to Cart Message Button Text
+function inmo_custom_add_to_cart_message_html( $message, $products, $show_qty ) {
+    $message = str_replace( 'Xem giỏ hàng', 'Xem ngay', $message );
+    $message = str_replace( 'View cart', 'Xem ngay', $message );
+    return $message;
+}
+add_filter( 'wc_add_to_cart_message_html', 'inmo_custom_add_to_cart_message_html', 10, 3 );

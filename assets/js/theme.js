@@ -411,5 +411,43 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             });
         }
+
+        // ---- STICKY ADD TO CART BAR ----
+        const stickyBar = document.getElementById('pgStickyBuyBar');
+        const productSection = document.querySelector('.pg-product');
+        if (stickyBar && productSection) {
+            const checkScroll = () => {
+                const triggerPoint = productSection.offsetTop + productSection.offsetHeight - 100;
+                if (window.scrollY > triggerPoint) {
+                    stickyBar.classList.add('is-visible');
+                } else {
+                    stickyBar.classList.remove('is-visible');
+                }
+            };
+            window.addEventListener('scroll', checkScroll);
+            checkScroll(); // Run once in case already scrolled
+
+            // Bind click to main Add to Cart form submission
+            const stickyBtn = stickyBar.querySelector('.pg-sticky-bar-btn');
+            if (stickyBtn) {
+                stickyBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const cartForm = document.querySelector('form.cart');
+                    if (cartForm) {
+                        // Ensure hidden 'add-to-cart' input exists so WooCommerce recognizes the product ID on programmatic submit
+                        let hiddenAdd = cartForm.querySelector('input[name="add-to-cart"]');
+                        if (!hiddenAdd) {
+                            hiddenAdd = document.createElement('input');
+                            hiddenAdd.type = 'hidden';
+                            hiddenAdd.name = 'add-to-cart';
+                            const mainBtn = cartForm.querySelector('.single_add_to_cart_button');
+                            hiddenAdd.value = mainBtn ? mainBtn.value : '';
+                            cartForm.appendChild(hiddenAdd);
+                        }
+                        cartForm.submit();
+                    }
+                });
+            }
+        }
     });
 });
