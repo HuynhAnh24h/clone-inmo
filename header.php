@@ -40,16 +40,20 @@
 			<div class="collapse navbar-collapse justify-content-between" id="themeNavbar">
 				<div class="theme-navbar mx-auto mt-3 mt-lg-0">
 					<?php
-					if ( has_nav_menu( 'menu-1' ) ) {
-						wp_nav_menu(
-							array(
-								'theme_location' => 'menu-1',
-								'menu_id'        => 'primary-menu',
-								'menu_class'     => 'theme-navbar-list d-flex flex-column flex-lg-row align-items-lg-center m-0 p-0',
-								'container'      => false,
-								'fallback_cb'    => false,
-							)
+					$has_custom_menu = is_nav_menu( 'main-menu' );
+					if ( $has_custom_menu || has_nav_menu( 'menu-1' ) ) {
+						$menu_args = array(
+							'menu_id'     => 'primary-menu',
+							'menu_class'  => 'theme-navbar-list d-flex flex-column flex-lg-row align-items-lg-center m-0 p-0',
+							'container'   => false,
+							'fallback_cb' => false,
 						);
+						if ( $has_custom_menu ) {
+							$menu_args['menu'] = 'main-menu';
+						} else {
+							$menu_args['theme_location'] = 'menu-1';
+						}
+						wp_nav_menu( $menu_args );
 					} else {
 						?>
 						<ul class="theme-navbar-list d-flex flex-column flex-lg-row align-items-lg-center m-0 p-0">
