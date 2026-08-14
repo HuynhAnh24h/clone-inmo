@@ -14,6 +14,97 @@ $fields[] = array(
     'placement' => 'left',
     'endpoint' => 0,
 );
+// ==========================
+// TAB: Gallery Sản phẩm (Main Gallery)
+// ==========================
+$fields[] = array(
+    'key' => 'field_tab_main_gallery',
+    'label' => 'Gallery Sản phẩm (Đầu trang)',
+    'name' => '',
+    'type' => 'tab',
+    'placement' => 'left',
+    'endpoint' => 0,
+);
+$fields[] = array(
+    'key' => 'field_product_gallery',
+    'label' => 'Bộ sưu tập Hình ảnh / Video',
+    'name' => 'product_gallery',
+    'type' => 'repeater',
+    'instructions' => 'Đăng tải danh sách hình ảnh hoặc video hiển thị ở phần giới thiệu đầu trang chi tiết sản phẩm. Nếu để trống, hệ thống sẽ sử dụng ảnh mặc định của WooCommerce.',
+    'collapsed' => '',
+    'min' => 0,
+    'max' => 10,
+    'layout' => 'table',
+    'button_label' => 'Thêm ảnh / video',
+    'sub_fields' => array(
+        array(
+            'key' => 'field_gallery_media_type',
+            'label' => 'Loại phương tiện',
+            'name' => 'media_type',
+            'type' => 'select',
+            'choices' => array(
+                'image' => 'Hình ảnh',
+                'video' => 'Video',
+            ),
+            'default_value' => 'image',
+            'wrapper' => array('width' => '20%'),
+        ),
+        array(
+            'key' => 'field_gallery_image',
+            'label' => 'Hình ảnh',
+            'name' => 'image',
+            'type' => 'image',
+            'return_format' => 'url',
+            'wrapper' => array('width' => '40%'),
+            'conditional_logic' => array(
+                array(
+                    array(
+                        'field' => 'field_gallery_media_type',
+                        'operator' => '==',
+                        'value' => 'image',
+                    ),
+                ),
+            ),
+        ),
+        array(
+            'key' => 'field_gallery_video',
+            'label' => 'Video (MP4/WebM)',
+            'name' => 'video',
+            'type' => 'file',
+            'return_format' => 'url',
+            'mime_types' => 'mp4,webm,ogg',
+            'wrapper' => array('width' => '40%'),
+            'conditional_logic' => array(
+                array(
+                    array(
+                        'field' => 'field_gallery_media_type',
+                        'operator' => '==',
+                        'value' => 'video',
+                    ),
+                ),
+            ),
+        ),
+        array(
+            'key' => 'field_gallery_video_thumbnail',
+            'label' => 'Ảnh đại diện Video (Thumbnail)',
+            'name' => 'video_thumbnail',
+            'type' => 'image',
+            'return_format' => 'url',
+            'wrapper' => array('width' => '40%'),
+            'instructions' => 'Hiển thị ở cột ảnh thu nhỏ bên trái.',
+            'conditional_logic' => array(
+                array(
+                    array(
+                        'field' => 'field_gallery_media_type',
+                        'operator' => '==',
+                        'value' => 'video',
+                    ),
+                ),
+            ),
+        ),
+    ),
+);
+
 // --- Bắt đầu thêm video scroll cố định và nội dung trượt đè ---
 $fields[] = array(
     'key' => 'field_show_scroll_video',

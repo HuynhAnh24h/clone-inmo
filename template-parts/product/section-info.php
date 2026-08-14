@@ -10,24 +10,82 @@ global $product;
 		<div class="row g-5">
 		<div class="col-lg-7">
 			<div class="pg-gallery">
-				<div class="pg-thumbs" id="thumbsWrap">
-					<?php
-					$attachment_ids = $product->get_gallery_image_ids();
-					$main_image_url = wp_get_attachment_image_url( $product->get_image_id(), 'full' );
-					
-					if ( $product->get_image_id() ) {
-						echo '<img src="' . esc_url( wp_get_attachment_image_url( $product->get_image_id(), 'thumbnail' ) ) . '" class="is-active" data-full="' . esc_url( $main_image_url ) . '" alt="">';
-					}
-					
-					if ( $attachment_ids && $product->get_image_id() ) {
-						foreach ( $attachment_ids as $attachment_id ) {
-							echo '<img src="' . esc_url( wp_get_attachment_image_url( $attachment_id, 'thumbnail' ) ) . '" data-full="' . esc_url( wp_get_attachment_image_url( $attachment_id, 'full' ) ) . '" alt="">';
+				<?php
+				$custom_gallery = function_exists('get_field') ? get_field('product_gallery') : null;
+				
+				// Initialize list of items
+				$gallery_items = array();
+				
+				if ( !empty($custom_gallery) && is_array($custom_gallery) ) {
+					// Use ACF gallery
+					foreach ( $custom_gallery as $row ) {
+						if ( $row['media_type'] === 'video' && !empty($row['video']) ) {
+							$gallery_items[] = array(
+								'type'      => 'video',
+								'src'       => $row['video'],
+								'thumb'     => !empty($row['video_thumbnail']) ? $row['video_thumbnail'] : wc_placeholder_img_src(),
+							);
+						} elseif ( $row['media_type'] === 'image' && !empty($row['image']) ) {
+							$gallery_items[] = array(
+								'type'      => 'image',
+								'src'       => $row['image'],
+								'thumb'     => $row['image'],
+							);
 						}
 					}
-					?>
+				} else {
+					// Fallback to standard WooCommerce Gallery
+					$main_image_id  = $product->get_image_id();
+					$main_image_url = $main_image_id ? wp_get_attachment_url( $main_image_id ) : wc_placeholder_img_src();
+					$attachment_ids = $product->get_gallery_image_ids();
+					
+					if ( $main_image_url ) {
+						$gallery_items[] = array(
+							'type'  => 'image',
+							'src'   => $main_image_url,
+							'thumb' => $main_image_url,
+						);
+					}
+					if ( $attachment_ids ) {
+						foreach ( $attachment_ids as $attachment_id ) {
+							$image_url = wp_get_attachment_url( $attachment_id );
+							if ( $image_url ) {
+								$gallery_items[] = array(
+									'type'  => 'image',
+									'src'   => $image_url,
+									'thumb' => $image_url,
+								);
+							}
+						}
+					}
+				}
+				
+				// Setup first item values
+				$first_item = !empty($gallery_items) ? $gallery_items[0] : array('type' => 'image', 'src' => wc_placeholder_img_src(), 'thumb' => wc_placeholder_img_src());
+				?>
+				
+				<!-- Thumbnails list -->
+				<div class="pg-thumbs" id="thumbsWrap">
+					<?php foreach ( $gallery_items as $index => $item ) : ?>
+						<img class="<?php echo $index === 0 ? 'is-active' : ''; ?>" 
+						     src="<?php echo esc_url( $item['thumb'] ); ?>" 
+						     data-type="<?php echo esc_attr( $item['type'] ); ?>" 
+						     data-src="<?php echo esc_url( $item['src'] ); ?>" 
+						     alt="thumbnail" />
+					<?php endforeach; ?>
 				</div>
-				<div class="pg-main-image">
-					<img id="mainImage" src="<?php echo esc_url( $main_image_url ); ?>" alt="<?php the_title_attribute(); ?>" />
+				
+				<!-- Main preview container -->
+				<div class="pg-main-img" id="mainMediaContainer" style="position: relative;">
+					<img id="mainImage" 
+					     src="<?php echo $first_item['type'] === 'image' ? esc_url( $first_item['src'] ) : ''; ?>" 
+					     alt="<?php the_title_attribute(); ?>" 
+					     style="width: 100%; height: 100%; object-fit: contain; display: <?php echo $first_item['type'] === 'image' ? 'block' : 'none'; ?>;" />
+					
+					<video id="mainVideo" 
+					       autoplay loop muted playsinline 
+					       src="<?php echo $first_item['type'] === 'video' ? esc_url( $first_item['src'] ) : ''; ?>" 
+					       style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px; display: <?php echo $first_item['type'] === 'video' ? 'block' : 'none'; ?>;"></video>
 				</div>
 			</div>
 		</div>

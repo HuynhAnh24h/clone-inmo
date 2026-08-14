@@ -112,12 +112,38 @@ document.addEventListener('DOMContentLoaded', () => {
 	// ---- SINGLE PRODUCT LOGIC ----
 	const thumbs = document.querySelectorAll('.pg-thumbs img');
 	const mainImage = document.getElementById('mainImage');
-	if (thumbs.length > 0 && mainImage) {
+	const mainVideo = document.getElementById('mainVideo');
+	if (thumbs.length > 0) {
 		thumbs.forEach(img => {
 			img.addEventListener('click', () => {
-				mainImage.src = img.getAttribute('data-full');
+				const type = img.getAttribute('data-type') || 'image';
+				const src = img.getAttribute('data-src');
+				
 				thumbs.forEach(t => t.classList.remove('is-active'));
 				img.classList.add('is-active');
+				
+				if (type === 'video') {
+					if (mainVideo) {
+						mainVideo.src = src;
+						mainVideo.style.display = 'block';
+						mainVideo.load();
+						mainVideo.play().catch(e => console.log('Autoplay blocked:', e));
+					}
+					if (mainImage) {
+						mainImage.style.display = 'none';
+						mainImage.src = '';
+					}
+				} else {
+					if (mainImage) {
+						mainImage.src = src;
+						mainImage.style.display = 'block';
+					}
+					if (mainVideo) {
+						mainVideo.style.display = 'none';
+						mainVideo.pause();
+						mainVideo.src = '';
+					}
+				}
 			});
 		});
 	}
@@ -177,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		];
 		featureLgData1.forEach((f) => {
 			const col = document.createElement('div');
-			col.className = 'col-md-4';
+			col.className = 'col-12 col-md-4';
 			const mediaHtml = f.video ? 
 				`<video class="pg-feature-lg-video" autoplay loop muted playsinline><source src="${f.video}" type="video/mp4"></video>` : 
 				`<img src="${f.image || f.img}" alt="${f.title}">`;
@@ -203,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		];
 		featureLgData2.forEach((f) => {
 			const col = document.createElement('div');
-			col.className = 'col-6 col-md-3';
+			col.className = 'col-12 col-md-3';
 			const mediaHtml = f.video ? 
 				`<video class="pg-feature-lg-video" autoplay loop muted playsinline><source src="${f.video}" type="video/mp4"></video>` : 
 				`<img src="${f.image || f.img}" alt="${f.title}">`;

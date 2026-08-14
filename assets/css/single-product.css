@@ -1004,3 +1004,16 @@ html, body {
 	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 	line-height: 1.4;
 }
+
+/* Mobile responsive adjustments for feature-lg grid */
+@media (max-width: 767px) {
+	.pg-feature-lg {
+		min-height: 200px !important;
+	}
+	.pg-feature-lg-info {
+		padding: 16px !important;
+	}
+	.pg-feature-lg span {
+		font-size: 0.95rem !important;
+	}
+}
