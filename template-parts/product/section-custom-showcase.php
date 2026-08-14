@@ -13,6 +13,8 @@ if ( $layout_type && $layout_type !== 'none' ) :
 	$layout_btn_lnk = get_field('custom_layout_btn_link');
 	$layout_img1    = get_field('custom_layout_img_1');
 	$layout_img2    = get_field('custom_layout_img_2');
+	$layout_img3    = get_field('custom_layout_img_3');
+	$layout_img4    = get_field('custom_layout_img_4');
 	$layout_prod_id = get_field('custom_layout_product');
 ?>
 	<section class="pg-custom-showcase-section style-<?php echo esc_attr($layout_type); ?>">
@@ -39,15 +41,25 @@ if ( $layout_type && $layout_type !== 'none' ) :
 						<?php endif; ?>
 					</div>
 					<div class="col-lg-7 col-12 pg-custom-right position-relative">
-						<div class="pg-bundle-grid">
+						<div class="pg-bundle-grid-staggered">
 							<?php if ( $layout_img1 ) : ?>
-								<div class="pg-bundle-img-col">
-									<img src="<?php echo esc_url($layout_img1); ?>" alt="Bundle Image 1" class="img-fluid rounded-4 shadow-sm">
+								<div class="pg-bundle-img pg-bundle-img-1">
+									<img src="<?php echo esc_url($layout_img1); ?>" alt="Bundle Image 1" class="img-fluid rounded-4 shadow-lg">
 								</div>
 							<?php endif; ?>
 							<?php if ( $layout_img2 ) : ?>
-								<div class="pg-bundle-img-col">
-									<img src="<?php echo esc_url($layout_img2); ?>" alt="Bundle Image 2" class="img-fluid rounded-4 shadow-sm">
+								<div class="pg-bundle-img pg-bundle-img-2">
+									<img src="<?php echo esc_url($layout_img2); ?>" alt="Bundle Image 2" class="img-fluid rounded-4 shadow-lg">
+								</div>
+							<?php endif; ?>
+							<?php if ( $layout_img3 ) : ?>
+								<div class="pg-bundle-img pg-bundle-img-3">
+									<img src="<?php echo esc_url($layout_img3); ?>" alt="Bundle Image 3" class="img-fluid rounded-4 shadow-lg">
+								</div>
+							<?php endif; ?>
+							<?php if ( $layout_img4 ) : ?>
+								<div class="pg-bundle-img pg-bundle-img-4">
+									<img src="<?php echo esc_url($layout_img4); ?>" alt="Bundle Image 4" class="img-fluid rounded-4 shadow-lg">
 								</div>
 							<?php endif; ?>
 						</div>

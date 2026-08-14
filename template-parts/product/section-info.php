@@ -109,7 +109,6 @@ global $product;
 			?>
 
 			<form class="cart" action="<?php echo esc_url( apply_filters( 'woocommerce_add_to_cart_form_action', $product->get_permalink() ) ); ?>" method="post" enctype='multipart/form-data'>
-				<input type="hidden" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>" />
 				<div class="pg-cart-wrap">
 					<div class="pg-qty">
 						<button type="button" class="minus">–</button>

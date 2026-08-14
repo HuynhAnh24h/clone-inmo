@@ -320,6 +320,38 @@ $fields[] = array(
     ),
 );
 $fields[] = array(
+    'key' => 'field_custom_layout_img_3',
+    'label' => 'Hình ảnh 3',
+    'name' => 'custom_layout_img_3',
+    'type' => 'image',
+    'return_format' => 'url',
+    'conditional_logic' => array(
+        array(
+            array(
+                'field' => 'field_custom_layout_type',
+                'operator' => '!=',
+                'value' => 'none',
+            ),
+        ),
+    ),
+);
+$fields[] = array(
+    'key' => 'field_custom_layout_img_4',
+    'label' => 'Hình ảnh 4',
+    'name' => 'custom_layout_img_4',
+    'type' => 'image',
+    'return_format' => 'url',
+    'conditional_logic' => array(
+        array(
+            array(
+                'field' => 'field_custom_layout_type',
+                'operator' => '!=',
+                'value' => 'none',
+            ),
+        ),
+    ),
+);
+$fields[] = array(
     'key' => 'field_custom_layout_product',
     'label' => 'Sản phẩm đi kèm (Thẻ mua nhanh)',
     'name' => 'custom_layout_product',
