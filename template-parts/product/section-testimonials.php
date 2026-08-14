@@ -26,8 +26,9 @@ global $product;
 		for ( $k = 1; $k <= 5; $k++ ) {
 			$img = get_field('feature_sm_' . $k . '_img');
 			$title = get_field('feature_sm_' . $k . '_title');
-			if ( $img || $title ) {
-				$feature_sm[] = array('img' => $img, 'title' => $title);
+			$desc = get_field('feature_sm_' . $k . '_desc');
+			if ( $img || $title || $desc ) {
+				$feature_sm[] = array('img' => $img, 'title' => $title, 'desc' => $desc);
 			}
 		}
 		// Feature Lg 1

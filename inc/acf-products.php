@@ -263,14 +263,22 @@ for ($k = 1; $k <= 5; $k++) {
         'name' => 'feature_sm_' . $k . '_img',
         'type' => 'image',
         'return_format' => 'url',
-        'wrapper' => array('width' => '50%'),
+        'wrapper' => array('width' => '33%'),
     );
     $fields[] = array(
         'key' => 'field_feature_sm_' . $k . '_title',
         'label' => 'Lưới ảnh nhỏ (Hàng trên) ' . $k . ' - Tiêu đề',
         'name' => 'feature_sm_' . $k . '_title',
         'type' => 'text',
-        'wrapper' => array('width' => '50%'),
+        'wrapper' => array('width' => '33%'),
+    );
+    $fields[] = array(
+        'key' => 'field_feature_sm_' . $k . '_desc',
+        'label' => 'Lưới ảnh nhỏ (Hàng trên) ' . $k . ' - Mô tả',
+        'name' => 'feature_sm_' . $k . '_desc',
+        'type' => 'textarea',
+        'rows' => 2,
+        'wrapper' => array('width' => '34%'),
     );
 }
 

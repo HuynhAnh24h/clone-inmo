@@ -153,8 +153,9 @@ document.addEventListener('DOMContentLoaded', () => {
 		if (!Array.isArray(featureSmData) || featureSmData.length === 0) featureSmData = [];
 		featureSmData.forEach((f) => {
 			const col = document.createElement('div');
-			col.className = 'col-6 col-md';
-			col.innerHTML = `<div class="pg-feature-sm"><img src="${f.image || f.img}" alt="${f.title}"><span>${f.title}</span></div>`;
+			col.className = 'col-12 col-sm-6 col-lg';
+			const descHtml = f.desc ? `<p class="pg-feature-sm-desc">${f.desc}</p>` : '';
+			col.innerHTML = `<div class="pg-feature-sm"><img src="${f.image || f.img}" alt="${f.title}"><span>${f.title}</span>${descHtml}</div>`;
 			featureSmWrap.appendChild(col);
 		});
 	}

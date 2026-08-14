@@ -827,3 +827,61 @@ html, body {
 		border-radius: 12px !important;
 	}
 }
+
+/* ================= CUSTOM FEATURE SM HOVER ACCORDION ================= */
+.pg-feature-sm {
+	background: #1c1d21 !important;
+	border: 1px solid rgba(255, 255, 255, 0.05) !important;
+	border-radius: 16px !important;
+	padding: 20px !important;
+	text-align: center;
+	transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+}
+.pg-feature-sm:hover {
+	transform: translateY(-6px);
+	border-color: #2de6a8 !important;
+	box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25) !important;
+	background: #23252b !important;
+}
+.pg-feature-sm img {
+	width: 100% !important;
+	max-width: 100%;
+	height: auto;
+	object-fit: cover;
+	border-radius: 10px !important;
+	margin-bottom: 15px !important;
+	transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.pg-feature-sm:hover img {
+	transform: scale(1.02);
+}
+.pg-feature-sm span {
+	display: block;
+	font-size: 0.95rem !important;
+	font-weight: 600 !important;
+	color: #ffffff !important;
+	margin-bottom: 0 !important;
+	transition: color 0.3s;
+}
+.pg-feature-sm:hover span {
+	color: #2de6a8 !important;
+}
+.pg-feature-sm-desc {
+	font-size: 0.82rem;
+	color: #9ca3af;
+	line-height: 1.4;
+	margin: 0;
+	max-height: 0;
+	opacity: 0;
+	overflow: hidden;
+	transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, margin-top 0.3s ease;
+}
+.pg-feature-sm:hover .pg-feature-sm-desc {
+	max-height: 100px;
+	opacity: 1;
+	margin-top: 10px;
+}
