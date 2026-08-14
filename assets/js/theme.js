@@ -113,6 +113,16 @@ document.addEventListener('DOMContentLoaded', () => {
 	const thumbs = document.querySelectorAll('.pg-thumbs img');
 	const mainImage = document.getElementById('mainImage');
 	const mainVideo = document.getElementById('mainVideo');
+	
+	// Lightbox references
+	const lightbox = document.getElementById('pgLightbox');
+	const lightboxImg = document.getElementById('lightboxImg');
+	const lightboxVideo = document.getElementById('lightboxVideo');
+	const lightboxClose = document.getElementById('lightboxClose');
+	const lightboxPrev = document.getElementById('lightboxPrev');
+	const lightboxNext = document.getElementById('lightboxNext');
+	
+	// Main container click handler to switch between media
 	if (thumbs.length > 0) {
 		thumbs.forEach(img => {
 			img.addEventListener('click', () => {
@@ -144,7 +154,136 @@ document.addEventListener('DOMContentLoaded', () => {
 						mainVideo.src = '';
 					}
 				}
+				
+				// Sync lightbox if it's currently open
+				if (lightbox && lightbox.style.display === 'flex') {
+					syncLightbox(type, src);
+				}
 			});
+		});
+	}
+
+	// Helper to navigate gallery
+	function navigateGallery(direction) {
+		const allThumbs = Array.from(document.querySelectorAll('.pg-thumbs img'));
+		if (allThumbs.length === 0) return;
+		const activeIndex = allThumbs.findIndex(t => t.classList.contains('is-active'));
+		let nextIndex = activeIndex + direction;
+		if (nextIndex < 0) nextIndex = allThumbs.length - 1;
+		if (nextIndex >= allThumbs.length) nextIndex = 0;
+		
+		allThumbs[nextIndex].click();
+		allThumbs[nextIndex].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+	}
+
+	// Main preview previous/next arrows
+	const prevBtn = document.getElementById('galleryPrevBtn');
+	const nextBtn = document.getElementById('galleryNextBtn');
+	if (prevBtn) {
+		prevBtn.addEventListener('click', (e) => {
+			e.stopPropagation();
+			navigateGallery(-1);
+		});
+	}
+	if (nextBtn) {
+		nextBtn.addEventListener('click', (e) => {
+			e.stopPropagation();
+			navigateGallery(1);
+		});
+	}
+
+	// Thumbnails vertical scroll arrows
+	const thumbsWrap = document.getElementById('thumbsWrap');
+	const arrowUp = document.getElementById('thumbArrowUp');
+	const arrowDown = document.getElementById('thumbArrowDown');
+	if (thumbsWrap) {
+		if (arrowUp) {
+			arrowUp.addEventListener('click', () => {
+				thumbsWrap.scrollBy({ top: -100, behavior: 'smooth' });
+			});
+		}
+		if (arrowDown) {
+			arrowDown.addEventListener('click', () => {
+				thumbsWrap.scrollBy({ top: 100, behavior: 'smooth' });
+			});
+		}
+	}
+
+	// Sync lightbox function
+	function syncLightbox(type, src) {
+		if (type === 'video') {
+			if (lightboxVideo) {
+				lightboxVideo.src = src;
+				lightboxVideo.style.display = 'block';
+				lightboxVideo.load();
+				lightboxVideo.play();
+			}
+			if (lightboxImg) lightboxImg.style.display = 'none';
+		} else {
+			if (lightboxImg) {
+				lightboxImg.src = src;
+				lightboxImg.style.display = 'block';
+				lightboxImg.classList.remove('zoomed'); // reset zoom
+			}
+			if (lightboxVideo) {
+				lightboxVideo.style.display = 'none';
+				lightboxVideo.pause();
+			}
+		}
+	}
+
+	// Open lightbox on clicking main preview
+	const mainMediaContainer = document.getElementById('mainMediaContainer');
+	if (mainMediaContainer && lightbox) {
+		mainMediaContainer.addEventListener('click', (e) => {
+			// Don't open if clicked on navigation arrows
+			if (e.target.closest('.pg-gallery-arrow')) return;
+			
+			const activeThumb = document.querySelector('.pg-thumbs img.is-active');
+			if (!activeThumb) return;
+			const type = activeThumb.getAttribute('data-type') || 'image';
+			const src = activeThumb.getAttribute('data-src');
+			
+			lightbox.style.display = 'flex';
+			syncLightbox(type, src);
+		});
+	}
+
+	// Close Lightbox
+	if (lightboxClose && lightbox) {
+		lightboxClose.addEventListener('click', () => {
+			lightbox.style.display = 'none';
+			if (lightboxVideo) lightboxVideo.pause();
+		});
+	}
+	if (lightbox) {
+		lightbox.addEventListener('click', (e) => {
+			if (e.target === lightbox) {
+				lightbox.style.display = 'none';
+				if (lightboxVideo) lightboxVideo.pause();
+			}
+		});
+	}
+
+	// Lightbox arrows navigation
+	if (lightboxPrev) {
+		lightboxPrev.addEventListener('click', (e) => {
+			e.stopPropagation();
+			navigateGallery(-1);
+		});
+	}
+	if (lightboxNext) {
+		lightboxNext.addEventListener('click', (e) => {
+			e.stopPropagation();
+			navigateGallery(1);
+		});
+	}
+
+	// Zoom image inside Lightbox
+	if (lightboxImg) {
+		lightboxImg.addEventListener('click', (e) => {
+			e.stopPropagation();
+			lightboxImg.classList.toggle('zoomed');
 		});
 	}
 

@@ -64,19 +64,28 @@ global $product;
 				$first_item = !empty($gallery_items) ? $gallery_items[0] : array('type' => 'image', 'src' => wc_placeholder_img_src(), 'thumb' => wc_placeholder_img_src());
 				?>
 				
-				<!-- Thumbnails list -->
-				<div class="pg-thumbs" id="thumbsWrap">
-					<?php foreach ( $gallery_items as $index => $item ) : ?>
-						<img class="<?php echo $index === 0 ? 'is-active' : ''; ?>" 
-						     src="<?php echo esc_url( $item['thumb'] ); ?>" 
-						     data-type="<?php echo esc_attr( $item['type'] ); ?>" 
-						     data-src="<?php echo esc_url( $item['src'] ); ?>" 
-						     alt="thumbnail" />
-					<?php endforeach; ?>
+				<!-- Thumbnails wrapper with scroll arrows -->
+				<div class="pg-thumbs-wrapper">
+					<div class="pg-thumb-arrow pg-thumb-arrow-up" id="thumbArrowUp"><i class="bi bi-chevron-up"></i></div>
+					
+					<div class="pg-thumbs" id="thumbsWrap">
+						<?php foreach ( $gallery_items as $index => $item ) : ?>
+							<img class="<?php echo $index === 0 ? 'is-active' : ''; ?>" 
+							     src="<?php echo esc_url( $item['thumb'] ); ?>" 
+							     data-type="<?php echo esc_attr( $item['type'] ); ?>" 
+							     data-src="<?php echo esc_url( $item['src'] ); ?>" 
+							     alt="thumbnail" />
+						<?php endforeach; ?>
+					</div>
+					
+					<div class="pg-thumb-arrow pg-thumb-arrow-down" id="thumbArrowDown"><i class="bi bi-chevron-down"></i></div>
 				</div>
 				
-				<!-- Main preview container -->
-				<div class="pg-main-img" id="mainMediaContainer" style="position: relative;">
+				<!-- Main preview container with gallery nav arrows -->
+				<div class="pg-main-img" id="mainMediaContainer" style="position: relative; cursor: zoom-in;">
+					<div class="pg-gallery-arrow pg-gallery-prev" id="galleryPrevBtn"><i class="bi bi-chevron-left"></i></div>
+					<div class="pg-gallery-arrow pg-gallery-next" id="galleryNextBtn"><i class="bi bi-chevron-right"></i></div>
+					
 					<img id="mainImage" 
 					     src="<?php echo $first_item['type'] === 'image' ? esc_url( $first_item['src'] ) : ''; ?>" 
 					     alt="<?php the_title_attribute(); ?>" 
@@ -107,7 +116,7 @@ global $product;
 						<input type="number" id="qtyValue" class="qty" name="quantity" value="1" min="1" max="<?php echo esc_attr( $product->get_stock_quantity() ); ?>" />
 						<button type="button" class="plus">+</button>
 					</div>
-					<button type="submit" class="single_add_to_cart_button">Thêm vào giỏ hàng</button>
+					<button type="submit" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>" class="single_add_to_cart_button button alt">Thêm vào giỏ hàng</button>
 				</div>
 			</form>
 			
@@ -157,3 +166,14 @@ global $product;
 		</div>
 	</div>
 </section>
+
+<!-- Gallery Lightbox Modal -->
+<div id="pgLightbox" class="pg-lightbox">
+	<span class="pg-lightbox-close" id="lightboxClose">&times;</span>
+	<div class="pg-lightbox-content">
+		<img id="lightboxImg" src="" alt="Lightbox zoom view" />
+		<video id="lightboxVideo" autoplay loop muted playsinline controls style="display: none; width: 100%; max-height: 85vh; border-radius: 8px;"></video>
+	</div>
+	<div class="pg-lightbox-arrow pg-lightbox-prev" id="lightboxPrev"><i class="bi bi-chevron-left"></i></div>
+	<div class="pg-lightbox-arrow pg-lightbox-next" id="lightboxNext"><i class="bi bi-chevron-right"></i></div>
+</div>
