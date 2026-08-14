@@ -20,7 +20,7 @@ $banner_img_url = $thumbnail_id ? wp_get_attachment_url( $thumbnail_id ) : '';
 <!-- Category Banner Section -->
 <section class="pg-category-banner" style="background-image: url('<?php echo esc_url($banner_img_url); ?>');">
 	<div class="pg-category-banner-overlay"></div>
-	<div class="container-fluid px-3 px-md-5 pg-category-banner-content">
+	<div class="container pg-category-banner-content">
 		<nav class="pg-category-breadcrumb" aria-label="breadcrumb">
 			<a href="<?php echo esc_url( home_url('/') ); ?>"><i class="bi bi-house-door-fill"></i></a>
 			<span class="sep">/</span>
