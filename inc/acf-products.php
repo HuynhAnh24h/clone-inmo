@@ -11,10 +11,20 @@ $fields[] = array(
     'label' => 'Nội dung chung',
     'name' => '',
     'type' => 'tab',
-    'placement' => 'top',
+    'placement' => 'left',
     'endpoint' => 0,
 );
 // --- Bắt đầu thêm video scroll cố định và nội dung trượt đè ---
+$fields[] = array(
+    'key' => 'field_show_scroll_video',
+    'label' => 'Hiển thị Section Video Scroll',
+    'name' => 'show_scroll_video',
+    'type' => 'true_false',
+    'default_value' => 1,
+    'ui' => 1,
+    'ui_on_text' => 'Bật',
+    'ui_off_text' => 'Tắt',
+);
 $fields[] = array(
     'key' => 'field_scroll_video',
     'label' => 'Video Scroll Cố định',
@@ -67,6 +77,28 @@ $fields[] = array(
     'name' => 'ergonomic_subheading',
     'type' => 'text',
     'default_value' => 'Precision crafted for lightweight performance',
+);
+
+// ==========================
+// TAB: Layout Đặc biệt (Showcase)
+// ==========================
+$fields[] = array(
+    'key' => 'field_tab_showcase',
+    'label' => 'Layout Đặc biệt (Showcase)',
+    'name' => '',
+    'type' => 'tab',
+    'placement' => 'left',
+    'endpoint' => 0,
+);
+$fields[] = array(
+    'key' => 'field_show_custom_showcase',
+    'label' => 'Hiển thị Layout Đặc biệt',
+    'name' => 'show_custom_showcase',
+    'type' => 'true_false',
+    'default_value' => 1,
+    'ui' => 1,
+    'ui_on_text' => 'Bật',
+    'ui_off_text' => 'Tắt',
 );
 
 // --- Bắt đầu thêm Khối Layout Đặc biệt (Custom Showcase Block) ---
@@ -216,6 +248,50 @@ $fields[] = array(
 );
 // --- Kết thúc Khối Layout Đặc biệt ---
 
+// ==========================
+// TAB: CTA Sẵn sàng mua (Ready CTA)
+// ==========================
+$fields[] = array(
+    'key' => 'field_tab_ready_cta',
+    'label' => 'CTA Sẵn sàng mua',
+    'name' => '',
+    'type' => 'tab',
+    'placement' => 'left',
+    'endpoint' => 0,
+);
+$fields[] = array(
+    'key' => 'field_show_ready_cta',
+    'label' => 'Hiển thị CTA Sẵn sàng mua',
+    'name' => 'show_ready_cta',
+    'type' => 'true_false',
+    'default_value' => 1,
+    'ui' => 1,
+    'ui_on_text' => 'Bật',
+    'ui_off_text' => 'Tắt',
+);
+
+// ==========================
+// TAB: Thanh mua nhanh (Sticky Bar)
+// ==========================
+$fields[] = array(
+    'key' => 'field_tab_sticky_bar',
+    'label' => 'Thanh mua nhanh (Sticky Bar)',
+    'name' => '',
+    'type' => 'tab',
+    'placement' => 'left',
+    'endpoint' => 0,
+);
+$fields[] = array(
+    'key' => 'field_show_sticky_bar',
+    'label' => 'Hiển thị Sticky Buy Bar',
+    'name' => 'show_sticky_bar',
+    'type' => 'true_false',
+    'default_value' => 1,
+    'ui' => 1,
+    'ui_on_text' => 'Bật',
+    'ui_off_text' => 'Tắt',
+);
+
 
 // ==========================
 // TAB 2: Tính năng (Accordion)
@@ -225,8 +301,18 @@ $fields[] = array(
     'label' => 'Tính năng (Accordion)',
     'name' => '',
     'type' => 'tab',
-    'placement' => 'top',
+    'placement' => 'left',
     'endpoint' => 0,
+);
+$fields[] = array(
+    'key' => 'field_show_accordion',
+    'label' => 'Hiển thị Accordion Tính năng',
+    'name' => 'show_accordion',
+    'type' => 'true_false',
+    'default_value' => 1,
+    'ui' => 1,
+    'ui_on_text' => 'Bật',
+    'ui_off_text' => 'Tắt',
 );
 for ($i = 1; $i <= 5; $i++) {
     $fields[] = array(
@@ -251,8 +337,18 @@ $fields[] = array(
     'label' => 'Gallery Thiết kế',
     'name' => '',
     'type' => 'tab',
-    'placement' => 'top',
+    'placement' => 'left',
     'endpoint' => 0,
+);
+$fields[] = array(
+    'key' => 'field_show_ergonomic',
+    'label' => 'Hiển thị Lưới Thiết kế & Công thái học',
+    'name' => 'show_ergonomic',
+    'type' => 'true_false',
+    'default_value' => 1,
+    'ui' => 1,
+    'ui_on_text' => 'Bật',
+    'ui_off_text' => 'Tắt',
 );
 
 // Lưới 1 (Nhỏ) - Tối đa 5 ảnh
@@ -328,8 +424,18 @@ $fields[] = array(
     'label' => 'INMO App',
     'name' => '',
     'type' => 'tab',
-    'placement' => 'top',
+    'placement' => 'left',
     'endpoint' => 0,
+);
+$fields[] = array(
+    'key' => 'field_show_app',
+    'label' => 'Hiển thị Section App & Độ tương thích',
+    'name' => 'show_app',
+    'type' => 'true_false',
+    'default_value' => 1,
+    'ui' => 1,
+    'ui_on_text' => 'Bật',
+    'ui_off_text' => 'Tắt',
 );
 
 // Dòng máy tương thích - Tối đa 5 máy
@@ -366,8 +472,18 @@ $fields[] = array(
     'label' => 'Trải nghiệm (Testimonials)',
     'name' => '',
     'type' => 'tab',
-    'placement' => 'top',
+    'placement' => 'left',
     'endpoint' => 0,
+);
+$fields[] = array(
+    'key' => 'field_show_testimonials',
+    'label' => 'Hiển thị Section Đánh giá chuyên gia',
+    'name' => 'show_testimonials',
+    'type' => 'true_false',
+    'default_value' => 1,
+    'ui' => 1,
+    'ui_on_text' => 'Bật',
+    'ui_off_text' => 'Tắt',
 );
 
 // Đánh giá chuyên gia / Video - Tối đa 5 đánh giá
@@ -412,7 +528,7 @@ $fields[] = array(
     'label' => 'Tab & Ghi chú Tùy chỉnh',
     'name' => '',
     'type' => 'tab',
-    'placement' => 'top',
+    'placement' => 'left',
     'endpoint' => 0,
 );
 $fields[] = array(

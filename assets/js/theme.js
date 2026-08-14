@@ -155,7 +155,15 @@ document.addEventListener('DOMContentLoaded', () => {
 			const col = document.createElement('div');
 			col.className = 'col-12 col-sm-6 col-lg';
 			const descHtml = f.desc ? `<p class="pg-feature-sm-desc">${f.desc}</p>` : '';
-			col.innerHTML = `<div class="pg-feature-sm"><img src="${f.image || f.img}" alt="${f.title}"><span>${f.title}</span>${descHtml}</div>`;
+			col.innerHTML = `
+				<div class="pg-feature-sm">
+					<img src="${f.image || f.img}" alt="${f.title}">
+					<div class="pg-feature-sm-info">
+						<span>${f.title}</span>
+						${descHtml}
+					</div>
+				</div>
+			`;
 			featureSmWrap.appendChild(col);
 		});
 	}

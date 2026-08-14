@@ -58,21 +58,21 @@ function inmo_theme_scripts() {
 	// Main theme styles
 	wp_enqueue_style( 'inmo-theme-style', get_stylesheet_uri(), array(), wp_get_theme()->get( 'Version' ) );
 	wp_enqueue_style( 'inmo-bootstrap-style', get_template_directory_uri() . '/assets/css/bootstrap.min.css', array(), '5.3' );
-	wp_enqueue_style( 'inmo-theme-core-style', get_template_directory_uri() . '/assets/css/theme-core.css', array('inmo-bootstrap-style'), wp_get_theme()->get( 'Version' ) );
-	wp_enqueue_style( 'inmo-theme-main-style', get_template_directory_uri() . '/assets/css/style.css', array('inmo-theme-core-style'), wp_get_theme()->get( 'Version' ) );
+	wp_enqueue_style( 'inmo-theme-core-style', get_template_directory_uri() . '/assets/css/theme-core.css', array('inmo-bootstrap-style'), time() );
+	wp_enqueue_style( 'inmo-theme-main-style', get_template_directory_uri() . '/assets/css/style.css', array('inmo-theme-core-style'), time() );
 
 	// Page-specific styles
 	if ( function_exists('is_product') && is_product() ) {
-		wp_enqueue_style( 'inmo-single-product-style', get_template_directory_uri() . '/assets/css/single-product.css', array('inmo-theme-core-style'), wp_get_theme()->get( 'Version' ) );
+		wp_enqueue_style( 'inmo-single-product-style', get_template_directory_uri() . '/assets/css/single-product.css', array('inmo-theme-core-style'), time() );
 	}
 	if ( is_page_template( 'page-support.php' ) ) {
-		wp_enqueue_style( 'inmo-page-support-style', get_template_directory_uri() . '/assets/css/page-support.css', array('inmo-theme-core-style'), wp_get_theme()->get( 'Version' ) );
+		wp_enqueue_style( 'inmo-page-support-style', get_template_directory_uri() . '/assets/css/page-support.css', array('inmo-theme-core-style'), time() );
 	}
 
 	// Scripts
 	wp_enqueue_script( 'bootstrap-js', get_template_directory_uri() . '/assets/js/bootstrap.min.js', array(), '5.3', true );
     wp_enqueue_script( 'splide-js', 'https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js', array(), '4.1.4', true );
-	wp_enqueue_script( 'inmo-theme-main-js', get_template_directory_uri() . '/assets/js/theme.js', array('splide-js'), wp_get_theme()->get( 'Version' ), true );
+	wp_enqueue_script( 'inmo-theme-main-js', get_template_directory_uri() . '/assets/js/theme.js', array('splide-js'), time(), true );
 	
 	// Localize AJAX URL for frontend JS
 	wp_localize_script( 'inmo-theme-main-js', 'ajaxurl', admin_url( 'admin-ajax.php' ) );

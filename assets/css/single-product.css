@@ -830,49 +830,79 @@ html, body {
 
 /* ================= CUSTOM FEATURE SM HOVER ACCORDION ================= */
 .pg-feature-sm {
+	position: relative !important;
 	background: #1c1d21 !important;
-	border: 1px solid rgba(255, 255, 255, 0.05) !important;
+	border: none !important;
 	border-radius: 16px !important;
-	padding: 20px !important;
-	text-align: center;
+	padding: 0 !important;
+	text-align: left !important;
 	transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
 	height: 100%;
+	min-height: 380px;
+	overflow: hidden !important;
 	display: flex;
 	flex-direction: column;
-	justify-content: flex-start;
 }
 .pg-feature-sm:hover {
 	transform: translateY(-6px);
-	border-color: #2de6a8 !important;
-	box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25) !important;
-	background: #23252b !important;
+	box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35) !important;
 }
 .pg-feature-sm img {
 	width: 100% !important;
-	max-width: 100%;
-	height: auto;
-	object-fit: cover;
-	border-radius: 10px !important;
-	margin-bottom: 15px !important;
-	transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+	height: 100% !important;
+	object-fit: cover !important;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	margin: 0 !important;
+	border-radius: 16px !important;
+	transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 .pg-feature-sm:hover img {
-	transform: scale(1.02);
+	transform: scale(1.05);
+}
+
+/* Gradient overlay for readability */
+.pg-feature-sm::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 60%;
+	background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 60%, rgba(0, 0, 0, 0) 100%);
+	z-index: 2;
+	transition: height 0.4s ease;
+}
+.pg-feature-sm:hover::before {
+	height: 80%;
+}
+
+/* Text info container overlay */
+.pg-feature-sm-info {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 20px !important;
+	z-index: 3;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
 }
 .pg-feature-sm span {
 	display: block;
-	font-size: 0.95rem !important;
+	font-size: 1.15rem !important;
 	font-weight: 600 !important;
 	color: #ffffff !important;
 	margin-bottom: 0 !important;
 	transition: color 0.3s;
-}
-.pg-feature-sm:hover span {
-	color: #2de6a8 !important;
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
 .pg-feature-sm-desc {
 	font-size: 0.82rem;
-	color: #9ca3af;
+	color: #d1d5db;
 	line-height: 1.4;
 	margin: 0;
 	max-height: 0;
@@ -881,7 +911,21 @@ html, body {
 	transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, margin-top 0.3s ease;
 }
 .pg-feature-sm:hover .pg-feature-sm-desc {
-	max-height: 100px;
+	max-height: 120px;
 	opacity: 1;
 	margin-top: 10px;
+}
+
+/* Force 5 columns to be on a single row on screens 768px and up */
+@media (min-width: 768px) {
+	#featureSmWrap {
+		display: flex !important;
+		flex-wrap: nowrap !important;
+		gap: 16px !important;
+	}
+	#featureSmWrap > div {
+		flex: 1 1 0% !important;
+		width: auto !important;
+		max-width: none !important;
+	}
 }

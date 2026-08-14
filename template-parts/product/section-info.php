@@ -55,6 +55,10 @@ global $product;
 			
 			<a href="<?php echo esc_url( wc_get_checkout_url() ); ?>?add-to-cart=<?php echo esc_attr( $product->get_id() ); ?>" class="btn-buy-now">Mua ngay</a>
 
+			<?php
+			$show_accordion = function_exists('get_field') && get_field('show_accordion') !== null ? get_field('show_accordion') : true;
+			if ( $show_accordion ) :
+			?>
 			<div id="accordionWrap">
 				<?php
 				if ( function_exists('get_field') ) {
@@ -80,6 +84,7 @@ global $product;
 					<div class="pg-accordion-body">Tương tác dễ dàng với trợ lý ảo bằng giọng nói mọi lúc mọi nơi.</div>
 				<?php } ?>
 			</div>
+			<?php endif; ?>
 
 			<div class="pg-app-downloads">
 				<div>
