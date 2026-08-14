@@ -1017,3 +1017,42 @@ html, body {
 		font-size: 0.95rem !important;
 	}
 }
+
+/* ================= READY CTA SECTION CUSTOMIZATION ================= */
+.pg-ready h2 {
+	font-size: 50px !important;
+	font-weight: 700 !important;
+	color: #2de6a8 !important;
+	margin-bottom: 30px !important;
+	letter-spacing: -0.02em !important;
+	line-height: 1.2 !important;
+}
+.pg-ready .btn-pg-cta {
+	display: inline-block !important;
+	text-decoration: none !important;
+	font-size: 1.1rem !important;
+	padding: 14px 38px !important;
+	background: #1c1d21 !important;
+	color: #fff !important;
+	border: 1.5px solid #2e2e35 !important;
+	border-radius: 30px !important;
+	transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.pg-ready .btn-pg-cta:hover {
+	background: #2de6a8 !important;
+	color: #000 !important;
+	border-color: #2de6a8 !important;
+	transform: translateY(-2px) !important;
+	box-shadow: 0 8px 25px rgba(45, 230, 168, 0.3) !important;
+}
+
+@media (max-width: 767px) {
+	.pg-ready h2 {
+		font-size: 28px !important;
+		margin-bottom: 20px !important;
+	}
+	.pg-ready .btn-pg-cta {
+		padding: 12px 30px !important;
+		font-size: 1rem !important;
+	}
+}
