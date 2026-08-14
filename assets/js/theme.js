@@ -306,6 +306,17 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	}
 
+	// Dynamic quantity bind for Buy Now link
+	const buyNowBtn = document.querySelector('.btn-buy-now');
+	if (buyNowBtn && qtyInput) {
+		buyNowBtn.addEventListener('click', (e) => {
+			e.preventDefault();
+			const qty = parseInt(qtyInput.value) || 1;
+			const baseHref = buyNowBtn.getAttribute('href');
+			window.location.href = baseHref + '&quantity=' + qty;
+		});
+	}
+
 	const featureSmWrap = document.getElementById('featureSmWrap');
 	if (featureSmWrap) {
 		let featureSmData = window.acfProductData && window.acfProductData.featureSm ? window.acfProductData.featureSm : [
