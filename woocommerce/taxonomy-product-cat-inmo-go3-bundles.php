@@ -32,7 +32,7 @@ $banner_img_url = $thumbnail_id ? wp_get_attachment_url( $thumbnail_id ) : '';
 
 <!-- Category Products Grid Section -->
 <section class="pg-category-products py-5">
-	<div class="container-fluid px-3 px-md-5">
+	<div class="container">
 		<div class="row g-4" id="productGrid">
 			<?php
 			if ( woocommerce_product_loop() ) {
