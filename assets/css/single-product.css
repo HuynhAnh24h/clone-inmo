@@ -967,15 +967,15 @@ html, body {
 	transform: scale(1.04);
 }
 
-/* Dark readability gradient overlay */
+/* Dark readability gradient overlay (Top-down) */
 .pg-feature-lg::before {
 	content: '';
 	position: absolute;
 	left: 0;
 	right: 0;
-	bottom: 0;
+	top: 0;
 	height: 60%;
-	background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.3) 60%, rgba(0, 0, 0, 0) 100%);
+	background: linear-gradient(to bottom, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.3) 60%, rgba(0, 0, 0, 0) 100%);
 	z-index: 2;
 	transition: height 0.4s ease;
 }
@@ -983,17 +983,17 @@ html, body {
 	height: 80%;
 }
 
-/* Text info overlay */
+/* Text info overlay (Top aligned) */
 .pg-feature-lg-info {
 	position: absolute;
-	bottom: 0;
+	top: 0;
 	left: 0;
 	right: 0;
 	padding: 22px !important;
 	z-index: 3;
 	display: flex;
 	flex-direction: column;
-	justify-content: flex-end;
+	justify-content: flex-start;
 }
 .pg-feature-lg span {
 	display: block;
