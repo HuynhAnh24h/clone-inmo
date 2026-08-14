@@ -1,1 +1,143 @@
-/* CSS load moved to functions.php for performance */
+/* ================= CATEGORY ARCHIVE PAGE STYLES ================= */
+.pg-category-banner {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 380px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+.pg-category-banner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.75) 100%);
+    z-index: 1;
+}
+.pg-category-banner-content {
+    position: relative;
+    z-index: 2;
+    color: #fff;
+}
+.pg-category-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 12px;
+}
+.pg-category-breadcrumb a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+.pg-category-breadcrumb a:hover {
+    color: #2de6a8;
+}
+.pg-category-breadcrumb .sep {
+    font-size: 0.85rem;
+}
+.pg-category-breadcrumb .current {
+    font-weight: 500;
+    color: #fff;
+}
+.pg-category-title {
+    font-size: 3.2rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -0.02em;
+    color: #fff;
+}
+
+/* Category Grid and Cards */
+.pg-category-products {
+    background: #ffffff;
+}
+.pg-archive-product-card {
+    display: block;
+    text-decoration: none !important;
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    height: 100%;
+}
+.pg-archive-product-media {
+    position: relative;
+    background: #000; /* Dark wrapper for product images */
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+}
+.pg-archive-product-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.pg-archive-product-card:hover .pg-archive-product-media img {
+    transform: scale(1.05);
+}
+.pg-archive-product-rating {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(29, 29, 31, 0.85);
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    backdrop-filter: blur(4px);
+}
+.pg-archive-product-rating i {
+    color: #ffc107;
+}
+.pg-archive-product-info {
+    padding: 16px 8px 8px 8px;
+    text-align: left;
+}
+.pg-archive-product-title {
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: #1d1d1f;
+    margin: 0 0 6px 0;
+    line-height: 1.4;
+    transition: color 0.2s ease;
+}
+.pg-archive-product-card:hover .pg-archive-product-title {
+    color: #2de6a8;
+}
+.pg-archive-product-price {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: #6e6e73;
+    margin: 0;
+}
+
+@media (max-width: 767px) {
+    .pg-category-banner {
+        height: 260px;
+    }
+    .pg-category-title {
+        font-size: 2.2rem;
+    }
+    .pg-archive-product-title {
+        font-size: 0.95rem;
+    }
+    .pg-archive-product-price {
+        font-size: 0.85rem;
+    }
+}
