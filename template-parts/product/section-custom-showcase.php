@@ -32,13 +32,6 @@ if ( $layout_type && $layout_type !== 'none' ) :
 						<?php if ( $layout_desc ) : ?>
 							<p class="pg-showcase-desc"><?php echo esc_html($layout_desc); ?></p>
 						<?php endif; ?>
-						<?php if ( $layout_btn_txt && $layout_btn_lnk ) : ?>
-							<div class="mt-4">
-								<a href="<?php echo esc_url($layout_btn_lnk); ?>" class="btn-pg-cta style1-btn">
-									<?php echo esc_html($layout_btn_txt); ?> <i class="bi bi-arrow-right ms-1"></i>
-								</a>
-							</div>
-						<?php endif; ?>
 					</div>
 					<div class="col-lg-7 col-12 pg-custom-right position-relative">
 						<div class="pg-bundle-grid-2x2">
@@ -64,34 +57,6 @@ if ( $layout_type && $layout_type !== 'none' ) :
 							<?php endif; ?>
 						</div>
 						
-						<!-- Floating Product Card (Thẻ mua nhanh nổi) -->
-						<?php 
-						if ( $layout_prod_id ) {
-							$assoc_product = wc_get_product($layout_prod_id);
-							if ( $assoc_product ) {
-								$prod_title = $assoc_product->get_name();
-								$prod_price = $assoc_product->get_price_html();
-								$prod_thumb = wp_get_attachment_image_url($assoc_product->get_image_id(), 'thumbnail');
-								$add_to_cart_url = esc_url(wc_get_checkout_url() . '?add-to-cart=' . $layout_prod_id);
-								?>
-								<div class="pg-floating-product-card shadow-lg">
-									<?php if ( $prod_thumb ) : ?>
-										<div class="card-thumb">
-											<img src="<?php echo esc_url($prod_thumb); ?>" alt="<?php echo esc_attr($prod_title); ?>">
-										</div>
-									<?php endif; ?>
-									<div class="card-details">
-										<h4 class="card-title"><?php echo esc_html($prod_title); ?></h4>
-										<span class="card-price"><?php echo $prod_price; ?></span>
-									</div>
-									<div class="card-action">
-										<a href="<?php echo $add_to_cart_url; ?>" class="btn-card-buy">Buy Now</a>
-									</div>
-								</div>
-								<?php
-							}
-						}
-						?>
 					</div>
 				</div>
 			<?php elseif ( $layout_type === 'style2' ) : ?>
