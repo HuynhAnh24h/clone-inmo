@@ -452,6 +452,66 @@ for ($i = 1; $i <= 5; $i++) {
     );
 }
 
+// Bổ sung các trường Tải ứng dụng (App Downloads)
+$fields[] = array(
+    'key' => 'field_show_app_downloads',
+    'label' => 'Hiển thị Khung Tải Ứng dụng',
+    'name' => 'show_app_downloads',
+    'type' => 'true_false',
+    'default_value' => 1,
+    'ui' => 1,
+    'ui_on_text' => 'Bật',
+    'ui_off_text' => 'Tắt',
+);
+$fields[] = array(
+    'key' => 'field_app_downloads_title',
+    'label' => 'Tiêu đề Khung Tải Ứng dụng',
+    'name' => 'app_downloads_title',
+    'type' => 'text',
+    'default_value' => 'Ứng dụng có sẵn cho iOS và Android',
+    'conditional_logic' => array(
+        array(
+            array(
+                'field' => 'field_show_app_downloads',
+                'operator' => '==',
+                'value' => '1',
+            ),
+        ),
+    ),
+);
+$fields[] = array(
+    'key' => 'field_app_ios_link',
+    'label' => 'Đường dẫn tải App cho iOS',
+    'name' => 'app_ios_link',
+    'type' => 'text',
+    'default_value' => '/tai-ung-dung-va-huong-dan/',
+    'conditional_logic' => array(
+        array(
+            array(
+                'field' => 'field_show_app_downloads',
+                'operator' => '==',
+                'value' => '1',
+            ),
+        ),
+    ),
+);
+$fields[] = array(
+    'key' => 'field_app_android_link',
+    'label' => 'Đường dẫn tải App cho Android',
+    'name' => 'app_android_link',
+    'type' => 'text',
+    'default_value' => '/tai-ung-dung-va-huong-dan/',
+    'conditional_logic' => array(
+        array(
+            array(
+                'field' => 'field_show_app_downloads',
+                'operator' => '==',
+                'value' => '1',
+            ),
+        ),
+    ),
+);
+
 // ==========================
 // TAB 3: Gallery Thiết kế
 // ==========================
@@ -675,10 +735,29 @@ $fields[] = array(
     'endpoint' => 0,
 );
 $fields[] = array(
+    'key' => 'field_show_custom_note_1',
+    'label' => 'Hiển thị Ghi chú tùy chỉnh 1',
+    'name' => 'show_custom_note_1',
+    'type' => 'true_false',
+    'default_value' => 1,
+    'ui' => 1,
+    'ui_on_text' => 'Bật',
+    'ui_off_text' => 'Tắt',
+);
+$fields[] = array(
     'key' => 'field_custom_note_1',
-    'label' => 'Ghi chú tùy chỉnh 1',
+    'label' => 'Ghi chú tùy chỉnh 1 (Soạn thảo văn bản)',
     'name' => 'custom_note_1',
-    'type' => 'text',
+    'type' => 'wysiwyg',
+    'conditional_logic' => array(
+        array(
+            array(
+                'field' => 'field_show_custom_note_1',
+                'operator' => '==',
+                'value' => '1',
+            ),
+        ),
+    ),
 );
 $fields[] = array(
     'key' => 'field_custom_note_2',

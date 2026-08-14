@@ -102,10 +102,14 @@ global $product;
 		<div class="col-lg-5">
 			<h1 class="pg-info__title"><?php the_title(); ?></h1>
 			<div class="pg-info__price"><?php echo $product->get_price_html(); ?></div>
-			
 			<?php 
-			$note1 = function_exists('get_field') && get_field('custom_note_1') ? get_field('custom_note_1') : 'Người ủng hộ Kickstarter được ưu tiên giao hàng.';
-			echo '<p class="pg-top-note">' . esc_html( $note1 ) . '</p>';
+			$show_note1 = function_exists('get_field') && get_field('show_custom_note_1') !== null ? get_field('show_custom_note_1') : true;
+			if ( $show_note1 ) {
+				$note1 = function_exists('get_field') && get_field('custom_note_1') ? get_field('custom_note_1') : 'Người ủng hộ Kickstarter được ưu tiên giao hàng.';
+				if ( $note1 ) {
+					echo '<div class="pg-top-note">' . wp_kses_post( $note1 ) . '</div>';
+				}
+			}
 			?>
 
 			<form class="cart" action="<?php echo esc_url( apply_filters( 'woocommerce_add_to_cart_form_action', $product->get_permalink() ) ); ?>" method="post" enctype='multipart/form-data'>
@@ -152,16 +156,27 @@ global $product;
 			</div>
 			<?php endif; ?>
 
+			<?php
+			$show_app = function_exists('get_field') && get_field('show_app_downloads') !== null ? get_field('show_app_downloads') : true;
+			if ( $show_app ) :
+				$app_title = function_exists('get_field') && get_field('app_downloads_title') ? get_field('app_downloads_title') : 'Ứng dụng có sẵn cho iOS và Android';
+				$ios_link = function_exists('get_field') && get_field('app_ios_link') ? get_field('app_ios_link') : '/tai-ung-dung-va-huong-dan/';
+				$android_link = function_exists('get_field') && get_field('app_android_link') ? get_field('app_android_link') : '/tai-ung-dung-va-huong-dan/';
+				
+				$ios_url = ( strpos($ios_link, 'http') === 0 ) ? $ios_link : home_url($ios_link);
+				$android_url = ( strpos($android_link, 'http') === 0 ) ? $android_link : home_url($android_link);
+			?>
 			<div class="pg-app-downloads">
 				<div>
-					<h4>Ứng dụng có sẵn cho iOS và Android</h4>
+					<h4><?php echo esc_html( $app_title ); ?></h4>
 					<ul>
-						<li><a href="<?php echo esc_url( home_url( '/tai-ung-dung-va-huong-dan/' ) ); ?>" style="color: #666">App cho iOS</a></li>
-						<li><a href="<?php echo esc_url( home_url( '/tai-ung-dung-va-huong-dan/' ) ); ?>" style="color: #666">App cho Android</a></li>
+						<li><a href="<?php echo esc_url( $ios_url ); ?>" style="color: #666">App cho iOS</a></li>
+						<li><a href="<?php echo esc_url( $android_url ); ?>" style="color: #666">App cho Android</a></li>
 					</ul>
 				</div>
 				<i class="bi bi-x-lg" style="color: #ccc; cursor: pointer;"></i>
 			</div>
+			<?php endif; ?>
 		</div>
 	</div>
 </section>
