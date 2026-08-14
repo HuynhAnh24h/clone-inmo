@@ -527,3 +527,14 @@ function inmo_custom_add_to_cart_message_html( $message, $products, $show_qty ) 
     return $message;
 }
 add_filter( 'wc_add_to_cart_message_html', 'inmo_custom_add_to_cart_message_html', 10, 3 );
+
+/**
+ * Register Custom Elementor Widgets
+ */
+add_action( 'elementor/widgets/register', 'inmo_register_custom_elementor_widgets' );
+function inmo_register_custom_elementor_widgets( $widgets_manager ) {
+    if ( file_exists( get_template_directory() . '/inc/elementor-products-widget.php' ) ) {
+        require_once get_template_directory() . '/inc/elementor-products-widget.php';
+        $widgets_manager->register( new \INMO_Elementor_Products_Widget() );
+    }
+}
