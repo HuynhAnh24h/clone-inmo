@@ -34,17 +34,19 @@ global $product;
 		// Feature Lg 1
 		for ( $k = 1; $k <= 3; $k++ ) {
 			$img = get_field('feature_lg1_' . $k . '_img');
+			$video = get_field('feature_lg1_' . $k . '_video');
 			$title = get_field('feature_lg1_' . $k . '_title');
-			if ( $img || $title ) {
-				$feature_lg1[] = array('img' => $img, 'title' => $title);
+			if ( $img || $video || $title ) {
+				$feature_lg1[] = array('img' => $img, 'video' => $video, 'title' => $title);
 			}
 		}
 		// Feature Lg 2
 		for ( $k = 1; $k <= 4; $k++ ) {
 			$img = get_field('feature_lg2_' . $k . '_img');
+			$video = get_field('feature_lg2_' . $k . '_video');
 			$title = get_field('feature_lg2_' . $k . '_title');
-			if ( $img || $title ) {
-				$feature_lg2[] = array('img' => $img, 'title' => $title);
+			if ( $img || $video || $title ) {
+				$feature_lg2[] = array('img' => $img, 'video' => $video, 'title' => $title);
 			}
 		}
 		// Testimonials

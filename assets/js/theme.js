@@ -175,11 +175,20 @@ document.addEventListener('DOMContentLoaded', () => {
 			{ title: 'Thoải mái cả ngày, thiết kế siêu nhẹ', image: 'https://placehold.co/500x260/1a1a1a/ffffff?text=Comfort' },
 			{ title: 'Trợ lý AI điều khiển bằng giọng nói, học hỏi theo thói quen', image: 'https://placehold.co/500x260/1a1a1a/ffffff?text=AI' }
 		];
-		if (!Array.isArray(featureLgData1) || featureLgData1.length === 0) featureLgData1 = [];
 		featureLgData1.forEach((f) => {
 			const col = document.createElement('div');
 			col.className = 'col-md-4';
-			col.innerHTML = `<div class="pg-feature-lg"><img src="${f.image || f.img}" alt="${f.title}"><span>${f.title}</span></div>`;
+			const mediaHtml = f.video ? 
+				`<video class="pg-feature-lg-video" autoplay loop muted playsinline><source src="${f.video}" type="video/mp4"></video>` : 
+				`<img src="${f.image || f.img}" alt="${f.title}">`;
+			col.innerHTML = `
+				<div class="pg-feature-lg">
+					${mediaHtml}
+					<div class="pg-feature-lg-info">
+						<span>${f.title}</span>
+					</div>
+				</div>
+			`;
 			featureLgWrap1.appendChild(col);
 		});
 	}
@@ -192,11 +201,20 @@ document.addEventListener('DOMContentLoaded', () => {
 			{ title: 'Máy nhắc chữ + Tự động tóm tắt cuộc họp', image: 'https://placehold.co/380x260/1a1a1a/ffffff?text=Teleprompter' },
 			{ title: 'Điều hướng AR, rảnh tay, không cần điện thoại', image: 'https://placehold.co/380x260/1a1a1a/ffffff?text=Navigation' }
 		];
-		if (!Array.isArray(featureLgData2) || featureLgData2.length === 0) featureLgData2 = [];
 		featureLgData2.forEach((f) => {
 			const col = document.createElement('div');
 			col.className = 'col-6 col-md-3';
-			col.innerHTML = `<div class="pg-feature-lg"><img src="${f.image || f.img}" alt="${f.title}"><span>${f.title}</span></div>`;
+			const mediaHtml = f.video ? 
+				`<video class="pg-feature-lg-video" autoplay loop muted playsinline><source src="${f.video}" type="video/mp4"></video>` : 
+				`<img src="${f.image || f.img}" alt="${f.title}">`;
+			col.innerHTML = `
+				<div class="pg-feature-lg">
+					${mediaHtml}
+					<div class="pg-feature-lg-info">
+						<span>${f.title}</span>
+					</div>
+				</div>
+			`;
 			featureLgWrap2.appendChild(col);
 		});
 	}

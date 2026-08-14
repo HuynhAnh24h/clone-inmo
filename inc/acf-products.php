@@ -386,14 +386,24 @@ for ($k = 1; $k <= 3; $k++) {
         'name' => 'feature_lg1_' . $k . '_img',
         'type' => 'image',
         'return_format' => 'url',
-        'wrapper' => array('width' => '50%'),
+        'wrapper' => array('width' => '33%'),
+    );
+    $fields[] = array(
+        'key' => 'field_feature_lg1_' . $k . '_video',
+        'label' => 'Lưới ảnh vừa (Hàng giữa) ' . $k . ' - Video (Tùy chọn)',
+        'name' => 'feature_lg1_' . $k . '_video',
+        'type' => 'file',
+        'return_format' => 'url',
+        'mime_types' => 'mp4,webm,ogg',
+        'wrapper' => array('width' => '33%'),
+        'instructions' => 'Nếu tải video lên, hệ thống sẽ ưu tiên chạy video thay cho ảnh.',
     );
     $fields[] = array(
         'key' => 'field_feature_lg1_' . $k . '_title',
         'label' => 'Lưới ảnh vừa (Hàng giữa) ' . $k . ' - Tiêu đề',
         'name' => 'feature_lg1_' . $k . '_title',
         'type' => 'text',
-        'wrapper' => array('width' => '50%'),
+        'wrapper' => array('width' => '34%'),
     );
 }
 
@@ -405,14 +415,24 @@ for ($k = 1; $k <= 4; $k++) {
         'name' => 'feature_lg2_' . $k . '_img',
         'type' => 'image',
         'return_format' => 'url',
-        'wrapper' => array('width' => '50%'),
+        'wrapper' => array('width' => '33%'),
+    );
+    $fields[] = array(
+        'key' => 'field_feature_lg2_' . $k . '_video',
+        'label' => 'Lưới ảnh ngang (Hàng dưới) ' . $k . ' - Video (Tùy chọn)',
+        'name' => 'feature_lg2_' . $k . '_video',
+        'type' => 'file',
+        'return_format' => 'url',
+        'mime_types' => 'mp4,webm,ogg',
+        'wrapper' => array('width' => '33%'),
+        'instructions' => 'Nếu tải video lên, hệ thống sẽ ưu tiên chạy video thay cho ảnh.',
     );
     $fields[] = array(
         'key' => 'field_feature_lg2_' . $k . '_title',
         'label' => 'Lưới ảnh ngang (Hàng dưới) ' . $k . ' - Tiêu đề',
         'name' => 'feature_lg2_' . $k . '_title',
         'type' => 'text',
-        'wrapper' => array('width' => '50%'),
+        'wrapper' => array('width' => '34%'),
     );
 }
 
