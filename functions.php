@@ -49,6 +49,9 @@ add_action( 'after_setup_theme', 'inmo_theme_setup' );
  * Enqueue scripts and styles.
  */
 function inmo_theme_scripts() {
+	// Google Fonts connection
+	wp_enqueue_style( 'inmo-google-fonts', 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap', array(), null );
+
 	// Bootstrap icons
 	wp_enqueue_style( 'bootstrap-icons', 'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css', array(), '1.13.1' );
 	

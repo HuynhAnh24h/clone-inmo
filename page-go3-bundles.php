@@ -60,7 +60,7 @@ $banner_img_url = has_post_thumbnail() ? get_the_post_thumbnail_url( get_the_ID(
 					<div <?php wc_product_class( 'col-12 col-sm-6 col-md-4 mb-4', $product ); ?>>
 						<a href="<?php echo esc_url( $product->get_permalink() ); ?>" class="pg-archive-product-card">
 							<div class="pg-archive-product-media">
-								<img src="<?php echo esc_url( $image_url ); ?>" alt="<?php the_title_attribute(); ?>">
+								<img src="<?php echo esc_url( $image_url ); ?>" width="400" height="400" loading="lazy" alt="<?php the_title_attribute(); ?>">
 								<?php if ( $rating > 0 ) : ?>
 									<span class="pg-archive-product-rating">
 										<i class="bi bi-star-fill"></i><?php echo number_format( $rating, 1 ); ?>

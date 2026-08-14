@@ -37,22 +37,22 @@ if ( $layout_type && $layout_type !== 'none' ) :
 						<div class="pg-bundle-grid-2x2">
 							<?php if ( $layout_img1 ) : ?>
 								<div class="pg-bundle-img-card">
-									<img src="<?php echo esc_url($layout_img1); ?>" alt="Bundle Image 1">
+									<img src="<?php echo esc_url($layout_img1); ?>" width="400" height="500" loading="lazy" alt="<?php echo esc_attr($layout_title ? $layout_title . ' - 1' : 'Bundle Image 1'); ?>">
 								</div>
 							<?php endif; ?>
 							<?php if ( $layout_img2 ) : ?>
 								<div class="pg-bundle-img-card">
-									<img src="<?php echo esc_url($layout_img2); ?>" alt="Bundle Image 2">
+									<img src="<?php echo esc_url($layout_img2); ?>" width="400" height="500" loading="lazy" alt="<?php echo esc_attr($layout_title ? $layout_title . ' - 2' : 'Bundle Image 2'); ?>">
 								</div>
 							<?php endif; ?>
 							<?php if ( $layout_img3 ) : ?>
 								<div class="pg-bundle-img-card">
-									<img src="<?php echo esc_url($layout_img3); ?>" alt="Bundle Image 3">
+									<img src="<?php echo esc_url($layout_img3); ?>" width="400" height="500" loading="lazy" alt="<?php echo esc_attr($layout_title ? $layout_title . ' - 3' : 'Bundle Image 3'); ?>">
 								</div>
 							<?php endif; ?>
 							<?php if ( $layout_img4 ) : ?>
 								<div class="pg-bundle-img-card">
-									<img src="<?php echo esc_url($layout_img4); ?>" alt="Bundle Image 4">
+									<img src="<?php echo esc_url($layout_img4); ?>" width="400" height="500" loading="lazy" alt="<?php echo esc_attr($layout_title ? $layout_title . ' - 4' : 'Bundle Image 4'); ?>">
 								</div>
 							<?php endif; ?>
 						</div>
@@ -65,7 +65,7 @@ if ( $layout_type && $layout_type !== 'none' ) :
 					<div class="col-lg-6 col-12 pg-custom-right">
 						<div class="pg-showcase-single-img-wrap position-relative">
 							<?php if ( $layout_img1 ) : ?>
-								<img src="<?php echo esc_url($layout_img1); ?>" alt="Showcase Image" class="img-fluid rounded-4 shadow-lg pg-glow-img">
+								<img src="<?php echo esc_url($layout_img1); ?>" width="600" height="400" loading="lazy" alt="<?php echo esc_attr($layout_title ? $layout_title : 'Showcase Image'); ?>" class="img-fluid rounded-4 shadow-lg pg-glow-img">
 							<?php endif; ?>
 							
 							<!-- Sub card spec overlay -->

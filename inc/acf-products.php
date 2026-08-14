@@ -666,6 +666,14 @@ $fields[] = array(
     'type' => 'url',
     'instructions' => 'Đường dẫn đến trang tải ứng dụng trên Google Play Store.',
 );
+$fields[] = array(
+    'key' => 'field_app_section_logo',
+    'label' => 'Hình ảnh ứng dụng (Bên phải)',
+    'name' => 'app_section_logo',
+    'type' => 'image',
+    'return_format' => 'url',
+    'instructions' => 'Tải lên hình ảnh logo ứng dụng sắc nét (Ví dụ: Logo INMO nền đen tròn/vuông). Nếu trống, hệ thống sử dụng ảnh mặc định.',
+);
 
 // ==========================
 // TAB 5: Trải nghiệm (Testimonials)

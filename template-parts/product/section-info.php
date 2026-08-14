@@ -74,7 +74,9 @@ global $product;
 							     src="<?php echo esc_url( $item['thumb'] ); ?>" 
 							     data-type="<?php echo esc_attr( $item['type'] ); ?>" 
 							     data-src="<?php echo esc_url( $item['src'] ); ?>" 
-							     alt="thumbnail" />
+							     width="80" height="80"
+							     loading="lazy"
+							     alt="<?php echo esc_attr( $product->get_name() . ' gallery thumbnail ' . ($index + 1) ); ?>" />
 						<?php endforeach; ?>
 					</div>
 					
@@ -89,6 +91,7 @@ global $product;
 					<img id="mainImage" 
 					     src="<?php echo $first_item['type'] === 'image' ? esc_url( $first_item['src'] ) : ''; ?>" 
 					     alt="<?php the_title_attribute(); ?>" 
+					     width="600" height="520"
 					     style="width: 100%; height: 100%; object-fit: contain; display: <?php echo $first_item['type'] === 'image' ? 'block' : 'none'; ?>;" />
 					
 					<video id="mainVideo" 
