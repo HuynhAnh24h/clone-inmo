@@ -41,25 +41,25 @@ if ( $layout_type && $layout_type !== 'none' ) :
 						<?php endif; ?>
 					</div>
 					<div class="col-lg-7 col-12 pg-custom-right position-relative">
-						<div class="pg-bundle-grid-staggered">
+						<div class="pg-bundle-grid-2x2">
 							<?php if ( $layout_img1 ) : ?>
-								<div class="pg-bundle-img pg-bundle-img-1">
-									<img src="<?php echo esc_url($layout_img1); ?>" alt="Bundle Image 1" class="img-fluid rounded-4 shadow-lg">
+								<div class="pg-bundle-img-card">
+									<img src="<?php echo esc_url($layout_img1); ?>" alt="Bundle Image 1">
 								</div>
 							<?php endif; ?>
 							<?php if ( $layout_img2 ) : ?>
-								<div class="pg-bundle-img pg-bundle-img-2">
-									<img src="<?php echo esc_url($layout_img2); ?>" alt="Bundle Image 2" class="img-fluid rounded-4 shadow-lg">
+								<div class="pg-bundle-img-card">
+									<img src="<?php echo esc_url($layout_img2); ?>" alt="Bundle Image 2">
 								</div>
 							<?php endif; ?>
 							<?php if ( $layout_img3 ) : ?>
-								<div class="pg-bundle-img pg-bundle-img-3">
-									<img src="<?php echo esc_url($layout_img3); ?>" alt="Bundle Image 3" class="img-fluid rounded-4 shadow-lg">
+								<div class="pg-bundle-img-card">
+									<img src="<?php echo esc_url($layout_img3); ?>" alt="Bundle Image 3">
 								</div>
 							<?php endif; ?>
 							<?php if ( $layout_img4 ) : ?>
-								<div class="pg-bundle-img pg-bundle-img-4">
-									<img src="<?php echo esc_url($layout_img4); ?>" alt="Bundle Image 4" class="img-fluid rounded-4 shadow-lg">
+								<div class="pg-bundle-img-card">
+									<img src="<?php echo esc_url($layout_img4); ?>" alt="Bundle Image 4">
 								</div>
 							<?php endif; ?>
 						</div>
